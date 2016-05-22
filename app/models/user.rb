@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   has_many :sent_invites, class_name: 'Invite', foreign_key: 'sender_id'
 
   # paperclip validations; must include for upload
-  has_attached_file :avatar, default_url: "/system/users/avatars/default-avatars/avatar-bono.jpg"
+  has_attached_file :avatar, default_url: "https://s3.amazonaws.com/groupmeme/default-avatar.png"
   validates_attachment :avatar, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
 
   # #CarrierWave
