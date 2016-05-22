@@ -26,6 +26,7 @@ skeltal = Meme.create({
   :image => File.new("#{Rails.root}/public/seed-images/skeltal.png")
 })
 
+
 # doge = Meme.new
 # doge.image = File.open('/Users/pulsifer/Development/projects/groupmeme/web-0416-01-project/public/system/memes/images/seeds/doge.jpg')
 # doge.save
