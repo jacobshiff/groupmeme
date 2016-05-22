@@ -7,23 +7,23 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 doge = Meme.create({
-  :image => File.new("#{Rails.root}/public/system/memes/images/seeds/doge.jpg")
+  :image => File.new("#{Rails.root}/public/seed-images/doge.jpg")
 })
 
 pepe = Meme.create({
-  :image => File.new("#{Rails.root}/public/system/memes/images/seeds/pepe.jpeg")
+  :image => File.new("#{Rails.root}/public/seed-images/pepe.jpeg")
 })
 
 y_u_no = Meme.create({
-  :image => File.new("#{Rails.root}/public/system/memes/images/seeds/yuno.jpg")
+  :image => File.new("#{Rails.root}/public/seed-images/yuno.jpg")
 })
 
 beef = Meme.create({
-  :image => File.new("#{Rails.root}/public/system/memes/images/seeds/beef.jpg")
+  :image => File.new("#{Rails.root}/public/seed-images/beef.jpg")
 })
 
 skeltal = Meme.create({
-  :image => File.new("#{Rails.root}/public/system/memes/images/seeds/skeltal.png")
+  :image => File.new("#{Rails.root}/public/seed-images/skeltal.png")
 })
 
 # doge = Meme.new
