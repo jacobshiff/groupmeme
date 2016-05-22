@@ -59,5 +59,7 @@ Rails.application.routes.draw do
 
 
 #####Invitations
+#### COMMENTS
+  post '/:group_slug/memes/:id/comment' => 'comments#create', as: :comment
 
 end
