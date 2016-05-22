@@ -1,0 +1,6 @@
+<%= form_for(@invite) do |f| %>
+  <%= f.hidden_field :group_id, value: @invite.group_id %>
+  <%= f.label :recipient_email %>
+  <%= f.email_field :recipient_email %>
+  <%= f.submit %>
+<% end %>

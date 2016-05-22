@@ -41,6 +41,10 @@ Rails.application.routes.draw do
   #Destroy
   delete '/:group_slug/memes/:id' => 'memes#destroy'
 
+  #invites
+  get '/:group_slug/invites/new' => 'invites#new', as: 'invite_new'
+  post '/:group_slug/invites' => 'invites#create', as: 'invites'
+
   # Registration
   get '/users/new' => 'registrations#new', as: 'registration_new'
   post '/users/new' => 'registrations#create', as: 'registration_create'
@@ -56,8 +60,5 @@ Rails.application.routes.draw do
   #can rewrite with user_slug
 
   #get '/users/:user_id/edit' => 'users#edit'
-
-
-#####Invitations
 
 end
