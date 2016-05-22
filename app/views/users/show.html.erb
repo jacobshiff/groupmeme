@@ -1,0 +1,16 @@
+#partially completed
+
+<h1>@user.username</h1>
+
+<table>
+  <tr>
+    <th>id</th>
+    <th>Name</th>
+    <th>Avatar</th>
+  </tr>
+  <tr>
+    <td><%= @user.id %></td>
+    <td><%= @user.username %></td>
+    <td><%= image_tag(@user.avatar) if @user.avatar %></td>
+  </tr>
+</table>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GroupMeme</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<!-- Navbar -->
+<%= render 'layouts/shared/basic_nav' %>
+
+<!-- Flashes -->
+<% flash.each do |type, message| %>
+    <div class="alert alert-<%= type %>" role="alert"><%= message %></div>
+  <% end %>
+<div class="container">
+<%= yield %>
+</div>
+</body>
+</html>

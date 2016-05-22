@@ -1,0 +1,14 @@
+<div class="container">
+<h1>Create A New Group</h1>
+
+<div class="row">
+  <div class="col-mid-6">
+    <%= form_for(@group) do |f| %>
+      <%= f.label :title %>
+      <%= f.text_field :title %>
+      <%= f.submit %>
+  </div>
+</div>
+
+<% end %>
+</div>

@@ -1,0 +1,17 @@
+$(document).ready(function(){
+  bindClick()
+});
+
+function bindClick(){
+
+  $('div.form-group button.btn').click(function(event){
+    event.preventDefault();
+    var content = $('input.form-control').val();
+    submitComment(content);
+  });
+}
+
+
+function submitComment(){
+
+}

@@ -1,0 +1,12 @@
+Login form
+
+<%= form_tag(create_login_path(params[:group_slug])) do |f| %>
+
+<label for="user[username]">Username</label>
+<input type="text" name="user[username]">
+
+<label for="user[password]">Password</label>
+<input type="password" name="user[password]">
+
+  <%= submit_tag("Login!") %>
+<% end %>

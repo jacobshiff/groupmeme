@@ -1,0 +1,9 @@
+, method: :post, url: meme_path(@meme), html: {id: 'new_file'}
+
+
+def upload
+  uploaded = params[:file_name]
+  File.open(Rails.root.join('public', 'uploads', uploaded.original_filename), 'w') do |file|
+    file.write(uploaded.read)
+  end
+end

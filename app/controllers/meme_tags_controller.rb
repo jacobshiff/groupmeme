@@ -1,0 +1,2 @@
+class MemeTagsController < ApplicationController
+end

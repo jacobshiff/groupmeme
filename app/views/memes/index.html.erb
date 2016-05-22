@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Trending at <%= @group.title %></h2>
+    </div>
+  </div>
+
+<!-- Need to add in code that crops image so all gifs are same size -->
+    <% @memes.in_groups_of(3).each do |meme_row| %>
+      <div class="row-eq-height">
+        <% meme_row.compact.each do |meme|  %>
+          <div class="col-md-4">
+            <div class="index-meme-container">
+            <%= link_to image_tag(meme.image.url, class: "index-meme-img"), meme_path(meme.group.group_slug, meme)%>
+            <div class="sub-text"> Creator and ability to like goes here </div>
+            </div>
+          </div>
+        <% end %>
+    </div>
+    <% end %>
+</div>

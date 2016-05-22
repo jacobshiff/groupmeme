@@ -1,0 +1,53 @@
+<!-- This is the new user registration form -->
+  <div class="row">
+    <div class="col-md-6">
+      <%= form_for @user, url: registration_create_path(params[:group_slug]), html: { multipart: true } do |f| %>
+      <div>
+        <%= f.label :username %>
+        <%= f.text_field :username %>
+      </div>
+      <div>
+        <%= f.label :email %>
+        <%= f.email_field :email %>
+      </div>
+      <div>
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+      </div>
+      <div>
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation %>
+      </div>
+
+      <div>
+        <%= f.label :groups %>
+        <%= f.collection_select :group_ids, Group.all, :id, :title %>
+      </div>
+
+      <div>
+        <%= f.submit 'Sign Me Up'%>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div style="width: 30%">
+        <%= image_tag 'avatars/avatar-bono.jpg', class: "registration-default-image img-responsive"%>
+      </div>
+      <div class="sub-text">
+        <%= f.label :avatar, "Customize your avatar" %>
+        <%= f.file_field(:avatar, accept: 'image/png,image/gif,image/jpeg') %>
+      </div>
+    
+
+    </div>
+
+<!--   </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div>
+          <%= f.submit 'Sign Me Up'%>
+        </div>
+      </div>
+    </div>
+ -->
+  <% end %>
+
