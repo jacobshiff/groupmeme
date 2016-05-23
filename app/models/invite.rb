@@ -11,6 +11,8 @@ class Invite < ActiveRecord::Base
     self.token = Digest::SHA1.hexdigest([Time.now, rand].join)
   end
 
+  #This method is always called when an invite is saved and sets the recipient ID
+  # to an existing user if the recipient already has an account (based on email)
   def check_user_existence
     recipient = User.find_by(email: recipient_email)
     if recipient
