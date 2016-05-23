@@ -32,6 +32,5 @@ function submitComment(content, url){
 
 function build_new_comment(response){
   // rewrite alt
-  var output = '<li> <div class="commenterImage"><img src="' + response.user_avatar + '" alt="Default avatar" /></div><div class="commentText"><p>' + response.content + '</p> <span class="date sub-text">' + response.time + '</span></div></li>'
-  return output
+  var output =     '<li><div class="commenterImage"><img src="' + response.user_avatar + '" alt="' + response.username + 'avatar" /></div><div class="commentText"><p><strong><a href="/users/' + response.username + '">'+ response.username + ' </a></strong>' + response.content + '</p> <span class="date sub-text">' + response.time +'</span></div></li>'
 }

@@ -49,7 +49,7 @@
             <%= image_tag comment.user.avatar %>
           </div>
           <div class="commentText">
-            <p class=""><%= comment.content %></p> <span class="date sub-text"> <%= comment.created_at.strftime("%H:%M on %b %d, %Y") %> </span>
+            <p><strong><%= link_to comment.user.username, user_path(comment.user.username) %></strong> <%= comment.content %></p> <span class="date sub-text"> <%= comment.created_at.strftime("%I:%M %p on %b %d, %Y") %> </span>
           </div>
         </li>
         <% end %>
