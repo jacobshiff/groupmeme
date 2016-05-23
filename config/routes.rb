@@ -63,7 +63,8 @@ Rails.application.routes.draw do
 #####Memberships
   get '/:group_slug/:username/membership' => 'memberships#show'
   delete '/:group_slug/:username/membership' => 'memberships#destroy', as: 'destroy_membership'
-
+  get '/:group_slug/:username/membership/edit' => 'memberships#edit', as: 'edit_membership'
+  patch '/:group_slug/:username/membership/edit' => 'memberships#update'
 #####Invitations
 
 end

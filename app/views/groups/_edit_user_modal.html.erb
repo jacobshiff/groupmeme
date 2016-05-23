@@ -9,7 +9,12 @@
           <h5 class="modal-title" id="edit-user">Select User Type</h5>
         </div>
         <div class="modal-body">
-
+          <div class="btn-group inline">
+            <p>Current Membership Status: <%= user.type(current_group) %></p>
+            <%= button_to 'Set As Admin', edit_membership_path(group.group_slug, user.username, 'admin'), method: :patch, class: 'btn btn-default' %>
+            <%= button_to 'Set As Moderator', edit_membership_path(group.group_slug, user.username, 'moderator'), method: :patch, class: 'btn btn-default' %>
+            <%= button_to 'Set As User', edit_membership_path(group.group_slug, user.username, 'user'), method: :patch, class: 'btn btn-default' %>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user.destroy 
+    current_user.destroy_memberships
+    current_user.destroy
   end
 end
