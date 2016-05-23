@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     delete '/logout' => 'sessions#destroy', as: 'logout'
 
 #####Groups
-    get '/groups/new' => 'groups#new'
+    get '/groups/new' => 'groups#new', as: 'new_group'
     get '/groups' => 'groups#index'
     get '/:group_slug' => 'groups#show', as: 'group'
     post '/:groups' => 'groups#create'
