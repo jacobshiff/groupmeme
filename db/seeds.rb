@@ -35,9 +35,9 @@ skeltal = Meme.create({
 # beef = Meme.new
 # beef.image = File.open('/Users/pulsifer/Development/projects/groupmeme/web-0416-01-project/public/system/memes/images/seeds/beef.jpg')
 
-jacob = User.create(username: 'jacobshiff', email: 'jacob@flatironschool.com', password: 'password')
+jacob = User.create(username: 'jacobshiff', email: 'shiffjacob@gmail.com', password: 'password')
 chris = User.create(username: 'xristo', email: 'chris@flatironschool.com', password: 'password')
-rachel = User.create(username: 'rachelb', email: 'rachel@flatironschool.com', password: 'password')
+rachel = User.create(username: 'rachelb', email: 'rnbronstein@gmail.com', password: 'password')
 kevin = User.create(username: 'kwebster2', email: 'kevin@flatironschool.com', password: 'password')
 
 doge.creator = rachel
@@ -170,6 +170,7 @@ dislike_2.save
 membership_1 = Membership.create(group_id: 1, user_id: 1, user_type: 'admin')
 membership_2 = Membership.create(group_id: 1, user_id: 2, user_type: 'member')
 membership_3 = Membership.create(group_id: 1, user_id: 3, user_type: 'member')
+membership_5 = Membership.create(group_id: 2, user_id: 3, user_type: 'admin')
 
 ##ADD INVITES
 invitation_1 = Invite.create(sender_id: 1, recipient_email: 'bob@bob.com', token: 'cheese')

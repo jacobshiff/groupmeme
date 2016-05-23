@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  bindClick();
+  bindClick()
 });
 
 function bindClick(){
@@ -11,7 +11,6 @@ function bindClick(){
     submitComment(content, url);
   });
 }
-
 
 function submitComment(content, url){
   $.ajax({
