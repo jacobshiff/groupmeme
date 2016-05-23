@@ -7,3 +7,6 @@ def upload
     file.write(uploaded.read)
   end
 end
+
+
+  // '<li> <div class="commenterImage"><img src="' + response.user_avatar + '" alt="Default avatar" /></div><div class="commentText"><p>' + response.content + '</p> <span class="date sub-text">' + response.time + '</span></div></li>'

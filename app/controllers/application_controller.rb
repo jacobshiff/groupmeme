@@ -11,6 +11,14 @@ class ApplicationController < ActionController::Base
     @current_group = Group.find_by(group_slug: params[:group_slug]) if params[:group_slug]
   end
 
+  helper_method def format_time(time)
+    if time.strftime("%Y-%m-%d") == Time.now.strftime("%Y-%m-%d")
+      "Today at #{time.strftime("%I:%M %p")}"
+    else
+      time.strftime("%I:%M %p on %b %d, %Y")
+    end
+  end
+  
   def logged_in?
     session[:user_id] != nil
   end
