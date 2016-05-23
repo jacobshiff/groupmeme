@@ -20,11 +20,13 @@ Rails.application.routes.draw do
     delete '/logout' => 'sessions#destroy', as: 'logout'
 
 #####Groups
-    get '/groups/new' => 'groups#new'
+    get '/groups/new' => 'groups#new', as: 'new_group'
     get '/groups' => 'groups#index'
     get '/:group_slug' => 'groups#show', as: 'group'
     post '/:groups' => 'groups#create'
-    get '/:group_slug/admin' => 'groups#admin', as: 'admin'
+    get '/:group_slug/edit/users' => 'groups#edit_users', as: 'edit_users'
+    get '/:group_slug/edit' => 'groups#edit', as: 'edit_group'
+
 
 ######### Memes routes
   #Create
@@ -60,6 +62,13 @@ Rails.application.routes.draw do
   #can rewrite with user_slug
 
   #get '/users/:user_id/edit' => 'users#edit'
+
+
+#####Memberships
+  get '/:group_slug/:username/membership' => 'memberships#show'
+  delete '/:group_slug/:username/membership' => 'memberships#destroy', as: 'destroy_membership'
+  get '/:group_slug/:username/membership/edit' => 'memberships#edit', as: 'edit_membership'
+  patch '/:group_slug/:username/membership/edit' => 'memberships#update'
 
 #####Invitations
 #### COMMENTS

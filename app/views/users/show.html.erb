@@ -1,16 +1,42 @@
 #partially completed
 
-<h1>@user.username</h1>
+<!-- <h1>@user.username</h1>
 
 <table>
   <tr>
-    <th>id</th>
     <th>Name</th>
     <th>Avatar</th>
   </tr>
   <tr>
-    <td><%= @user.id %></td>
     <td><%= @user.username %></td>
     <td><%= image_tag(@user.avatar) if @user.avatar %></td>
   </tr>
-</table>
+</table> -->
+
+<div class="container">
+  <h1><%= @user.username %>'s Profile</h1>
+
+  <%= image_tag(@user.avatar) if @user.avatar %>
+
+  <h3>Submissions:</h3>
+  <% if @user.memes.any?{|m| !m.nil?} %>
+  <ul>
+    <% @user.memes.each do |meme| %>
+    <li><%= link_to image_tag(meme.image), meme_path(meme.group.group_slug, meme) %></li>
+    <% end %>
+  </ul>
+  <% else %>
+    <p><%= @user.username %> hasn't submitted anything yet.</p>
+  <% end %>
+
+  <h3>Comments:</h3>
+  <% if @user.comments.any?{|c| !c.nil?} %>
+  <ul>
+    <% @user.comments.each do |comment| %>
+    <li><%= link_to comment.content, meme_path(comment.meme.group.group_slug, comment.meme) %></li>
+    <% end %>
+  </ul>
+  <% else %>
+    <p><%= @user.username %> hasn't written any comments yet.</p>
+  <% end %>
+</div>

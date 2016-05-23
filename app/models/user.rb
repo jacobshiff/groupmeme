@@ -32,6 +32,14 @@ class User < ActiveRecord::Base
     Membership.find_by(user: self, group: group).user_type
   end
 
+  def type=(new_type, group)
+    Membership.find_by(user: self, group: group).user_type = new_type
+  end
+
+  def destroy_memberships
+    self.memberships.each {|membership| membership.destroy}
+  end
+
   #Define invitation_token for new users
   def invitation_token
     invitation.token if invitation
@@ -39,6 +47,10 @@ class User < ActiveRecord::Base
 
   def invitation_token=(token)
     self.invitation = Invitation.find_by(token: token)
+  end
+
+  def membership(group)
+    Membership.find_by(user: self, group: group)
   end
 
 end
