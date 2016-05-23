@@ -11,6 +11,7 @@ class MemesController < ApplicationController
   end
 
   def show
+    #potential optimization to limit set_meme calls?
   end
 
   def new
@@ -44,7 +45,7 @@ class MemesController < ApplicationController
 
   private
   def set_meme
-    @meme = Group.find_by(group_slug: params[:group_slug]).memes.find(params[:id])
+    @meme = Meme.find(params[:id])
   end
 
   def set_group
