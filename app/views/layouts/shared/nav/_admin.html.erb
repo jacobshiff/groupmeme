@@ -1,5 +1,5 @@
 <li class="nav navbar-nav"><%= link_to 'Edit Group', edit_group_path(current_group.group_slug) %></li>
-<li class="nav navbar-nav"><a href='#'>Delete Group</a></li>
+<li class="nav navbar-nav"><%= link_to 'Invite New User', invite_new_path(current_group.group_slug) %></li>
 <li class="nav navbar-nav"><%= link_to 'View and Edit Members', edit_users_path(current_group.group_slug) %></li>
 <!-- Button trigger modal -->
 <li>

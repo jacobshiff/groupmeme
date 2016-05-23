@@ -44,6 +44,10 @@ class GroupsController < ApplicationController
     @users = Group.find_users_for_group(current_group)
   end
 
+  def user_index
+    @users = Group.find_users_for_group(current_group)
+  end
+
   private
 
   def group_params
