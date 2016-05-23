@@ -18,28 +18,30 @@ class Meme < ActiveRecord::Base
     if !user_reacted?(user)
       message_helper.html_safe
     else
-      "<strong>You</strong> and <strong>#{self.reactions.count - 1} other #{plural('person')}</strong> like this image".html_safe
+      other_message_helper.html_safe
     end
   end
 
   def message_helper
     num = self.reactions.count
     if num > 1
-      "<strong>#{num} people</strong> like this image"
+      "<strong>#{num} people</strong> like this"
+    elsif num == 0
+      "Be the first to like this"
     else
-      "<strong>#{num} person</strong> likes this image"
+      "<strong>#{num} person</strong> likes this"
     end
   end
 
-  def plural(word)
-    if self.reactions.count > 1
-      num = self.reactions.count - 1
+  def other_message_helper
+    num = self.reactions.count - 1
+    if num == 1
+      "<strong>You</strong> and <strong>1 other person </strong> like this"
+    elsif num == 0
+      "<strong>You</strong> like this"
     else
-      num = self.reactions.count
+      "<strong>You</strong> and <strong>#{num} other people</strong> like this"
     end
-    str = ActionController::Base.helpers.pluralize(num, word)
-    parts = str.split
-    parts[1]
   end
 
   def heart_class(user)

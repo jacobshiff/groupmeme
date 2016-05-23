@@ -1,0 +1,18 @@
+<!-- This is the existing user registration form -->
+  <div class="row">
+      <%= form_tag add_group_to_existing_create_path do %>
+      <!-- Token -->
+      <% if @token != nil %>
+        <div><%= hidden_field_tag :invite_token, @token %></div>
+      <% end %>
+
+      <div>
+        Welcome back <%= @user.username %>!
+        Please confirm that you would like to add <%= @group.title %>'s GroupMe to your account.
+      </div>
+      <div>
+        <%= submit_tag 'Confirm'%>
+      </div>
+
+  <% end %>
+

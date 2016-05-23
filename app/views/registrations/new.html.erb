@@ -1,7 +1,11 @@
 <!-- This is the new user registration form -->
   <div class="row">
     <div class="col-md-6">
-      <%= form_for @user, url: registration_create_path(params[:group_slug]), html: { multipart: true } do |f| %>
+      <%= form_for @user, url: registration_create_path, html: { multipart: true } do |f| %>
+      <!-- Token -->
+      <% if @token != nil %>
+        <div><%= f.hidden_field :invite_token, @token %></div>
+      <% end %>
       <div>
         <%= f.label :username %>
         <%= f.text_field :username %>
@@ -19,10 +23,10 @@
         <%= f.password_field :password_confirmation %>
       </div>
 
-      <div>
+      <!-- <div>
         <%= f.label :groups %>
         <%= f.collection_select :group_ids, Group.all, :id, :title %>
-      </div>
+      </div> -->
 
       <div>
         <%= f.submit 'Sign Me Up'%>
@@ -30,7 +34,7 @@
     </div>
     <div class="col-md-6">
       <div style="width: 30%">
-        <%= image_tag 'avatars/avatar-bono.jpg', class: "registration-default-image img-responsive"%>
+        <%= image_tag 'https://s3.amazonaws.com/groupmeme/default-avatar.png', class: "registration-default-image img-responsive"%>
       </div>
       <div class="sub-text">
         <%= f.label :avatar, "Customize your avatar" %>

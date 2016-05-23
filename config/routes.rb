@@ -19,8 +19,6 @@ Rails.application.routes.draw do
     # Logout
     delete '/logout' => 'sessions#destroy', as: 'logout'
 
-
-
 #####Groups
     get '/groups/new' => 'groups#new'
     get '/groups' => 'groups#index'
@@ -41,9 +39,15 @@ Rails.application.routes.draw do
   #Destroy
   delete '/:group_slug/memes/:id' => 'memes#destroy'
 
+  #invites
+  get '/:group_slug/invites/new' => 'invites#new', as: 'invite_new'
+  post '/:group_slug/invites' => 'invites#create', as: 'invites'
+
   # Registration
   get '/users/new' => 'registrations#new', as: 'registration_new'
   post '/users/new' => 'registrations#create', as: 'registration_create'
+  get '/users/existing' => 'registrations#add_group_to_existing', as: 'add_group_to_existing'
+  post '/users/existing' => 'registrations#add_group_to_existing_create', as: 'add_group_to_existing_create'
 
   # User path
   get '/users/:username' => 'users#show', as: 'user'
@@ -56,7 +60,6 @@ Rails.application.routes.draw do
   #can rewrite with user_slug
 
   #get '/users/:user_id/edit' => 'users#edit'
-
 
 #####Invitations
 #### COMMENTS
