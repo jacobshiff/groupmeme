@@ -19,6 +19,12 @@ class Group < ActiveRecord::Base
     #select * from groups inner join memberships where memberships.user_id == user.id
   end
 
+  def self.find_users_for_group(group)
+    memberships = Membership.where(group: group)
+    user_ids = memberships.collect{|m| m.user_id}
+    users = user_ids.collect{|id| User.find(id)}
+    return users
+  end
 
 
 end
