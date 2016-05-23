@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160522152015) do
+ActiveRecord::Schema.define(version: 20160522211032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,9 +47,11 @@ ActiveRecord::Schema.define(version: 20160522152015) do
     t.integer  "group_id"
     t.string   "recipient_email"
     t.string   "token"
+    t.integer  "recipient_id"
   end
 
   add_index "invites", ["group_id"], name: "index_invites_on_group_id", using: :btree
+  add_index "invites", ["recipient_id"], name: "index_invites_on_recipient_id", using: :btree
   add_index "invites", ["sender_id"], name: "index_invites_on_sender_id", using: :btree
 
   create_table "memberships", force: :cascade do |t|
@@ -114,13 +116,10 @@ ActiveRecord::Schema.define(version: 20160522152015) do
     t.string   "password_digest"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
-    t.integer  "invite_id"
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
   end
-
-  add_index "users", ["invite_id"], name: "index_users_on_invite_id", using: :btree
 
 end

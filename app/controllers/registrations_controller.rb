@@ -1,31 +1,67 @@
 #Controller for creating new users
 class RegistrationsController < ApplicationController
 
+  #New action for brand new user (new email/username AND group)
   def new
     if current_user
       flash[:danger] = "You are already logged in."
       redirect_to groups_path
-      #redirect_to memes_path(current_user.groups.first.group_slug)
     end
-      @user = User.new
+    capture_token_from_params
+    @user = User.new
   end
 
+  #Create action for brand new user (new email/username AND group)
   def create
     @user = User.new(user_params)
-    if @user.save
-      session[:user_id] = @user.id
-      redirect_to groups_path
-      #redirect_to memes_path(@user.groups.first.group_slug)
-      #if there is an error in registration, the error message carries through to the group/memes index??
+    capture_token_from_params
+    if @user.save # if successfully saved user...
+      session[:user_id] = @user.id #... then set session_id
+      if @token # ...and associate the new user with the group to which he was invited
+        group = Invite.find_by(token: @token).group
+        @user.groups << group
+        redirect_to groups_path
+      end
     else
+      #if there is an error in registration, the error message carries through to the group/memes index??
       error_type
       render :new
     end
   end
 
+  #New action for existing user who is adding a new group
+  def add_group_to_existing
+    capture_token_from_params
+    @user = Invite.find_by(token: @token).recipient #Set user, based on invite token
+    @group = Invite.find_by(token: @token).group #Set invited group, based on invite token
+
+    if @user.groups.include?(@group) #Check if already a member of that group
+      flash[:danger] = "#{@user.username} is already a member of #{@group.title}. Please sign in."
+      redirect_to groups_path
+    end
+  end
+  
+  #Create action for existing user who is adding a new group
+  def add_group_to_existing_create
+    capture_token_from_params
+    if @token
+      recipient = Invite.find_by(token: @token).recipient
+      group = Invite.find_by(token: @token).group
+      recipient.groups << group
+      redirect_to groups_path
+    else
+      flash[:danger] = "You do not have permission to join this group. Please contact the administrator."
+      redirect_to groups_path
+    end
+  end
+
   private
+  def capture_token_from_params
+    @token = params[:invite_token]
+  end
+
   def user_params
-    params.require(:user).permit(:username, :email, :password, :password_confirmation, :avatar, :group_ids)
+    params.require(:user).permit(:username, :email, :password, :password_confirmation, :avatar, :invite_token)
   end
 
   def user_avatar
