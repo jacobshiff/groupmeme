@@ -12,19 +12,23 @@ class RegistrationsController < ApplicationController
     else
       capture_token_from_params
       @user = User.new
+      @user.email = Invite.find_by(token: @token).recipient_email
     end
   end
 
   #Create action for brand new user (new email/username AND group)
   def create
     @user = User.new(user_params)
-    capture_token_from_params
+    token = params[:user][:invite_token]
     if @user.save # if successfully saved user...
       session[:user_id] = @user.id #... then set session_id
-      if @token # ...and associate the new user with the group to which he was invited
-        group = Invite.find_by(token: @token).group
+      if token # ...and associate the new user with the group to which he was invited
+        group = Invite.find_by(token: token).group
         @user.groups << group
-        redirect_to login_path
+        redirect_to memes_path(group.group_slug)
+      else
+        flash[:danger] = "You do not have permission to join this group. Please contact the administrator."
+        redirect_to groups_path
       end
     else
       #if there is an error in registration, the error message carries through to the group/memes index??
@@ -72,7 +76,7 @@ class RegistrationsController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:username, :email, :password, :password_confirmation, :avatar, :invite_token)
+    params.require(:user).permit(:username, :email, :password, :password_confirmation, :avatar)
   end
 
   def user_avatar
