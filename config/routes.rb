@@ -7,11 +7,11 @@ Rails.application.routes.draw do
   # end
 
 
-######## Home routes
+#### HOME
   get '/' => 'home#index', as: 'home'
 
 
-######## Users
+#### USERS
     # Login
     get '/login' => 'sessions#new', as: 'login'
     post '/login' => 'sessions#create', as: 'create_login'
@@ -19,7 +19,8 @@ Rails.application.routes.draw do
     # Logout
     delete '/logout' => 'sessions#destroy', as: 'logout'
 
-#####Groups
+#### GROUPS
+
     get '/groups/new' => 'groups#new', as: 'new_group'
     get '/groups' => 'groups#index'
     get '/:group_slug' => 'groups#show', as: 'group'
@@ -29,15 +30,19 @@ Rails.application.routes.draw do
     get '/:group_slug/users' => 'groups#user_index', as: 'view_users'
 
 
-######### Memes routes
+#### MEMES
   #Create
   get '/:group_slug/memes/new' => 'memes#new'
   post '/:group_slug/memes' => 'memes#create'
 
-  #Show
+  #index
   get '/:group_slug/memes' => 'memes#index', as: 'memes'
+  get '/:group_slug/memes/by/:sort' => 'memes#index', as: 'memes_sort'  #most popularity
+
+  #Show
   get '/:group_slug/memes/:id' => 'memes#show', as: 'meme'
   post '/:group_slug/memes/:id/react' => 'memes#react', as: :react
+
 
   #Destroy
   delete '/:group_slug/memes/:id' => 'memes#destroy'
@@ -71,7 +76,7 @@ Rails.application.routes.draw do
   get '/:group_slug/:username/membership/edit' => 'memberships#edit', as: 'edit_membership'
   patch '/:group_slug/:username/membership/edit' => 'memberships#update'
 
-#####Invitations
+
 #### COMMENTS
   post '/:group_slug/memes/:id/comment' => 'comments#create', as: :comment
 
