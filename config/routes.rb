@@ -19,24 +19,29 @@ Rails.application.routes.draw do
     # Logout
     delete '/logout' => 'sessions#destroy', as: 'logout'
 
-
 #### GROUPS
 
-    get '/groups/new' => 'groups#new'
+    get '/groups/new' => 'groups#new', as: 'new_group'
     get '/groups' => 'groups#index'
     get '/:group_slug' => 'groups#show', as: 'group'
     post '/:groups' => 'groups#create'
-    get '/:group_slug/admin' => 'groups#admin', as: 'admin'
+    get '/:group_slug/edit/users' => 'groups#edit_users', as: 'edit_users'
+    get '/:group_slug/edit' => 'groups#edit', as: 'edit_group'
+
 
 #### MEMES
   #Create
   get '/:group_slug/memes/new' => 'memes#new'
   post '/:group_slug/memes' => 'memes#create'
 
-  #Show
+  #index
   get '/:group_slug/memes' => 'memes#index', as: 'memes'
+  get '/:group_slug/memes/by/:sort' => 'memes#index', as: 'memes_sort'  #most popularity
+
+  #Show
   get '/:group_slug/memes/:id' => 'memes#show', as: 'meme'
   post '/:group_slug/memes/:id/react' => 'memes#react', as: :react
+
 
   #Destroy
   delete '/:group_slug/memes/:id' => 'memes#destroy'
@@ -62,6 +67,13 @@ Rails.application.routes.draw do
   #can rewrite with user_slug
 
   #get '/users/:user_id/edit' => 'users#edit'
+
+
+#####Memberships
+  get '/:group_slug/:username/membership' => 'memberships#show'
+  delete '/:group_slug/:username/membership' => 'memberships#destroy', as: 'destroy_membership'
+  get '/:group_slug/:username/membership/edit' => 'memberships#edit', as: 'edit_membership'
+  patch '/:group_slug/:username/membership/edit' => 'memberships#update'
 
 
 #### COMMENTS

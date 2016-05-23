@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
     @comment.meme_id = params[:id]
     @comment.group = current_group
     @comment.save
-    time = @comment.created_at.strftime("%I:%M %p on %b %d, %Y")
+    time = format_time(@comment.created_at)
     render json: {content: @comment.content, user: @comment.user, user_avatar: @comment.user.avatar, username: @comment.user.username, time: time}
   end
 
