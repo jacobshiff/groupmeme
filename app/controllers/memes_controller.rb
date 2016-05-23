@@ -16,13 +16,13 @@ class MemesController < ApplicationController
       case (params[:sort])
       when "viral"
         #sort virally
+        binding.pry
       when "time"
         #sort chrono
         @memes = @memes.sort_by(&:created_at).reverse
-
-#        @memes.sort_by!{ |meme| meme.created_at }
       when "rising"
         #sort rising
+        @memes = @memes.sort_by {|meme| - meme.reactions.where(created_at: (Time.now - 1.hour)..Time.now).count}
       else
         flash[:warning] = "What exactly are you trying to do here, pal?"
       end
