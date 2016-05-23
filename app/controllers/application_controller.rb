@@ -13,12 +13,12 @@ class ApplicationController < ActionController::Base
 
   helper_method def format_time(time)
     if time.strftime("%Y-%m-%d") == Time.now.strftime("%Y-%m-%d")
-      "Today at #{time.strftime("%I:%M %p")}"
+      "today at #{time.strftime("%I:%M %p")}"
     else
       time.strftime("%I:%M %p on %b %d, %Y")
     end
   end
-  
+
   def logged_in?
     session[:user_id] != nil
   end

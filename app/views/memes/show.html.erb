@@ -23,7 +23,7 @@
 
   <!-- Creator -->
   <div class="row">
-    <h3 class="meme-details">Posted by: <%= @meme.creator.username %> @ <%=format_time(@meme.created_at)%></h2>
+    <h3 class="meme-details">Posted by: <%= @meme.creator.username %> - <%=format_time(@meme.created_at)%></h2>
       <!-- <font face="verdana" size="1"><i>Posted by: <%= @meme.creator.username %> @ <%=@meme.created_at%> </i></font> -->
   </div>
 
@@ -49,7 +49,7 @@
             <%= image_tag comment.user.avatar %>
           </div>
           <div class="commentText">
-            <p><strong><%= link_to comment.user.username, user_path(comment.user.username) %></strong> <%= comment.content %></p> <span class="date sub-text"> <%= format_time(comment.created_at) %> </span>
+            <p><strong><%= link_to comment.user.username, user_path(comment.user.username) %></strong> <%= comment.content %></p> <span class="date sub-text"> <%= (format_time(comment.created_at)).capitalize %> </span>
           </div>
         </li>
         <% end %>
