@@ -26,7 +26,9 @@ Rails.application.routes.draw do
     get '/groups' => 'groups#index'
     get '/:group_slug' => 'groups#show', as: 'group'
     post '/:groups' => 'groups#create'
-    get '/:group_slug/admin' => 'groups#admin', as: 'admin'
+    get '/:group_slug/edit/users' => 'groups#edit_users', as: 'edit_users'
+    get '/:group_slug/edit' => 'groups#edit', as: 'edit_group'
+
 
 ######### Memes routes
   #Create
@@ -57,6 +59,10 @@ Rails.application.routes.draw do
 
   #get '/users/:user_id/edit' => 'users#edit'
 
+
+#####Memberships
+  get '/:group_slug/:username/membership' => 'memberships#show'
+  delete '/:group_slug/:username/membership' => 'memberships#destroy', as: 'destroy_membership'
 
 #####Invitations
 

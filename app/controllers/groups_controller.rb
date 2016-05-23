@@ -40,8 +40,8 @@ class GroupsController < ApplicationController
     end
   end
 
-  def admin
-    render :show
+  def edit_users
+    @users = Group.find_users_for_group(current_group)
   end
 
   private
