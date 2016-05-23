@@ -11585,7 +11585,6 @@ return jQuery;
 
 }).call(this);
 $(document).ready(function(){
-  alert("why???")
   bindClick();
 });
 
