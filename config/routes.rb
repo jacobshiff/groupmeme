@@ -7,11 +7,11 @@ Rails.application.routes.draw do
   # end
 
 
-######## Home routes
+#### HOME
   get '/' => 'home#index', as: 'home'
 
 
-######## Users
+#### USERS
     # Login
     get '/login' => 'sessions#new', as: 'login'
     post '/login' => 'sessions#create', as: 'create_login'
@@ -21,14 +21,14 @@ Rails.application.routes.draw do
 
 
 
-#####Groups
+#### GROUPS
     get '/groups/new' => 'groups#new'
     get '/groups' => 'groups#index'
     get '/:group_slug' => 'groups#show', as: 'group'
     post '/:groups' => 'groups#create'
     get '/:group_slug/admin' => 'groups#admin', as: 'admin'
 
-######### Memes routes
+#### MEMES
   #Create
   get '/:group_slug/memes/new' => 'memes#new'
   post '/:group_slug/memes' => 'memes#create'
@@ -57,7 +57,8 @@ Rails.application.routes.draw do
 
   #get '/users/:user_id/edit' => 'users#edit'
 
+#### COMMENTS
 
-#####Invitations
+  post '/:group_slug/memes/:id/comment' => 'comments#create', as: :comment
 
 end
