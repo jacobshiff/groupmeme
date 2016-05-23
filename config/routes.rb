@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     post '/:groups' => 'groups#create'
     get '/:group_slug/edit/users' => 'groups#edit_users', as: 'edit_users'
     get '/:group_slug/edit' => 'groups#edit', as: 'edit_group'
+    get '/:group_slug/users' => 'groups#user_index', as: 'view_users'
 
 
 ######### Memes routes
