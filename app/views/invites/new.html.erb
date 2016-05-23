@@ -1,3 +1,5 @@
+<!-- Need to add in validation that will not let someone reach this page unless they have permission to view the page! -->
+
 <%= form_for(@invite) do |f| %>
   <%= f.hidden_field :group_id, value: @invite.group_id %>
   <%= f.label :recipient_email %>
