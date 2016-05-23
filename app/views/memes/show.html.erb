@@ -1,0 +1,79 @@
+<div class="container">
+  <!-- <div class="row">
+    <div class="col-md-12">
+      <h1></h1>
+    </div>
+  </div> -->
+  <!-- Image -->
+  <!-- To center, add .row-centered class -->
+  <div class="col-mid-10">
+    <div class="row">
+      <!-- Main image div -->
+       <div class="col-mid-6 show-page-img">
+          <div class="meme-img">
+            <%= image_tag(@meme.image.url, class: "img-responsive show-page-image") %>
+          </div>
+          <!-- Reactions div -->
+          <div class="react" meme_parent_id="<%=@meme.id%>">
+            <%= render partial: "memes/memes_reactions", locals: {meme: @meme} %>
+          </div>
+      </div>
+
+    </div>
+
+  <!-- Creator -->
+  <div class="row">
+    <h3 class="meme-details">Posted by: <%= @meme.creator.username %> @ <%=format_time(@meme.created_at)%></h2>
+      <!-- <font face="verdana" size="1"><i>Posted by: <%= @meme.creator.username %> @ <%=@meme.created_at%> </i></font> -->
+  </div>
+
+  <!-- Tags -->
+  <div class="row tags">
+    <% @meme.tags.each do |tag| %>
+      <span class="label label-info"><%= tag.name %></span>
+    <% end %>
+  </div>
+
+  <!-- Comments -->
+
+  <div class="row detailBox">
+    <div class="actionBox">
+      <div class="titleBox">
+        <label>Comments</label>
+      </div>
+      <div class="actionBox">
+        <ul class="commentList">
+        <% @meme.comments.each do |comment| %>
+        <li>
+          <div class="commenterImage">
+            <%= image_tag comment.user.avatar %>
+          </div>
+          <div class="commentText">
+            <p><strong><%= link_to comment.user.username, user_path(comment.user.username) %></strong> <%= comment.content %></p> <span class="date sub-text"> <%= format_time(comment.created_at) %> </span>
+          </div>
+        </li>
+        <% end %>
+        </ul>
+        <form class="form-inline" role="form">
+              <div class="form-group">
+                  <input class="form-control" type="text" placeholder="Your comments" name="comment[content]" />
+              </div>
+              <div class="form-group">
+              <%= link_to comment_path(current_group.group_slug, params[:id]) do %>
+                  <button class="btn btn-default">Add</button>
+              <% end %>
+              </div>
+          </form>
+      </div>
+    </div>
+  </div>
+    <div class="row show-page-buttons">
+      <a href="<%=memes_path(@meme.group.group_slug)%>"><button type="button" class="btn btn-primary">Back to Index</button></a>
+
+      <%= link_to "Delete", meme_path(@meme.group.group_slug, @meme), method: :delete, data: {confirm: "Are you sure you want to delete this meme?" }, class: 'btn btn-danger'   %>
+      <!-- <button type="button" class="btn btn-danger">Delete</button> -->
+    </div>
+  </div>
+  </div>
+
+</div>
