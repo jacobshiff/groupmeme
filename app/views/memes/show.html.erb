@@ -23,7 +23,7 @@
 
   <!-- Creator -->
   <div class="row">
-    <h3 class="meme-details">Posted by: <%= @meme.creator.username %> @ <%=@meme.created_at.strftime("%I:%M %p on %b %d, %Y")%></h2>
+    <h3 class="meme-details">Posted by: <%= @meme.creator.username %> @ <%=format_time(@meme.created_at)%></h2>
       <!-- <font face="verdana" size="1"><i>Posted by: <%= @meme.creator.username %> @ <%=@meme.created_at%> </i></font> -->
   </div>
 
@@ -43,17 +43,15 @@
       </div>
       <div class="actionBox">
         <ul class="commentList">
-        <% if !@meme.comments.empty? %>
-          <% @meme.comments.each do |comment| %>
-          <li>
-            <div class="commenterImage">
-              <%= image_tag comment.user.avatar %>
-            </div>
-            <div class="commentText">
-              <p class=""><%= comment.content %></p> <span class="date sub-text"> <%= comment.created_at.strftime("%H:%M on %b %d, %Y") %> </span>
-            </div>
-          </li>
-          <% end %>
+        <% @meme.comments.each do |comment| %>
+        <li>
+          <div class="commenterImage">
+            <%= image_tag comment.user.avatar %>
+          </div>
+          <div class="commentText">
+            <p><strong><%= link_to comment.user.username, user_path(comment.user.username) %></strong> <%= comment.content %></p> <span class="date sub-text"> <%= format_time(comment.created_at) %> </span>
+          </div>
+        </li>
         <% end %>
         </ul>
         <form class="form-inline" role="form">
