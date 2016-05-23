@@ -11,8 +11,12 @@
         <% meme_row.compact.each do |meme|  %>
           <div class="col-md-4">
             <div class="index-meme-container">
-            <%= link_to image_tag(meme.image.url, class: "index-meme-img"), meme_path(meme.group.group_slug, meme)%>
-            <div class="sub-text"> Creator and ability to like goes here </div>
+            <%= link_to image_tag(meme.image.url, class: "img-thumbnail"), meme_path(meme.group.group_slug, meme)%>
+            <h5><small>posted by <%= meme.creator.username %></small></h5>
+            <!-- Reactions div -->
+              <div class="react" meme_parent_id="<%=meme.id%>">
+                <%= render partial: "memes/memes_reactions", locals: {meme: meme} %>
+              </div>
             </div>
           </div>
         <% end %>
