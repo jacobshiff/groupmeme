@@ -3,12 +3,16 @@ class RegistrationsController < ApplicationController
 
   #New action for brand new user (new email/username AND group)
   def new
-    if current_user
+    if !capture_token_from_params
+      flash[:danger] = "You need an invite to join GroupMeme."
+      redirect_to groups_path
+    elsif current_user
       flash[:danger] = "You are already logged in."
       redirect_to groups_path
+    else
+      capture_token_from_params
+      @user = User.new
     end
-    capture_token_from_params
-    @user = User.new
   end
 
   #Create action for brand new user (new email/username AND group)
@@ -20,7 +24,7 @@ class RegistrationsController < ApplicationController
       if @token # ...and associate the new user with the group to which he was invited
         group = Invite.find_by(token: @token).group
         @user.groups << group
-        redirect_to groups_path
+        redirect_to login_path
       end
     else
       #if there is an error in registration, the error message carries through to the group/memes index??
@@ -31,13 +35,18 @@ class RegistrationsController < ApplicationController
 
   #New action for existing user who is adding a new group
   def add_group_to_existing
-    capture_token_from_params
-    @user = Invite.find_by(token: @token).recipient #Set user, based on invite token
-    @group = Invite.find_by(token: @token).group #Set invited group, based on invite token
-
-    if @user.groups.include?(@group) #Check if already a member of that group
-      flash[:danger] = "#{@user.username} is already a member of #{@group.title}. Please sign in."
+    if !capture_token_from_params
+      flash[:danger] = "You need an invite to join GroupMeme."
       redirect_to groups_path
+    elsif
+      capture_token_from_params
+      @user = Invite.find_by(token: @token).recipient #Set user, based on invite token
+      @group = Invite.find_by(token: @token).group #Set invited group, based on invite token
+
+      if @user.groups.include?(@group) #Check if already a member of that group
+        flash[:danger] = "#{@user.username} is already a member of #{@group.title}. Please sign in."
+        redirect_to login_path
+      end
     end
   end
   
@@ -48,7 +57,7 @@ class RegistrationsController < ApplicationController
       recipient = Invite.find_by(token: @token).recipient
       group = Invite.find_by(token: @token).group
       recipient.groups << group
-      redirect_to groups_path
+      redirect_to login_path
     else
       flash[:danger] = "You do not have permission to join this group. Please contact the administrator."
       redirect_to groups_path
@@ -56,6 +65,7 @@ class RegistrationsController < ApplicationController
   end
 
   private
+
   def capture_token_from_params
     @token = params[:invite_token]
   end
