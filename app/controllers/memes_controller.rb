@@ -16,10 +16,12 @@ class MemesController < ApplicationController
       case (params[:sort])
       when "viral"
         #sort virally
-        binding.pry
-      when "time"
+        @memes = @memes.sort_by {|meme| - meme.reactions.count}
+      when "newest"
         #sort chrono
         @memes = @memes.sort_by(&:created_at).reverse
+      when "oldest"
+        @memes = @memes.sort_by(&:created_at)
       when "rising"
         #sort rising
         @memes = @memes.sort_by {|meme| - meme.reactions.where(created_at: (Time.now - 1.hour)..Time.now).count}
