@@ -7,7 +7,9 @@
         <div class="modal-body">
           <%= form_for meme do |f| %>
             <div class="form-group">
-              <%= f.label :image, "Upload A File", class: 'btn btn-success btn-file' %>
+              <%= f.label :title, "Title (optional)" %> <br>
+              <%= f.text_field :title %> <br>
+              <%= f.label :image, "Upload A File", class: 'btn btn-success btn-file' %> <br>
               <%= f.file_field(:image, accept: 'image/png,image/gif,image/jpeg', class:
             'hidden') %><p id="filename"></p>
             <script type="text/javascript">
