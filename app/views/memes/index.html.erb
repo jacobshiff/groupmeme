@@ -1,11 +1,12 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <h2>Trending at <%= @group.title %></h2>
+      <h2>Trending at <%= @group.title %> <%= render partial: "sort", locals: {group: @group} %></h2>
     </div>
   </div>
 
 <!-- Need to add in code that crops image so all gifs are same size -->
+     <!-- @memes.in_groups_of(3).each do |meme_row|  -->
     <% @memes.in_groups_of(3).each do |meme_row| %>
       <div class="row-eq-height">
         <% meme_row.compact.each do |meme|  %>

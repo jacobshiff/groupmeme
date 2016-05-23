@@ -33,10 +33,14 @@ Rails.application.routes.draw do
   get '/:group_slug/memes/new' => 'memes#new'
   post '/:group_slug/memes' => 'memes#create'
 
-  #Show
+  #index
   get '/:group_slug/memes' => 'memes#index', as: 'memes'
+  get '/:group_slug/memes/by/:sort' => 'memes#index', as: 'memes_sort'  #most popularity
+
+  #Show
   get '/:group_slug/memes/:id' => 'memes#show', as: 'meme'
   post '/:group_slug/memes/:id/react' => 'memes#react', as: :react
+
 
   #Destroy
   delete '/:group_slug/memes/:id' => 'memes#destroy'
