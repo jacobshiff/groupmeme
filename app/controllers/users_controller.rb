@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   def show
-    #binding.pry
     @user = User.find(session[:user_id])
   end
 
@@ -14,4 +13,9 @@ class UsersController < ApplicationController
     current_user.destroy_memberships
     current_user.destroy
   end
+
+  def update
+  end
+
+
 end

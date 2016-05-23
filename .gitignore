@@ -39,4 +39,5 @@ build/
 
 # Ignore application configuration
 /config/application.yml
-/config/secrets.yml
+
+db/migrate/20160522194128_correct_reaction_type_column.rb

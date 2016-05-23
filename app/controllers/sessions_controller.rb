@@ -19,20 +19,26 @@ class SessionsController < ApplicationController
     # This is the action associated with logging in (post request)
     # This finds the user id and adds it to his/her cookie
 
-    # @user = User.find(params[:user][:id])
     @user = User.find_by(username: user_params[:username])
-    if @user.authenticate(user_params[:password])
-      #make active sesh, bring up first group of their groups
-      session[:user_id] = @user.id
-      redirect_to groups_path
-      #redirect_to memes_path(@user.groups.first.group_slug)
+    # if the user exists...
+    if @user
+      # ... then authenticate that the password is correct
+      if @user.authenticate(user_params[:password])
+        #make active sesh, bring up first group of their groups
+        session[:user_id] = @user.id
+        redirect_to groups_path
+      else
+        flash[:danger] = "Please confirm that you entered your username and password correctly."
+        render :new
+      end
     else
+      flash[:danger] = "Please confirm that you entered your username and password correctly."
       render :new
     end
   end
 
   def destroy
-    session[:user_id] = nil
+    session.delete(:user_id)
     redirect_to home_path
   end
 

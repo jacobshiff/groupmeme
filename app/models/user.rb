@@ -4,15 +4,15 @@ class User < ActiveRecord::Base
   has_many :reactions
   has_many :comments
   has_many :memes, foreign_key: 'creator_id'
-  #has_many :received_invites, class_name: 'Invite', foreign_key: 'invitee_id'
   has_many :created_groups, class_name: 'Group', foreign_key: 'group_creator_id'
 
   #Invitation validations
-  belongs_to :invite
+  #belongs_to :invite
+  has_many :invitations, class_name: "Invite", foreign_key: 'recipient_id'
   has_many :sent_invites, class_name: 'Invite', foreign_key: 'sender_id'
 
   # paperclip validations; must include for upload
-  has_attached_file :avatar, default_url: "/system/users/avatars/default-avatars/avatar-bono.jpg"
+  has_attached_file :avatar, default_url: "https://s3.amazonaws.com/groupmeme/default-avatar.png"
   validates_attachment :avatar, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
 
   # #CarrierWave
