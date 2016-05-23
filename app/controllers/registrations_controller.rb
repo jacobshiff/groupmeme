@@ -57,6 +57,7 @@ class RegistrationsController < ApplicationController
       recipient = Invite.find_by(token: @token).recipient
       group = Invite.find_by(token: @token).group
       recipient.groups << group
+      flash[:success] = "You have successfully added #{group.title} to your account. Please log in to view."
       redirect_to login_path
     else
       flash[:danger] = "You do not have permission to join this group. Please contact the administrator."
