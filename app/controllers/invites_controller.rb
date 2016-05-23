@@ -1,8 +1,13 @@
 class InvitesController < ApplicationController
 
   def new
-    @invite = Invite.new
-    @invite.group = current_group
+    if !current_user
+      flash[:danger] = "Please log in."
+      redirect_to login_path
+    else
+      @invite = Invite.new
+      @invite.group = current_group
+    end
   end
 
   def create

@@ -4,7 +4,7 @@
       <%= form_for @user, url: registration_create_path, html: { multipart: true } do |f| %>
       <!-- Token -->
       <% if @token != nil %>
-        <div><%= f.hidden_field :invite_token, @token %></div>
+        <div><%= f.hidden_field :invite_token, value: @token %></div>
       <% end %>
       <div>
         <%= f.label :username %>
