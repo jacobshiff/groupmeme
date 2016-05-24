@@ -7,8 +7,7 @@
 
   <!-- Need to add in code that crops image so all gifs are same size -->
        <!-- @memes.in_groups_of(3).each do |meme_row|  -->
-      <% @memes.in_groups_of(3).each do |meme_row| %>
-          <% meme_row.compact.each do |meme|  %>
+      <% @memes.each do |meme|  %>
             
             <div class="card film art">
               <%= link_to meme_path(meme.group.group_slug, meme), class: "thumb" do %>
@@ -28,7 +27,6 @@
                   <% end %>
                 </ul>
               </div>
-          <% end %>
         </div>
       <% end %>
   </div>
