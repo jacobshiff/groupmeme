@@ -1,0 +1,12 @@
+<h1>Make a meme, yo</h1>
+This can be our marker
+
+
+<%= form_for @meme do |f| %>
+  <b><i>Select a file: </i></b>
+  <%= f.file_field(:image, accept: 'image/png,image/gif,image/jpeg') %>
+  <h3>OR<h3>
+  <b><i>Enter an image url: </i></b>
+  <%= f.text_field :url_path %>
+  <%= f.submit %>
+<% end %>

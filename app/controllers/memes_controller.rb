@@ -1,3 +1,7 @@
+require 'open-uri'
+
+require 'meme_captain'
+
 class MemesController < ApplicationController
     before_action :set_group, only: [:index, :new]
     before_action :set_meme, only: [:show, :destroy, :react]
@@ -61,6 +65,25 @@ class MemesController < ApplicationController
 
     respond_to do |format|
       format.js
+    end
+  end
+
+  def maker
+    #bring in ruby-based meme_generator OR meme_captain
+    # require 'open-uri'
+    # require 'meme_captain'
+    @meme = Meme.new
+
+    var filepath = "url_path"
+    # open('http://memesvault.com/wp-content/uploads/Angry-Meme-02.jpg', 'rb') do |f|
+    if(meme_img_url)
+      open(url_path) do |f|
+        # binding.pry
+        i = MemeCaptain.meme_top_bottom(f, 'test', '1 2 3')
+        i.write('meme.jpg')
+      end
+    else
+      puts "////////////////DIDNT GET A URL////////////////"
     end
   end
 
