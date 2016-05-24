@@ -10,11 +10,13 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require bootstrap
+ *= require font-awesome
+ *= require style
+ *= require font-awesome.min
  *= require_tree .
  *= require_self
  */
-@import "bootstrap-sprockets";
-@import "bootstrap";
 
 .index-meme-container{
   width:90%;
