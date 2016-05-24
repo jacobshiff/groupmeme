@@ -1,12 +1,12 @@
-Login form
-
+<h3><i>Welcome to GroupSlam.</i><h3>
+<br>
 <%= form_tag(create_login_path(params[:group_slug])) do |f| %>
 
 <label for="user[username]">Username</label>
 <input type="text" name="user[username]">
-
+<br><br>
 <label for="user[password]">Password</label>
 <input type="password" name="user[password]">
-
+<br><br>
   <%= submit_tag("Login!") %>
 <% end %>
