@@ -1,0 +1,3 @@
+$('#add-meme').click(function{
+  $('.index-meme-container:last').append("<%= j render partial 'memes/newest_meme', locals: {meme: Meme.last} %>")
+})

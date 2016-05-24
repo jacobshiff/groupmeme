@@ -58,3 +58,23 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
+========dropzone instead
+<%= form_for meme do |f| %>
+  <div class="form-group">
+    <%= f.label :title, "Title (optional)" %> <br>
+    <%= f.text_field :title %> <br>
+    <%= f.label :image, "Upload A File" %> <br>
+    <!-- <script>$("div#meme-dropzone").dropzone();</script> -->
+    <%= f.file_field(:image, accept: 'image/png,image/gif,image/jpeg', html: {class:
+  'dropzone', id: 'meme-dropzone'}) %>
+  <!-- <script type="text/javascript">
+    $(function() {
+     $("input:file").change(function (){
+       var fullPath = $(this).val();
+       var fileName = fullPath.replace(/^.*[\\\/]/, '')
+       $("#filename").html(fileName);
+     });
+  });
+  </script> -->
+  </div>

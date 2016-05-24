@@ -5,28 +5,16 @@
           <h3 class="modal-title" id="add-new-meme">Add A New Meme!</h3>
         </div>
         <div class="modal-body">
-          <%= form_for meme do |f| %>
-            <div class="form-group">
-              <%= f.label :title, "Title (optional)" %> <br>
-              <%= f.text_field :title %> <br>
-              <%= f.label :image, "Upload A File", class: 'btn btn-success btn-file' %> <br>
-              <%= f.file_field(:image, accept: 'image/png,image/gif,image/jpeg', class:
-            'hidden') %><p id="filename"></p>
-            <script type="text/javascript">
-              $(function() {
-               $("input:file").change(function (){
-                 var fullPath = $(this).val();
-                 var fileName = fullPath.replace(/^.*[\\\/]/, '')
-                 $("#filename").html(fileName);
-               });
-            });
-            </script>
+          <%= form_for(meme, html: { multipart: true, class: "dropzone", id: 'meme-upload', name: 'meme[image]'}) do |f|  %>
+            <div class="fallback">
+              <%= f.file_field :image %><br>
+              <%= f.submit class: "btn btn-primary"%>
             </div>
+          <% end %>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <%= f.submit class: "btn btn-primary"%>
-        <% end %>
+          <button type="button" class="btn btn-success" data-dismiss="modal" id="add-meme">Add</button>
         </div>
       </div>
     </div>

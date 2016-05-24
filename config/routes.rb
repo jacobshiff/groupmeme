@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'uploads/new'
+
   #resources :memes, only: [:index]
 
   # resources :groups, only: [:index, :show], params: :slug do
@@ -80,4 +82,7 @@ Rails.application.routes.draw do
 #### COMMENTS
   post '/:group_slug/memes/:id/comment' => 'comments#create', as: :comment
 
+
+# #### UPLOADS --> just here to test dropzone
+#   resources :uploads
 end

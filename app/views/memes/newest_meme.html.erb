@@ -1,0 +1,6 @@
+<%= image_tag(meme.image) %>
+  <h5><small>posted by <%= meme.creator %></small></h5>
+            <!-- Reactions div -->
+            <div class="react" meme_parent_id="<%=meme.id%>">
+              <%= render partial: "memes/memes_reactions", locals: {meme: meme} %>
+            </div>

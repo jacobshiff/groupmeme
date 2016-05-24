@@ -51,7 +51,6 @@ class Meme < ActiveRecord::Base
       "glyphicon glyphicon-heart-empty"
     end
   end
-
   # def popularity_score
   #   #self.
   # end

@@ -1,12 +1,12 @@
 class MemesController < ApplicationController
-    before_action :set_group, only: [:index, :new]
     before_action :set_meme, only: [:show, :destroy, :react]
     before_action :require_login_and_access
 
   def index
     # group_slug = params[:group_slug]
     # @group = Group.find_by(group_slug: group_slug)
-    @memes = Meme.where(group: @group)
+    @memes = Meme.where(group: current_group)
+    @group = current_group
 
     #Toodoo: REFACTOR ME INTO HELPER METHOD FOR SORTING TYPE CHOOSER
     #params[:sort]  #viral, or time, or rising   /memes/by/[x]
@@ -32,7 +32,6 @@ class MemesController < ApplicationController
   end
 
   def show
-    #potential optimization to limit set_meme calls?
   end
 
   def new
@@ -40,19 +39,21 @@ class MemesController < ApplicationController
   end
 
   def create
+    #binding.pry
+
     @meme = Meme.new(meme_params)
-    @meme.group = Group.find_by(group_slug: params[:group_slug])
+    @meme.group = current_group
     @meme.creator = current_user
     if @meme.save
-      redirect_to meme_path(group_slug: @meme.group.group_slug, id: @meme.id)
+    	render json: { message: "success" }, :status => 200
     else
-      render :new
+      render json: { error: @meme.errors.full_messages.join(',')}, :status => 400
     end
   end
 
   def destroy
     @meme.destroy
-    redirect_to memes_path(@meme.group.group_slug)
+    redirect_to memes_path(current_group.group_slug)
   end
 
   def react
@@ -67,10 +68,6 @@ class MemesController < ApplicationController
   private
   def set_meme
     @meme ||= Meme.find(params[:id])
-  end
-
-  def set_group
-    @group = Group.find_by(group_slug: params[:group_slug])
   end
 
   def meme_params
