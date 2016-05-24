@@ -8,7 +8,6 @@
     <!-- Main image div -->
     <%= image_tag(@meme.image.url, class: "thumb") %>
       <div style="margin-left: 40px">
-      <h2>Doge</h2>
       <% if !@meme.title.nil? %>
         <h2><%= @meme.title %></h2>
       <% end %>
