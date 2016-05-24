@@ -54,8 +54,12 @@ class Meme < ActiveRecord::Base
 
   def tags_attributes=(tag_attributes)
     tag_attributes.values.each do |tag_name|
-      tag = Tag.find_or_create_by(tag_name)
-      self.tags << tag
+      tag_name.values.each do |tag|
+        tag.split(", ").each do |name|
+          tag = Tag.find_or_create_by(name: name)
+          self.tags << tag
+        end
+      end
     end
   end
 
