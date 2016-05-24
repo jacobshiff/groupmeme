@@ -1,25 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>GroupMeme</title>
+  <title>GroupSlam</title>
+  <!-- Stylesheets from Theme -->
   <%= stylesheet_link_tag 'application', media: 'all'%>
-  <%= javascript_include_tag 'application'%>
+  <!--[if IE 7]>
+    <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+  <![endif]-->
+
+  <!-- Scripts from theme placed at bottom of body for faster loading -->
+  
   <%= csrf_meta_tags %>
+
   <!-- Favicon -->
   <link rel="icon" 
       type="image/png" 
-      href="https://s3.amazonaws.com/groupmeme/Group+Slam+Favicon-02.png" />
+      href="https://s3.amazonaws.com/groupmeme/GroupSlam-Favicon-32.ico" />
+
 </head>
 <body>
 <!-- Navbar -->
-<%= render 'layouts/shared/basic_nav' %>
+<div class="col-md-3 sidebar">
+  <%= render 'layouts/shared/basic_nav' %>
+</div>
 
 <!-- Flashes -->
 <% flash.each do |type, message| %>
     <div class="alert alert-<%= type %>" role="alert"><%= message %></div>
   <% end %>
-<div class="container">
-<%= yield %>
-</div>
+
+  <%= yield %>
+
+
+<!-- Scripts from theme placed at end for faster loading -->
+  <%= javascript_include_tag 'http://code.jquery.com/jquery-1.11.3.min.js'%>
+  <%= javascript_include_tag 'application'%>
 </body>
 </html>

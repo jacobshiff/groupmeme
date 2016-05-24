@@ -1,26 +1,34 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
+<div class="col-md-9 content">
+  <div class="wrapper">
+  <div class="portfolio-wrapper">
+    <div class="row">
       <h2>Trending at <%= @group.title %> <%= render partial: "sort", locals: {group: @group} %></h2>
     </div>
-  </div>
 
-<!-- Need to add in code that crops image so all gifs are same size -->
-     <!-- @memes.in_groups_of(3).each do |meme_row|  -->
-    <% @memes.in_groups_of(3).each do |meme_row| %>
-      <div class="row-eq-height">
-        <% meme_row.compact.each do |meme|  %>
-          <div class="col-md-4">
-            <div class="index-meme-container">
-            <%= link_to image_tag(meme.image.url, class: "img-thumbnail"), meme_path(meme.group.group_slug, meme)%>
-            <h5><small>posted by <%= meme.creator.username %></small></h5>
-            <!-- Reactions div -->
-              <div class="react" meme_parent_id="<%=meme.id%>">
-                <%= render partial: "memes/memes_reactions", locals: {meme: meme} %>
+  <!-- Need to add in code that crops image so all gifs are same size -->
+       <!-- @memes.in_groups_of(3).each do |meme_row|  -->
+      <% @memes.each do |meme|  %>
+            
+            <div class="card film art">
+              <%= link_to meme_path(meme.group.group_slug, meme), class: "thumb" do %>
+                  <%= image_tag(meme.image.url) %>
+                  <span class="overlay"><span class="fa fa-search"></span></span>
+              <% end %>
+              <div class="card-body">
+                <div class="react" meme_parent_id="<%=meme.id%>">
+                  <%= render partial: "memes/memes_reactions", locals: {meme: meme} %>
+                </div>
+                <h5><small>Posted by <%= meme.creator.username %></small></h5>
+              </div><!-- end card-body -->
+              <div class="card-footer">
+                <ul class="list-inline filters">
+                  <% meme.tags.each do |tag| %>
+                  <li><a href="#none"><%= tag.name %></a></li>
+                  <% end %>
+                </ul>
               </div>
-            </div>
-          </div>
-        <% end %>
-    </div>
-    <% end %>
+        </div>
+      <% end %>
+  </div>
+  </div>
 </div>
