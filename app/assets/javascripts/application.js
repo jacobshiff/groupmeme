@@ -11,6 +11,9 @@
 // about supported directives.
 //
 //= require jquery
+//= require bootstrap.js
+//= require rebound.js
+//= require jquery.isotope.min.js
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require_tree .
