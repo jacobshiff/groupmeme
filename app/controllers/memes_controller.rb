@@ -69,23 +69,27 @@ class MemesController < ApplicationController
   end
 
   def maker
-    #bring in ruby-based meme_generator OR meme_captain
-    # require 'open-uri'
-    # require 'meme_captain'
     @meme = Meme.new
+    #do the whole form thing and collect params vars, THEEEEEEEN goto maker2
+    render :maker2
+  end
 
-    var filepath = "url_path"
+  def maker2
     # open('http://memesvault.com/wp-content/uploads/Angry-Meme-02.jpg', 'rb') do |f|
-    if(meme_img_url)
-      open(url_path) do |f|
+
+    if(params[:url_path])               #if theres a url path saved,
+      open(params[:url_path]) do |f|    #attempt to open it and...
         # binding.pry
-        i = MemeCaptain.meme_top_bottom(f, 'test', '1 2 3')
-        i.write('meme.jpg')
+        i = MemeCaptain.meme_top_bottom(f, txt_top, txt_bottom)
+        i.write('output.jpg')  #change to a preview solution, then if ok, write to heroku-style thing
       end
     else
       puts "////////////////DIDNT GET A URL////////////////"
     end
   end
+
+
+
 
   private
   def set_meme
