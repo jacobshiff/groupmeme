@@ -58,3 +58,16 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
+
+=====
+<p id="filename"></p>
+<script type="text/javascript">
+  $(function() {
+   $("input:file").change(function (){
+     var fullPath = $(this).val();
+     var fileName = fullPath.replace(/^.*[\\\/]/, '')
+     $("#filename").html(fileName);
+   });
+});
+</script>

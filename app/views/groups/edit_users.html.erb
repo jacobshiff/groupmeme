@@ -1,18 +1,22 @@
 <div class="container">
   <h1>Users in <%= current_group.title %></h1>
 
-  <ul>
     <% @users.each do |user| %>
-    <li>
-      <%= image_tag user.avatar %>
-      <h4><%= link_to user.username, user_path(user) %></h4>
-      <% if user != current_user %>
-        <%= render partial: 'edit_user_modal', locals: {group: current_group, user: user} %>
-        <%= button_to "Remove User From Group", destroy_membership_path(current_group.group_slug, user.username), :method => :delete, data: { confirm: "Really?" }, class: 'btn btn-danger' %>
-      <% else %>
-        <p>That's you!</p>
-      <% end  %>
-    </li>
+      <div class="card film art">
+        <%= link_to user_path(user), class: "thumb" do %>
+            <%= image_tag user.avatar %>
+        <% end %>
+      <div class="card-body">
+        <%= link_to user.username, user_path(user) %>
+        <% if user != current_user %>
+          <%= render partial: 'edit_user_modal', locals: {group: current_group, user: user} %>
+          <%= button_to "Remove User From Group", destroy_membership_path(current_group.group_slug, user.username), :method => :delete, data: { confirm: "Really?" }, class: 'btn btn-danger' %>
+      </div>
+        <% else %>
+          <div class="card-footer">
+          <p>That's you!</p>
+          </div>
+        <% end  %>
+      </div>
     <% end %>
-  </ul>
 </div>
