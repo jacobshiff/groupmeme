@@ -7,6 +7,9 @@
   <!-- Image -->
   <!-- To center, add .row-centered class -->
   <div class="col-mid-10">
+    <% if !@meme.title.nil? %>
+      <h2><%= @meme.title %></h2>
+    <% end %>
     <div class="row">
       <!-- Main image div -->
        <div class="col-mid-6 show-page-img">
