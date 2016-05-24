@@ -1,5 +1,5 @@
-
-<div class >
+<div class="col-md-9 content">
+  <div class="wrapper">
   <div class="portfolio-wrapper">
     <div class="row">
       <h2>Trending at <%= @group.title %> <%= render partial: "sort", locals: {group: @group} %></h2>
@@ -11,7 +11,7 @@
             
             <div class="card film art">
               <%= link_to meme_path(meme.group.group_slug, meme), class: "thumb" do %>
-                  <%= image_tag(meme.image.url, class: "img-thumbnail") %>
+                  <%= image_tag(meme.image.url) %>
                   <span class="overlay"><span class="fa fa-search"></span></span>
               <% end %>
               <div class="card-body">
@@ -30,3 +30,5 @@
         </div>
       <% end %>
   </div>
+  </div>
+</div>

@@ -28,11 +28,9 @@
 <% flash.each do |type, message| %>
     <div class="alert alert-<%= type %>" role="alert"><%= message %></div>
   <% end %>
-<div class="col-md-9 content">
-  <div class="wrapper">
+
   <%= yield %>
-  </div>
-</div>
+
 
 <!-- Scripts from theme placed at end for faster loading -->
   <%= javascript_include_tag 'http://code.jquery.com/jquery-1.11.3.min.js'%>
