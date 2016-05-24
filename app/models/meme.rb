@@ -5,6 +5,7 @@ class Meme < ActiveRecord::Base
   has_many :tags, through: :meme_tags
   has_many :reactions
   belongs_to :group
+  accepts_nested_attributes_for :tags
 
   #paperclip validations; must include for upload
   has_attached_file :image

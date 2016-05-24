@@ -37,6 +37,8 @@ gem "figaro"
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+gem 'jquery-ui-rails'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
@@ -65,7 +67,3 @@ group :development do
 end
 
 ruby '2.2.3'
-
-group :production do
-  gem 'rails_12factor'
-end
