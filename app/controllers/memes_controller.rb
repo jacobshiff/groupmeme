@@ -45,7 +45,8 @@ class MemesController < ApplicationController
     @meme.group = current_group
     @meme.creator = current_user
     if @meme.save
-    	render json: { message: "success" }, :status => 200
+      render json: { message: "success" }, :status => 200
+      redirect_to meme_path(current_group.group_slug, @meme)
     else
       render json: { error: @meme.errors.full_messages.join(',')}, :status => 400
     end
@@ -72,6 +73,10 @@ class MemesController < ApplicationController
 
   def meme_params
     params.require(:meme).permit(:image, :title)
+  end
+
+  def redirect(meme)
+    render :show
   end
 
 end
