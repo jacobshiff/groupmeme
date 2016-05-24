@@ -1,0 +1,8 @@
+<h1>Add A Meme</h1>
+
+<img src="">
+
+<%= form_for @meme, url: create_meme_path(params[:group_slug]) do |f| %>
+  <%= f.file_field(:image, accept: 'image/png,image/gif,image/jpeg') %>
+  <%= f.submit "Upload base"%>
+<% end %>

@@ -68,24 +68,27 @@ class MemesController < ApplicationController
     end
   end
 
-  def maker
+  #its fine this is good. okay.
+  def new_maker
     @meme = Meme.new
     #do the whole form thing and collect params vars, THEEEEEEEN goto maker2
-    render :maker2
+
+
+    # # open('http://memesvault.com/wp-content/uploads/Angry-Meme-02.jpg', 'rb') do |f
+    # if(params[:url_path])               #if theres a url path saved,
+    #   open(params[:url_path]) do |f|    #attempt to open it and...
+    #     # binding.pry
+    #     i = MemeCaptain.meme_top_bottom(f, txt_top, txt_bottom)
+    #     i.write('output.jpg')  #change to a preview solution, then if ok, write to heroku-style thing
+    #   end
+    # else
+    #   puts "////////////////DIDNT GET A URL////////////////"
+    # end
   end
 
-  def maker2
-    # open('http://memesvault.com/wp-content/uploads/Angry-Meme-02.jpg', 'rb') do |f|
 
-    if(params[:url_path])               #if theres a url path saved,
-      open(params[:url_path]) do |f|    #attempt to open it and...
-        # binding.pry
-        i = MemeCaptain.meme_top_bottom(f, txt_top, txt_bottom)
-        i.write('output.jpg')  #change to a preview solution, then if ok, write to heroku-style thing
-      end
-    else
-      puts "////////////////DIDNT GET A URL////////////////"
-    end
+  def create_maker
+    # binding.pry
   end
 
 
