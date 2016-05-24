@@ -5,7 +5,6 @@ class Meme < ActiveRecord::Base
   has_many :tags, through: :meme_tags
   has_many :reactions
   belongs_to :group
-  accepts_nested_attributes_for :tags
 
   #paperclip validations; must include for upload
   has_attached_file :image
@@ -52,6 +51,14 @@ class Meme < ActiveRecord::Base
       "glyphicon glyphicon-heart-empty"
     end
   end
+
+  def tags_attributes=(tag_attributes)
+    tag_attributes.values.each do |tag_name|
+      tag = Tag.find_or_create_by(tag_name)
+      self.tags << tag
+    end
+  end
+
 
   # def popularity_score
   #   #self.

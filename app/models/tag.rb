@@ -6,4 +6,5 @@ class Tag < ActiveRecord::Base
   def self.search(term)
     where("name ILIKE ?", "%#{term}%")
   end
+
 end
