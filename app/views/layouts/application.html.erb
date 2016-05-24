@@ -20,14 +20,18 @@
 </head>
 <body>
 <!-- Navbar -->
-<%= render 'layouts/shared/basic_nav' %>
+<div class="col-md-3 sidebar">
+  <%= render 'layouts/shared/basic_nav' %>
+</div>
 
 <!-- Flashes -->
 <% flash.each do |type, message| %>
     <div class="alert alert-<%= type %>" role="alert"><%= message %></div>
   <% end %>
-<div class="wrapper">
-<%= yield %>
+<div class="col-md-9 content">
+  <div class="wrapper">
+  <%= yield %>
+  </div>
 </div>
 
 <!-- Scripts from theme placed at end for faster loading -->
