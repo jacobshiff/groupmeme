@@ -24,7 +24,8 @@
               <div class="card-footer">
                 <ul class="list-inline filters">
                   <% meme.tags.each do |tag| %>
-                  <li><%= link_to tag.name, tag_path(current_group.group_slug, tag.slug)%></li>
+                  <li><%= link_to tag.name, tag_path(current_group.group_slug, tag.slug)%>
+                  </li>
                   <% end %>
                 </ul>
               </div>
