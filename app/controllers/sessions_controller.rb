@@ -29,11 +29,11 @@ class SessionsController < ApplicationController
         session[:user_id] = @user.id
         redirect_to groups_path
       else
-        flash[:danger] = "Please confirm that you entered your username and password correctly."
+        flash.now[:danger] = "Please confirm that you entered your username and password correctly."
         render :new
       end
     else
-      flash[:danger] = "Please confirm that you entered your username and password correctly."
+      flash.now[:danger] = "Please confirm that you entered your username and password correctly."
       render :new
     end
   end
