@@ -96,9 +96,9 @@ Comment.create(content: 'Me last night', user: chris, meme: penguin_programming)
 
 
 #### CREATE TAGS
-bangarang = Tag.create(name: 'Bangarangs', group: flatiron)
-random = Tag.create(name: 'Random', group: flatiron)
-rails = Tag.create(name: 'Rails', group: flatiron)
+bangarang = Tag.create(name: 'Bangarangs', group: flatiron, slug: 'bangarang')
+random = Tag.create(name: 'Random', group: flatiron, slug: 'random')
+rails = Tag.create(name: 'Rails', group: flatiron, slug: 'rails')
 
 
 #### CREATE MEME_TAG_JOIN
