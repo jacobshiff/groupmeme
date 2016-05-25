@@ -46,9 +46,9 @@ class Meme < ActiveRecord::Base
 
   def heart_class(user)
     if user_reacted?(user)
-      "fa fa-thumbs-up"
+      "glyphicon glyphicon-heart"
     else
-      "fa fa-thumbs-o-up"
+      "glyphicon glyphicon-heart-empty"
     end
   end
 
