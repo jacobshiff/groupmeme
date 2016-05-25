@@ -78,19 +78,23 @@ class MemesController < ApplicationController
   # change to upload_base
   def create_maker
     #Return to save template and create new model
-    
-    # Check if they did not upload an image
-    # template = Template.new
-    # template.check_size_limits
-    # template.set_template
+    #***Return to refactor to remove this logic from the controller!****
     if params[:meme].nil? #if they did not load a template, use paired programming gif
       url = 'https://s3.amazonaws.com/groupmeme/paired-programming.gif'
       filetype = '.gif'
     else #otherwise use their uploaded image as the template
-      binding.pry
+
+      #but first check filesize
+      image_size_in_mb = params[:meme][:image].size / 1000000.0
+      if image_size_in_mb > 5
+        flash[:danger] = "The maximum upload size is 5 MB"
+        @meme = Meme.new
+        render :new_maker
+        return
+      end
+      #if the size is fine, proceed
       url = params[:meme][:image].tempfile.path
-      # url = params[:template_temp]
-      filetype = params[:meme][:image].content_type.split('/').last
+      filetype = '.' + params[:meme][:image].content_type.split('/').last
       # @template = Meme.new(base_params)
       # @template.save
       # url = @template.image.url

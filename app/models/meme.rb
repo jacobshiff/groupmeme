@@ -53,7 +53,6 @@ class Meme < ActiveRecord::Base
   end
 
   def self.create_meme(url, top_text, bottom_text, filetype)
-    binding.pry
     open(url, 'rb') do |f|
       i = MemeCaptain.meme(f, [
         MemeCaptain::TextPos.new(top_text, 0.10, 0.10, 0.80, 0.20,
