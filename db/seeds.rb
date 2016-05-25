@@ -117,16 +117,16 @@ like_3.save
 dislike_1.save
 dislike_2.save
 
-ping_pong = Tag.create(name: 'Ping Pong')
+ping_pong = Tag.create(name: 'Ping Pong', slug: 'ping-pong')
 doge.tags << ping_pong
 pepe.tags << ping_pong
 beef.tags << ping_pong
-javascript = Tag.create(name: 'JavaScript')
+javascript = Tag.create(name: 'JavaScript', slug: 'javascript')
 y_u_no.tags << javascript
-ruby = Tag.create(name: 'Ruby')
+ruby = Tag.create(name: 'Ruby', slug: 'ruby')
 beef.tags << ruby
 doge.tags << ruby
-lunch = Tag.create(name: 'Lunch')
+lunch = Tag.create(name: 'Lunch', slug: 'lunch')
 pepe.tags << lunch
 
 #associate all group-specific objects with their group
@@ -167,14 +167,14 @@ dislike_1.save
 dislike_2.save
 
 ##ADD MEMBERSHIPS
-membership_1 = Membership.create(group_id: 1, user_id: 1, user_type: 'admin')
-membership_2 = Membership.create(group_id: 1, user_id: 2, user_type: 'member')
-membership_3 = Membership.create(group_id: 1, user_id: 3, user_type: 'member')
-membership_5 = Membership.create(group_id: 2, user_id: 3, user_type: 'admin')
+Membership.create(group_id: 1, user_id: 1, user_type: 'admin')
+Membership.create(group_id: 1, user_id: 2, user_type: 'member')
+Membership.create(group_id: 1, user_id: 3, user_type: 'member')
+Membership.create(group_id: 2, user_id: 3, user_type: 'admin')
 
 ##ADD INVITES
-invitation_1 = Invite.create(sender_id: 1, recipient_email: 'bob@bob.com', token: 'cheese')
-invitation_2 = Invite.create(sender_id: 2, recipient_email: 'memelover@memes.net', token: '12345')
+Invite.create(sender_id: 1, recipient_email: 'bob@bob.com', token: 'cheese')
+Invite.create(sender_id: 2, recipient_email: 'memelover@memes.net', token: '12345')
 
 
 # create_table "comments", force: :cascade do |t|

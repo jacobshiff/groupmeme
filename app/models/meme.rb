@@ -57,12 +57,26 @@ class Meme < ActiveRecord::Base
       tag_name.values.each do |tag|
         tag.split(", ").each do |name|
           tag = Tag.find_or_create_by(name: name)
+          tag.slug = tag.to_slug
+          tag.save
           self.tags << tag
         end
       end
     end
   end
 
+  def tag_class_list
+    tags = self.tags.collect{|tag| tag.name}
+    if tags.length > 2
+      last = tags.pop
+      str = tags.join(" ") + last
+    elsif tags.length == 2
+      str = tags.join(" ")
+    else
+      str = tags
+    end
+    "#{str}"
+  end
 
   # def popularity_score
   #   #self.
