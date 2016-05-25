@@ -4,7 +4,9 @@
         <%= form_for @group, html: {class: "form-horizontal"} do |f| %>
           <div class="form-group">
             <%= f.label :title, class: 'control-label' %>
-            <%= f.text_field :title %>
+            <div class="controls">
+              <%= f.text_field :title %>
+            </div>
           </div>
           <div class="form-group">
             <%= f.submit class: 'btn btn-primary' %>

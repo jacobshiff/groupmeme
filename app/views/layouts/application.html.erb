@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>GroupMeme</title>
+  <title>GroupSlam</title>
   <!-- Stylesheets from Theme -->
   <%= stylesheet_link_tag 'application', media: 'all'%>
   <!--[if IE 7]>
     <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
   <![endif]-->
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+      <!--[if IE 7]>
+        <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+      <![endif]-->
 
   <!-- Scripts from theme placed at bottom of body for faster loading -->
 
@@ -21,6 +25,7 @@
 <body>
 <!-- Sidebar (includes nav)-->
 <%= render 'layouts/shared/sidebar' %>
+
 
 <!-- Flashes -->
 <% flash.each do |type, message| %>

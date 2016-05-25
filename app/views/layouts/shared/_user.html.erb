@@ -1,3 +1,11 @@
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="<%= current_user.avatar %>" class="navbar-avatar"><%= current_user.username %><span class="caret"></span></a>
+  <ul class="dropdown-menu">
+    <li><a href="/users/<%= current_user.username %>">View Profile</a></li>
+    <li><a href="/groups">View Groups</a></li>
+    <li><%= link_to "Sign Out", logout_path, method: :delete %></li>
+  </ul>
+</li>
   <% if !!params[:group_slug] && (current_user.type(current_group) == "admin") %>
       <%= render partial: 'layouts/shared/nav/admin', locals: { group: current_group, user: current_user } %>
   <% elsif !!params[:group_slug] %>
@@ -5,11 +13,3 @@
   <% elsif !params[:group_slug] %>
       <%= render partial: 'layouts/shared/nav/home_nav', locals: {user: current_user} %>
   <% end %>
-  <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="<%= current_user.avatar %>" class="navbar-avatar"><%= current_user.username %><span class="caret"></span></a>
-    <ul class="dropdown-menu">
-      <li><a href="/users/<%= current_user.username %>">View Profile</a></li>
-      <li><a href="/groups">View Groups</a></li>
-      <li><%= link_to "Sign Out", logout_path, method: :delete %></li>
-    </ul>
-  </li>
