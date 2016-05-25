@@ -2,6 +2,8 @@ class Group < ActiveRecord::Base
   has_many :memberships
   has_many :users, through: :memberships
   has_many :memes
+  has_many :meme_tags, through: :memes
+  has_many :tags, through: :meme_tags
   belongs_to :group_creator, class_name: 'User'
 
   def to_slug
