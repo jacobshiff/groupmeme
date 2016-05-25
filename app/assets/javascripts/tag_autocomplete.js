@@ -17,7 +17,7 @@ $(function() {
        })
        .autocomplete({
          source: function( request, response ) {
-           $.getJSON( "/tags", {
+           $.getJSON( "/flatiron-school/tags", {
              term: extractLast( request.term )
            }, response );
          },

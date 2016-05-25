@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 #### HOME
   get '/' => 'home#index', as: 'home'
 #### TAGS
-  get '/tags' => 'tags#index', as: 'tags'
+  get '/:group_slug/tags' => 'tags#index', as: 'tags'
   
 #### USERS
     # Login
