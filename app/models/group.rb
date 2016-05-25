@@ -13,7 +13,9 @@ class Group < ActiveRecord::Base
   def all_tags
     t = self.memes.collect{|meme| meme.tags.collect{|tag| tag} }
     # the above returns an array of arrays with many repeats
-    t.flatten.uniq
+    t = t.flatten
+    t = t.uniq
+    t
   end
 
 #### I (Rachel) wrote this code in a daze...very clearly it is not needed at all

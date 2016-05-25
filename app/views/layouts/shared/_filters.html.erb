@@ -3,6 +3,7 @@
   <li class="title">Tags</li>
   <li><a href="#none" data-filter="*">All</a> <span>(<%= current_group.memes.count %>)</span></li>
   <% current_group.all_tags.each do |tag| %>
+  <%= binding.pry %>
     <li><a href="#none" data-filter=".<%= tag.slug %>"><%= tag.name %></a><span>(<%= tag.memes.count %>)</span></li>
   <% end %>
 </ul>
