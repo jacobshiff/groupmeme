@@ -86,14 +86,48 @@ class MemesController < ApplicationController
     # end
   end
 
+  output_meme = Tempfile.new('this_is_a_test')
 
   # change to upload_base
   def create_maker
-    @meme = Meme.new(base_params)
-    @meme.group = Group.find_by(group_slug: params[:group_slug])
-    @meme.creator = current_user
-    @meme.save
-    render json: {url: @meme.image.url}
+    # binding.pry
+    #return here to create a new thing called templates
+    @template = Meme.new(base_params)
+    @template.save
+    file_type = '.' + @template.image_content_type.split('/').last
+    # output_meme = Tempfile.new('this_is_a_test')
+
+    # binding.pry
+    open(@template.image.url, 'rb') do |f|
+      # binding.pry
+      i = MemeCaptain.meme(f, [
+        MemeCaptain::TextPos.new(params[:top_text], 0.10, 0.20, 0.80, 0.1,
+          :fill => 'white', :font => 'Impact-Regular'),
+        MemeCaptain::TextPos.new(params[:bottom_text], 0.80, 0.20, 0.80, 0.1,
+          :fill => 'white', :font => 'Impact-Regular'),
+        # MemeCaptain::TextPos.new('test', 10, 10, 50, 25)
+        ])
+      # binding.pry
+      # i.write(output_meme.path + 'output' + file_type)
+      i.write('this_is_a_test' + file_type)
+      #can set type to be that of the input
+    end
+
+    @new_meme = Meme.new
+    @new_meme.image = File.open('this_is_a_test' + file_type)
+    @new_meme.group = Group.find_by(group_slug: params[:group_slug])
+    @new_meme.creator = current_user
+    @new_meme.save
+    binding.pry
+    # @meme.group = Group.find_by(group_slug: params[:group_slug])
+    # @meme.creator = current_user
+    #i.write(output_meme.path + '/output' + file_type)
+    #output_meme.path + '/output' + file_type
+    
+    # This works: File.read('this_is_a_test' + file_type)
+    # This works: File.open('this_is_a_test' + file_type)
+    #@new_meme.image = File.open('this_is_a_test' + file_type)
+
   end
 
 
