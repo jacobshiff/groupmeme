@@ -87,8 +87,13 @@ class MemesController < ApplicationController
   end
 
 
+  # change to upload_base
   def create_maker
-    # binding.pry
+    @meme = Meme.new(base_params)
+    @meme.group = Group.find_by(group_slug: params[:group_slug])
+    @meme.creator = current_user
+    @meme.save
+    render json: {url: @meme.image.url}
   end
 
 
@@ -105,6 +110,10 @@ class MemesController < ApplicationController
 
   def meme_params
     params.require(:meme).permit(:image, :title)
+  end
+
+  def base_params
+    params.require(:meme).permit(:image)
   end
 
 end

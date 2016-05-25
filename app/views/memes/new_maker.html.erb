@@ -1,8 +1,20 @@
 <h1>Add A Meme</h1>
 
-<img src="">
+<div class="col-md-4">
+    <div class="textpanel">
+      <div id="target">
+      <img  style="width:100%" src="https://s3.amazonaws.com/groupmeme/paired-programming.gif">
+      </div> 
+          <textarea id="top-text" placeholder="Paired
+          programming"></textarea>
+          <textarea id="bottom-text" placeholder="Bottom text..."></textarea>
+    </div>
+</div>
+    
 
-<%= form_for @meme, url: create_meme_path(params[:group_slug]) do |f| %>
-  <%= f.file_field(:image, accept: 'image/png,image/gif,image/jpeg') %>
-  <%= f.submit "Upload base"%>
-<% end %>
+<div class="col-md-5">
+  <%= form_for @meme, url: create_meme_path(params[:group_slug]) do |f| %>
+    <%= f.file_field(:image, accept: 'image/png,image/gif,image/jpeg', id: 'pictureInput') %>
+    <%= f.submit "Submit"%>
+  <% end %>
+</div>

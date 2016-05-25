@@ -138,5 +138,51 @@ img.show-page-image{
   border-radius:50%;
   width:30px;
   margin-right:5px;
+}
 
+/*Custom CSS for image uploader*/
+.textpanel {
+    position: relative;
+}
+.textpanel img {
+    display: block;
+}
+
+
+.textpanel textarea#top-text {
+    position: absolute;
+    top: 10px;
+    left: 50px;
+    height: 30%;
+    width: 80%;
+    text-align: center;
+    vertical-align: text-middle;
+    font-family:impact;
+    font-size: 4em;
+    color: white;
+    -webkit-input-placeholder: color: white;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+    background-color: rgba(255,255,255,0.5);
+}
+
+.textpanel textarea::-webkit-input-placeholder {
+  color: white;
+}
+
+.textpanel textarea#bottom-text {
+    position: absolute;
+    top: 300px;
+    left: 50px;
+    height: 30%;
+    width: 80%;
+    text-align: center;
+    vertical-align: middle;
+    font-family:impact;
+    font-size: 4em;
+    color: white;
+    -webkit-input-placeholder: color: white;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+    background-color: rgba(255,255,255,0.5);
 }
