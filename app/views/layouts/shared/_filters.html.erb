@@ -1,0 +1,7 @@
+<ul class="nav navbar-nav filter-portfolio">
+  <li class="title">Tags</li>
+  <li class="active"><a href="#none" data-filter="*">All</a> <span><%= current_group.memes.count %></span></li>
+  <% current_group.all_tags do |tag| %>
+    <li><a href="#none"><%= tag.name %></a><span>tag.memes.count</span></li>
+  <% end %>
+</ul>

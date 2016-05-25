@@ -10,6 +10,10 @@ class Group < ActiveRecord::Base
     array.join("-")
   end
 
+  def all_tags
+    self.memes.collect{|meme| meme.tags.collect{|tag| tag} }
+  end
+
   # def self.find_groups_for_user(user)
   #   #user passed in as ID
   #   memberships = Membership.where(user_id: user)

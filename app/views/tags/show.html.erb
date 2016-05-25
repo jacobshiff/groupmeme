@@ -1,7 +1,7 @@
 <div class="portfolio-wrapper">
   <h3><%= @tag.name %></h3>
   <% @memes.each do |meme|  %>
-        <div class="card <%= meme.tags.each {|tag| 'tag.name' } %>">
+        <div class="card <%= meme.tag_class_list %>">
           <%= link_to meme_path(meme.group.group_slug, meme), class: "thumb" do %>
               <%= image_tag(meme.image.url) %>
               <span class="overlay"><span class="fa fa-chevron-circle-right"></span></span>

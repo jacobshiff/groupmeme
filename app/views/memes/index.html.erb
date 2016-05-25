@@ -8,7 +8,7 @@
        <!-- @memes.in_groups_of(3).each do |meme_row|  -->
       <% @memes.each do |meme|  %>
 
-            <div class="card film art">
+            <div class="card <%= meme.tag_class_list %>">
               <%= link_to meme_path(meme.group.group_slug, meme), class: "thumb" do %>
                   <%= image_tag(meme.image.url) %>
                   <span class="overlay"><span class="fa fa-chevron-circle-right"></span></span>
@@ -32,3 +32,69 @@
       <% end %>
   </div>
   </div>
+
+  <script type="text/javascript">
+
+    $(document).ready(function() {
+
+      $('.dropdown-toggle').dropdown();
+
+      var $container = $('.portfolio-wrapper');
+
+      $container.imagesLoaded( function(){
+        $container.isotope({
+          itemSelector : '.card',
+          layoutMode : 'fitRows'
+        });
+      });
+
+      // Needed functions
+      var getColWidth = function() {
+        var width,
+        windowWidth = $(window).width();
+        if( windowWidth <= 480 ) {
+          width = Math.floor( $container.width() );
+        } else if( windowWidth <= 768 ) {
+          width = Math.floor( $container.width() );
+        } else {
+          width = Math.floor( 250 );
+        }
+        return width;
+      }
+
+      function setWidths() {
+        var colWidth = getColWidth();
+        $container.children().css({ width: colWidth });
+      }
+
+
+      $(window).smartresize(function() {
+        setWidths();
+        $container.isotope({
+          masonry: {
+            columnWidth: getColWidth()
+          }
+        });
+      });
+
+      $('.filter-portfolio li a').click(function(){
+        $('.filter-portfolio li.active').removeClass('active');
+        $(this).parent('li').addClass('active');
+        var selector = $(this).attr('data-filter');
+        $container.isotope({
+          filter: selector,
+          masonry: {  }
+        });
+        return false;
+      });
+      // update columnWidth on window resize
+      $(window).smartresize(function(){
+        $container.isotope({
+          // update columnWidth to a percentage of container width
+          masonry: {  }
+        });
+      });
+
+    });
+
+  </script>

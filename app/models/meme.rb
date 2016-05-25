@@ -66,7 +66,7 @@ class Meme < ActiveRecord::Base
   end
 
   def tag_class_list
-    tags = self.tags.collect{|tag| tag.name}
+    tags = self.tags.collect{|tag| tag.slug}
     if tags.length > 2
       last = tags.pop
       str = tags.join(" ") + last
