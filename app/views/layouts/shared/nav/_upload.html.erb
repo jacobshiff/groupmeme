@@ -13,7 +13,7 @@
               <%= f.file_field(:image, accept: 'image/png,image/gif,image/jpeg', class:
             'hidden') %><p id="filename"></p>
             <script type="text/javascript">
-              $.(function() {
+              $.function() {
                $("input:file").change(function (){
                  var fullPath = $(this).val();
                  var fileName = fullPath.replace(/^.*[\\\/]/, '')
