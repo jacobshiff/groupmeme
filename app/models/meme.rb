@@ -57,7 +57,7 @@ class Meme < ActiveRecord::Base
       i = MemeCaptain.meme(f, [
         MemeCaptain::TextPos.new(top_text, 0.10, 0.10, 0.80, 0.20,
           :fill => 'white', :font => 'Impact-Regular'),
-        MemeCaptain::TextPos.new(bottom_text, 0.10, 0.70, 0.80, 0.1,
+        MemeCaptain::TextPos.new(bottom_text, 0.10, 0.70, 0.80, 0.2,
           :fill => 'white', :font => 'Impact-Regular'),
         # MemeCaptain::TextPos.new('test', 10, 10, 50, 25)
         ])
