@@ -52,6 +52,21 @@ class Meme < ActiveRecord::Base
     end
   end
 
+  def self.create_meme(url, top_text, bottom_text, filetype)
+    open(url, 'rb') do |f|
+      i = MemeCaptain.meme(f, [
+        MemeCaptain::TextPos.new(top_text, 0.10, 0.20, 0.80, 0.1,
+          :fill => 'white', :font => 'Impact-Regular'),
+        MemeCaptain::TextPos.new(bottom_text, 0.10, 0.80, 0.80, 0.1,
+          :fill => 'white', :font => 'Impact-Regular'),
+        # MemeCaptain::TextPos.new('test', 10, 10, 50, 25)
+        ])
+      # i.write(output_meme.path + 'output' + filetype)
+      i.write('temporary_meme' + filetype)
+      #can set type to be that of the input
+    end
+  end
+
   # def popularity_score
   #   #self.
   # end

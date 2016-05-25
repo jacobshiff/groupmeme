@@ -71,59 +71,40 @@ class MemesController < ApplicationController
   #its fine this is good. okay.
   def new_maker
     @meme = Meme.new
-    #do the whole form thing and collect params vars, THEEEEEEEN goto maker2
-
-
-    # # open('http://memesvault.com/wp-content/uploads/Angry-Meme-02.jpg', 'rb') do |f
-    # if(params[:url_path])               #if theres a url path saved,
-    #   open(params[:url_path]) do |f|    #attempt to open it and...
-    #     # binding.pry
-    #     i = MemeCaptain.meme_top_bottom(f, txt_top, txt_bottom)
-    #     i.write('output.jpg')  #change to a preview solution, then if ok, write to heroku-style thing
-    #   end
-    # else
-    #   puts "////////////////DIDNT GET A URL////////////////"
-    # end
   end
 
   output_meme = Tempfile.new('this_is_a_test')
 
   # change to upload_base
   def create_maker
-    # binding.pry
-    #return here to create a new thing called templates
-    @template = Meme.new(base_params)
-    @template.save
-    file_type = '.' + @template.image_content_type.split('/').last
-    # output_meme = Tempfile.new('this_is_a_test')
-
-    # binding.pry
-    open(@template.image.url, 'rb') do |f|
-      # binding.pry
-      i = MemeCaptain.meme(f, [
-        MemeCaptain::TextPos.new(params[:top_text], 0.10, 0.20, 0.80, 0.1,
-          :fill => 'white', :font => 'Impact-Regular'),
-        MemeCaptain::TextPos.new(params[:bottom_text], 0.80, 0.20, 0.80, 0.1,
-          :fill => 'white', :font => 'Impact-Regular'),
-        # MemeCaptain::TextPos.new('test', 10, 10, 50, 25)
-        ])
-      # binding.pry
-      # i.write(output_meme.path + 'output' + file_type)
-      i.write('this_is_a_test' + file_type)
-      #can set type to be that of the input
+    #Return to save template and create new model
+    
+    # Check if they did not upload an image
+    if params[:meme].nil? #if they did not load a template, use paired programming gif
+      url = 'https://s3.amazonaws.com/groupmeme/paired-programming.gif'
+      filetype = '.gif'
+    else #otherwise use their uploaded image as the template
+      @template = Meme.new(base_params)
+      @template.save
+      url = @template.image.url
+      filetype = '.' + @template.image_content_type.split('/').last
     end
+    
+    top_text = params[:top_text]
+    bottom_text = params[:bottom_text]
+
+    Meme.create_meme(url, top_text, bottom_text, filetype)
 
     @new_meme = Meme.new
-    @new_meme.image = File.open('this_is_a_test' + file_type)
+    @new_meme.image = File.open('temporary_meme' + filetype)
     @new_meme.group = Group.find_by(group_slug: params[:group_slug])
     @new_meme.creator = current_user
-    @new_meme.save
-    binding.pry
-    # @meme.group = Group.find_by(group_slug: params[:group_slug])
-    # @meme.creator = current_user
-    #i.write(output_meme.path + '/output' + file_type)
-    #output_meme.path + '/output' + file_type
     
+    if @new_meme.save
+      redirect_to meme_path(group_slug: @new_meme.group.group_slug, id: @new_meme.id)
+    else
+      render :new_maker
+    end    
     # This works: File.read('this_is_a_test' + file_type)
     # This works: File.open('this_is_a_test' + file_type)
     #@new_meme.image = File.open('this_is_a_test' + file_type)
