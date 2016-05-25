@@ -9,6 +9,9 @@ class CommentsController < ApplicationController
     render json: {content: @comment.content, user: @comment.user, user_avatar: @comment.user.avatar, username: @comment.user.username, time: time}
   end
 
+  def destroy
+  end
+
   private
   def comment_params
     params.require(:comment).permit(:content)
