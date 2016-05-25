@@ -8,7 +8,7 @@ class Group < ActiveRecord::Base
 
   #paperclip
   has_attached_file :image, default_url: "https://s3.amazonaws.com/groupmeme/default-avatar.png"
-  validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
+  validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png"] }
 
   def to_slug
     revised = self.title.downcase.tr("()&.*',+!", ' ')
