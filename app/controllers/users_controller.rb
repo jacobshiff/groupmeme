@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
+
   def show
-    @user = User.find(session[:user_id])
+    @user = User.find_by(username: params[:username])
   end
 
   def edit

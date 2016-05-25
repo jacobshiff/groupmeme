@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
   def require_access
     if !access_to_group?
       flash[:danger] = "You do not have access to this page."
-      redirect_to login_path
+      redirect_to groups_path
     end
   end
 

@@ -8,17 +8,18 @@
   <!-- Need to add in code that crops image so all gifs are same size -->
        <!-- @memes.in_groups_of(3).each do |meme_row|  -->
       <% @memes.each do |meme|  %>
-            
+
             <div class="card film art">
               <%= link_to meme_path(meme.group.group_slug, meme), class: "thumb" do %>
                   <%= image_tag(meme.image.url) %>
-                  <span class="overlay"><span class="fa fa-search"></span></span>
+                  <span class="overlay"><span class="fa fa-chevron-circle-right"></span></span>
               <% end %>
               <div class="card-body">
                 <div class="react" meme_parent_id="<%=meme.id%>">
                   <%= render partial: "memes/memes_reactions", locals: {meme: meme} %>
                 </div>
-                <h5><small>Posted by <%= meme.creator.username %></small></h5>
+                <h5><small>Posted by <%= link_to meme.creator.username, user_path(meme.creator.username)%></small></h5>
+                <h5><small><a href="/<%= current_group.group_slug %>/memes/<%= meme.id %>#comments"><%= meme.comments.count %> comments</small></h5></a>
               </div><!-- end card-body -->
               <div class="card-footer">
                 <ul class="list-inline filters">

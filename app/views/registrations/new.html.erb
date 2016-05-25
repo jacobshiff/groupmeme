@@ -1,6 +1,4 @@
 <!-- This is the new user registration form -->
-  <div class="row">
-    <div class="col-md-6">
       <%= form_for @user, url: registration_create_path, html: { multipart: true } do |f| %>
       <!-- Token -->
       <% if @token != nil %>
@@ -22,12 +20,9 @@
         <%= f.label :password_confirmation %>
         <%= f.password_field :password_confirmation %>
       </div>
-
-
       <div>
         <%= f.submit 'Sign Me Up'%>
       </div>
-    </div>
     <div class="col-md-6">
       <div style="width: 30%">
         <%= image_tag 'https://s3.amazonaws.com/groupmeme/default-avatar.png', class: "registration-default-image img-responsive"%>
@@ -36,8 +31,7 @@
         <%= f.label :avatar, "Customize your avatar" %>
         <%= f.file_field(:avatar, accept: 'image/png,image/gif,image/jpeg') %>
       </div>
-    
+
 
     </div>
   <% end %>
-

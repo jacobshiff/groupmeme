@@ -1,8 +1,14 @@
-<!-- Need to add in validation that will not let someone reach this page unless they have permission to view the page! -->
 
-<%= form_for(@invite) do |f| %>
+
+<!-- Need to add in validation that will not let someone reach this page unless they have permission to view the page! -->
+<div class="col-md-6 .col-md-offset-3" id="new-invite-form">
+<h3>Invite A New User</h3>
+<%= form_for @invite, class: "form-inline" do |f| %>
   <%= f.hidden_field :group_id, value: @invite.group_id %>
-  <%= f.label :recipient_email %>
-  <%= f.email_field :recipient_email %>
-  <%= f.submit %>
+  <div class="form-group">
+  <%= f.label :recipient_email, "Recipient Email Address" %>
+  <%= f.email_field :recipient_email   %>
+  </div>
+  <%= f.submit class: 'btn btn-default' %>
 <% end %>
+</div>
