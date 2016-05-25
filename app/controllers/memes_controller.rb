@@ -80,6 +80,9 @@ class MemesController < ApplicationController
     #Return to save template and create new model
     
     # Check if they did not upload an image
+    # template = Template.new
+    # template.check_size_limits
+    # template.set_template
     if params[:meme].nil? #if they did not load a template, use paired programming gif
       url = 'https://s3.amazonaws.com/groupmeme/paired-programming.gif'
       filetype = '.gif'

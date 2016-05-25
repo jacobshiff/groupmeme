@@ -67,6 +67,10 @@ class Meme < ActiveRecord::Base
     end
   end
 
+
+  def set_template
+    
+  end
   # def popularity_score
   #   #self.
   # end

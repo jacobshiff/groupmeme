@@ -26,6 +26,16 @@ $(function() {
     $('input#bottom_text').val(bottom_text)
   })
 
+  // progress bar
+  $('#meme-upload-submit').on('click', function(event){
+    
+    var progress = $("#progressDiv").html();
+      BootstrapDialog.show(
+      {
+        title: "Please wait...",
+        message: progress
+      });
+  })
 
   // $('input#meme-upload-submit').on('click', function(event){
   //   var top_text = $('textarea#top-text').val()
