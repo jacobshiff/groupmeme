@@ -73,7 +73,7 @@ class Meme < ActiveRecord::Base
     elsif tags.length == 2
       str = tags.join(" ")
     else
-      str = tags
+      str = tags[0]
     end
     "#{str}"
   end

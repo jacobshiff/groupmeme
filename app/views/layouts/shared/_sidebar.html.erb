@@ -1,4 +1,4 @@
 <div class="col-md-3 sidebar">
   <%= render 'layouts/shared/side_nav' %>
-  <%= render 'layouts/shared/filters' if current_group %>
+  <%= render 'layouts/shared/filters' if current_page?(memes_path)%>
 </div>

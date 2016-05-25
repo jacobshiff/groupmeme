@@ -11,7 +11,8 @@ class Group < ActiveRecord::Base
   end
 
   def all_tags
-    self.memes.collect{|meme| meme.tags.collect{|tag| tag} }
+    t = self.memes.collect{|meme| meme.tags.collect{|tag| tag} }
+    t.flatten.uniq
   end
 
   # def self.find_groups_for_user(user)
