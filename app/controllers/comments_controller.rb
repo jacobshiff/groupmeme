@@ -10,6 +10,8 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    @comment = params[:comment]
+    @comment.destroy
   end
 
   private
@@ -18,3 +20,5 @@ class CommentsController < ApplicationController
   end
 
 end
+
+# NO SEND BLANK COMMENT PLS
