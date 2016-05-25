@@ -55,9 +55,9 @@ class Meme < ActiveRecord::Base
   def self.create_meme(url, top_text, bottom_text, filetype)
     open(url, 'rb') do |f|
       i = MemeCaptain.meme(f, [
-        MemeCaptain::TextPos.new(top_text, 0.10, 0.20, 0.80, 0.1,
+        MemeCaptain::TextPos.new(top_text, 0.10, 0.10, 0.80, 0.20,
           :fill => 'white', :font => 'Impact-Regular'),
-        MemeCaptain::TextPos.new(bottom_text, 0.10, 0.80, 0.80, 0.1,
+        MemeCaptain::TextPos.new(bottom_text, 0.10, 0.70, 0.80, 0.1,
           :fill => 'white', :font => 'Impact-Regular'),
         # MemeCaptain::TextPos.new('test', 10, 10, 50, 25)
         ])
