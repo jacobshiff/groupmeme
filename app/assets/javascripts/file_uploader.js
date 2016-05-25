@@ -26,6 +26,14 @@ $(function() {
     $('input#bottom_text').val(bottom_text)
   })
 
+// set url
+  $('#meme-upload-submit').on('click', function(event){
+    
+    var template_temp = $('img#preview-image').attr('src');
+    $('input#template_temp').val(template_temp)
+  })
+
+
   // progress bar
   $('#meme-upload-submit').on('click', function(event){
     

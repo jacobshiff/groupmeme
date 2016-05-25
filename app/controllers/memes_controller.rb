@@ -87,10 +87,14 @@ class MemesController < ApplicationController
       url = 'https://s3.amazonaws.com/groupmeme/paired-programming.gif'
       filetype = '.gif'
     else #otherwise use their uploaded image as the template
-      @template = Meme.new(base_params)
-      @template.save
-      url = @template.image.url
-      filetype = '.' + @template.image_content_type.split('/').last
+      binding.pry
+      url = params[:meme][:image].tempfile.path
+      # url = params[:template_temp]
+      filetype = params[:meme][:image].content_type.split('/').last
+      # @template = Meme.new(base_params)
+      # @template.save
+      # url = @template.image.url
+      # filetype = '.' + @template.image_content_type.split('/').last
     end
     
     top_text = params[:top_text]
