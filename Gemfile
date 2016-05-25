@@ -39,6 +39,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'jquery-ui-rails'
 
+gem 'meme_captain'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
@@ -56,9 +58,7 @@ group :development, :test do
   gem 'pry-rails'
 
   gem 'prybaby'
-
-  ##EXPERIMENTAL
-  gem 'meme_captain'
+  
 
 end
 
