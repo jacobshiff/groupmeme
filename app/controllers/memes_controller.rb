@@ -79,7 +79,7 @@ class MemesController < ApplicationController
   def create_maker
     #Return to save template and create new model
     #***Return to refactor to remove this logic from the controller!****
-    if params[:meme].nil? #if they did not load a template, use paired programming gif
+    if params[:meme][:image].nil? #if they did not load a template, use paired programming gif
       url = 'https://s3.amazonaws.com/groupmeme/paired-programming.gif'
       filetype = '.gif'
     else #otherwise use their uploaded image as the template
@@ -104,10 +104,13 @@ class MemesController < ApplicationController
     top_text = params[:top_text]
     bottom_text = params[:bottom_text]
 
+
+    
     Meme.create_meme(url, top_text, bottom_text, filetype)
 
     @new_meme = Meme.new
     @new_meme.image = File.open('temporary_meme' + filetype)
+    @new_meme.title = title_params
     @new_meme.group = Group.find_by(group_slug: params[:group_slug])
     @new_meme.creator = current_user
     
@@ -136,6 +139,10 @@ class MemesController < ApplicationController
 
   def meme_params
     params.require(:meme).permit(:image, :title)
+  end
+
+  def title_params
+    params.require(:meme).permit(:image, :title)[:title]
   end
 
   def base_params

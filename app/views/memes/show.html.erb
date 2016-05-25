@@ -12,14 +12,14 @@
         <h2><%= @meme.title %></h2>
       <% end %>
         <!-- Reactions div -->
-        <div class="react" meme_parent_id="<%=@meme.id%>">
+        <div class="react" style="margin-top:15px;" meme_parent_id="<%=@meme.id%>">
           <h4>
           <%= render partial: "memes/memes_reactions", locals: {meme: @meme} %>
           </h4>
         </div>
 
       <!-- Creator -->
-        <h4>Posted by: <%= @meme.creator.username %> - <%=format_time(@meme.created_at)%></h4>
+        <h5>Posted by: <%= @meme.creator.username %> - <%=format_time(@meme.created_at)%></h5>
 
         <!-- Tags -->
           <% @meme.tags.each do |tag| %>
