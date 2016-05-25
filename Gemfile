@@ -56,6 +56,10 @@ group :development, :test do
   gem 'pry-rails'
 
   gem 'prybaby'
+
+  ##EXPERIMENTAL
+  gem 'meme_captain'
+
 end
 
 group :development do

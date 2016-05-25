@@ -7,11 +7,13 @@ Rails.application.routes.draw do
   # end
 
 
+
+
 #### HOME
   get '/' => 'home#index', as: 'home'
   
 #### TAGS
-  get '/tags' => 'tags#index', as: 'tags'
+  get '/:group_slug/tags' => 'tags#index', as: 'tags'
   
 #### USERS
     # Login
@@ -34,8 +36,8 @@ Rails.application.routes.draw do
 
 #### MEMES
   #Create
-  get '/:group_slug/memes/new' => 'memes#new'
-  post '/:group_slug/memes' => 'memes#create'
+  get '/:group_slug/memes/new' => 'memes#new' #IMPORTANT: If you change this route, you MUST update tag_autocomplete.js, which grabs the group_slug based on 'var group_slug = window.location.pathname.split('/')[1]'
+  post '/:group_slug/memes' => 'memes#create', as: 'create_meme'
 
   #index
   get '/:group_slug/memes' => 'memes#index', as: 'memes'
@@ -81,7 +83,5 @@ Rails.application.routes.draw do
 
 #### COMMENTS
   post '/:group_slug/memes/:id/comment' => 'comments#create', as: :comment
-
-
 
 end

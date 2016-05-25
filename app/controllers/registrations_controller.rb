@@ -53,7 +53,7 @@ class RegistrationsController < ApplicationController
       end
     end
   end
-  
+
   #Create action for existing user who is adding a new group
   def add_group_to_existing_create
     capture_token_from_params
@@ -85,12 +85,12 @@ class RegistrationsController < ApplicationController
 
   def error_type
     if @user.errors.messages[:password_confirmation]
-      flash[:danger] = "Your passwords do not match. Please try again."
+      flash.now[:danger] = "Your passwords do not match. Please try again."
     elsif @user.errors.messages[:username]
-      flash[:danger] = "#{@user.username} has already been taken. Please try another username."
+      flash.now[:danger] = "#{@user.username} has already been taken. Please try another username."
       # add in flash check for password is too short
     elsif @user.errors.messages[:password]
-      flash[:danger] = "Passwords must be at least 6 characters. Please try again."
+      flash.now[:danger] = "Passwords must be at least 6 characters. Please try again."
     end
   end
 

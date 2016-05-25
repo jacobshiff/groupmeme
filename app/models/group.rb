@@ -26,5 +26,9 @@ class Group < ActiveRecord::Base
     return users
   end
 
+  def all_tags
+    self.memes.collect{|meme| meme.tags.collect{|tag| tag} }
+  end
+
 
 end

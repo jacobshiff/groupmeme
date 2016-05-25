@@ -17,7 +17,10 @@ $(function() {
        })
        .autocomplete({
          source: function( request, response ) {
-           $.getJSON( "/tags", {
+          // Group the groupslug from the path (e.g. google/memes/new)
+          var group_slug = window.location.pathname.split('/')[1]
+          var retrieve_tags_url = "/" + group_slug + "/tags"
+           $.getJSON(retrieve_tags_url, {
              term: extractLast( request.term )
            }, response );
          },
