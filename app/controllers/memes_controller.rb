@@ -108,11 +108,12 @@ class MemesController < ApplicationController
     
     Meme.create_meme(url, top_text, bottom_text, filetype)
 
-    @new_meme = Meme.new
+    @new_meme = Meme.new(tag_params)
     @new_meme.image = File.open('temporary_meme' + filetype)
     @new_meme.title = title_params
     @new_meme.group = Group.find_by(group_slug: params[:group_slug])
     @new_meme.creator = current_user
+    
     
     if @new_meme.save
       redirect_to meme_path(group_slug: @new_meme.group.group_slug, id: @new_meme.id)
@@ -138,11 +139,15 @@ class MemesController < ApplicationController
   end
 
   def meme_params
-    params.require(:meme).permit(:image, :title)
+    params.require(:meme).permit(:image, :title, tags_attributes: [:name])
   end
 
   def title_params
     params.require(:meme).permit(:image, :title)[:title]
+  end
+
+  def tag_params
+    params.require(:meme).permit(tags_attributes: [:name])
   end
 
   def base_params

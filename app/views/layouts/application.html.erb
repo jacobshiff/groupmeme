@@ -7,30 +7,34 @@
   <!--[if IE 7]>
     <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
   <![endif]-->
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+      <!--[if IE 7]>
+        <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+      <![endif]-->
 
   <!-- Scripts from theme placed at bottom of body for faster loading -->
-  
+
   <%= csrf_meta_tags %>
 
   <!-- Favicon -->
-  <link rel="icon" 
-      type="image/png" 
+  <link rel="icon"
+      type="image/png"
       href="https://s3.amazonaws.com/groupmeme/GroupSlam-Favicon-32.ico" />
 
 </head>
 <body>
-<!-- Navbar -->
-<div class="col-md-3 sidebar">
-  <%= render 'layouts/shared/basic_nav' %>
-</div>
+<!-- Sidebar (includes nav)-->
+<%= render 'layouts/shared/sidebar' %>
+
 
 <!-- Flashes -->
 <% flash.each do |type, message| %>
     <div class="alert alert-<%= type %>" role="alert"><%= message %></div>
   <% end %>
 
-  <%= yield %>
-
+<div class="col-md-9 content">
+    <%= yield %>
+</div>
 
 <!-- Scripts from theme placed at end for faster loading -->
   <%= javascript_include_tag 'http://code.jquery.com/jquery-1.11.3.min.js'%>

@@ -1,2 +1,4 @@
-<p class="navbar-text"><%= link_to "Sign In", login_path %></p>
-<p class="navbar-text"><%= link_to "Sign Up", registration_new_path %></p>
+<ul class="nav pills nav-stacked" style="max-width: 300px;">
+<li><%= link_to "Sign In", login_path, class: 'btn btn-primary' %></li>
+<li><%= link_to "Sign Up", registration_new_path, class: 'btn btn-primary' %></li>
+</ul>

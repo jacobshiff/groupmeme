@@ -4,16 +4,19 @@ class InvitesController < ApplicationController
     if !current_user
       flash[:danger] = "Please log in."
       redirect_to login_path
-    else
+    elsif current_user.type(current_group) == "admin" || current_user.type(current_group) == "moderator"
       @invite = Invite.new
       @invite.group = current_group
+    else
+      flash[:danger] = "Sorry, you are not authorized to invite new users."
+      redirect_to group_path(current_group.group_slug)
     end
   end
 
   def create
     @invite = Invite.new(invite_params)
     @invite.sender = current_user
-    
+
     if @invite.save
       # if the user already exists...
       if @invite.recipient_id
@@ -24,7 +27,7 @@ class InvitesController < ApplicationController
         # send the new user template
         InviteMailer.new_user_invite(@invite).deliver
       end
-        
+
       flash[:success] = "Your invite was successfully sent."
       redirect_to invite_new_path(current_group.group_slug)
     else

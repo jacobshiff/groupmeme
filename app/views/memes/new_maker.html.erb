@@ -14,20 +14,27 @@
     </div>
 
 
-      <div style="margin-left: 40px">
-        <!-- Title placeholder -->
-        <h2><input type="text" id="meme-title-text" placeholder="Optional Title" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Optional Title'" style="font-size:18pt;width:300px; margin-bottom:10px;"></input></h2>
+      <div id="user-input-box" style="margin-left: 40px">
       
         <!-- Form -->
         <%= form_for @meme, url: create_meme_path(params[:group_slug]) do |f| %>
           
+          <h4 style="margin-top:18px;">Select your background image. GIFs, JPGs, PNGs are accepted.</h4>
           <%= f.file_field(:image, accept: 'image/png,image/gif,image/jpeg', id: 'pictureInput', class:'controls') %>
-          <div style="margin-top:2px; margin-bottom:2px; font-style: italic;">Select your background image. GIFs, JPGs, PNGs are accepted.</div>
-          <!-- <%= hidden_field_tag :template_temp %> -->
+
           <%= f.hidden_field :title, id:"meme-title-input" %>
           <%= hidden_field_tag :top_text %>
           <%= hidden_field_tag :bottom_text %>
-          <br>
+          <!-- Tag nested form -->
+          <div>
+            <%= f.fields_for :tags, @meme.tags.new do |tag_form| %>
+              <h2><%= tag_form.text_field :name, id: "tag-autocomplete", class:'controls', placeholder: 'Enter tags for this image, separated by commas', style:'margin-top:4px;' %></h2>
+            <% end %>
+          </div>
+
+          <!-- Title placeholder -->
+        <h2><input type="text" id="meme-title-text" placeholder="Optional Title" style="margin-bottom:10px;"></input></h2>
+
           <%= f.submit "Create", class: 'btn btn-lg btn-default', id:'meme-upload-submit'%>
         <% end %>
           

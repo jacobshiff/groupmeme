@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery-ui
 //= require bootstrap.js
 //= require rebound.js
 //= require jquery.isotope.min.js

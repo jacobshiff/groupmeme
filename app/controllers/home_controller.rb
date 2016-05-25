@@ -1,8 +1,13 @@
 class HomeController < ApplicationController
 
   def index
-    groups = Group.all
-    @groups = groups.reject{ |g| g.group_slug.nil? }
+    if current_user
+      if current_user.groups.count == 1
+        redirect_to(group_path(current_user.groups.first.group_slug))
+      else
+        redirect_to(groups_path)
+      end
+    end
   end
 
 end

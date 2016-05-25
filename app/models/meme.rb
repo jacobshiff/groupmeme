@@ -46,9 +46,9 @@ class Meme < ActiveRecord::Base
 
   def heart_class(user)
     if user_reacted?(user)
-      "glyphicon glyphicon-heart"
+      "fa fa-thumbs-up"
     else
-      "glyphicon glyphicon-heart-empty"
+      "fa fa-thumbs-o-up"
     end
   end
 
@@ -67,10 +67,19 @@ class Meme < ActiveRecord::Base
     end
   end
 
-
-  def set_template
-
+  #needed for nest attributes... added tag
+  def tags_attributes=(tag_attributes)
+    tag_attributes.values.each do |tag_name|
+      tag_name.values.each do |tag|
+        tag.split(", ").each do |name|
+          tag = Tag.find_or_create_by(name: name)
+          self.tags << tag
+        end
+      end
+    end
   end
+
+
   # def popularity_score
   #   #self.
   # end
