@@ -1,7 +1,16 @@
 <h1>Add A Meme</h1>
 
 <%= form_for @meme do |f| %>
+<div>
   <%= f.file_field(:image, accept: 'image/png,image/gif,image/jpeg') %>
-  
+</div>
+
+
+<div>
+  <%= f.fields_for :tags, @meme.tags.new do |tag_form| %>
+    <%= tag_form.label :name, "Tag Name" %>
+    <%= tag_form.text_field :name, id: "tag-autocomplete" %>
+  <% end %>
+</div>
   <%= f.submit %>
 <% end %>
