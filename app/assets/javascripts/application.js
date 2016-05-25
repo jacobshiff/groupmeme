@@ -13,8 +13,8 @@
 //= require jquery
 //= require jquery-ui
 //= require bootstrap.js
-//= require rebound.js
 //= require jquery.isotope.min.js
 //= require jquery_ujs
 //= require bootstrap-sprockets
+//= require rebound.js
 //= require_tree .
