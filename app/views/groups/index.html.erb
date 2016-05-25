@@ -1,5 +1,5 @@
+<div class="portfolio-wrapper">
 <h1>Your Groups</h1>
-
 <ul>
 <% @groups.each do |group| %>
   <li>
@@ -7,4 +7,5 @@
   </li>
 <% end %>
 </ul>
-<%= link_to "Create A New Group", new_group_path %>
+<%= link_to "Create A New Group", new_group_path, class: 'btn btn-primary' %>
+</div>

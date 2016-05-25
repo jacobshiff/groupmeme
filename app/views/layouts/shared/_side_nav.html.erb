@@ -1,0 +1,35 @@
+<div class="navbar" role="navigation">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#groupslam-navbar-collapse-1"><span class="fa fa-bars"></span>Menu</button>
+    <a class="navbar-brand" href="/"><img style="width:80%" src="https://s3.amazonaws.com/groupmeme/Group+Slam+Logo-01.png"></a>
+    <p class="brand-text"><%= current_group.title if current_group %></p>
+  </div><!-- end navbar-header -->
+  <div class="collapse navbar-collapse" id="groupslam-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <% if current_user %>
+      <div>
+        <img src="<%= current_user.avatar %>" class="navbar-avatar">
+        <h5><%= current_user.username %></h5>
+      </div>
+      <% end %>
+      <li class="title">Menu</li>
+      <!-- Conditional links -->
+      <% if current_user %>
+        <li><a href="/users/<%= current_user.username %>">Profile</a></li>
+        <li><a href="/groups">Your Groups</a></li>
+        <% if current_user && current_group %>
+          <% if current_user.type(current_group) == "admin" %>
+          <li><%= link_to 'Edit Group', edit_group_path(current_group.group_slug) %></li>
+          <li><%= link_to 'Invite New User', invite_new_path(current_group.group_slug) %></li>
+          <li><%= link_to 'View and Edit Members', edit_users_path(current_group.group_slug) %></li>
+          <% end %>
+        <% end %>
+        <li><%= link_to "Sign Out", logout_path, method: :delete %></li>
+      <% end %>
+      <% if !current_user %>
+          <li><%= link_to "Sign In", login_path, class: 'btn btn-primary' %></li>
+          <li><%= link_to "Sign Up", registration_new_path, class: 'btn btn-primary' %></li>
+      <% end %>
+    </ul>
+  </div><!-- end navbar-collapse -->
+</div><!-- end navbar -->

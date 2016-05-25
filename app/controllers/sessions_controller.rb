@@ -23,6 +23,7 @@ class SessionsController < ApplicationController
     # if the user exists...
     if @user
       # ... then authenticate that the password is correct
+      # binding.pry
       if @user.authenticate(user_params[:password])
         #make active sesh, bring up first group of their groups
         session[:user_id] = @user.id

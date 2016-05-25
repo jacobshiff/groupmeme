@@ -10,8 +10,7 @@
               <%= f.label :title, "Title (optional)" %> <br>
               <%= f.text_field :title %> <br>
               <%= f.label :image, "Upload A File", class: 'btn btn-success btn-file' %> <br>
-              <%= f.file_field(:image, accept: 'image/png,image/gif,image/jpeg', class:
-            'hidden') %><p id="filename"></p>
+              <%= f.file_field(:image, accept: 'image/png,image/gif,image/jpeg', class: 'hidden') %><p id="filename"></p>
             <script type="text/javascript">
                $("input:file").change(function (){
                  var fullPath = $(this).val();
