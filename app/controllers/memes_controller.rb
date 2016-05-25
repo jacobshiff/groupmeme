@@ -56,7 +56,7 @@ class MemesController < ApplicationController
       if image_size_in_mb > 5
         flash[:danger] = "The maximum upload size is 5 MB"
         @meme = Meme.new
-        render :new_maker
+        render :new
         return
       end
       #if the size is fine, proceed
@@ -85,7 +85,7 @@ class MemesController < ApplicationController
     if @new_meme.save
       redirect_to meme_path(group_slug: @new_meme.group.group_slug, id: @new_meme.id)
     else
-      render :new_maker
+      render :new
     end    
     # This works: File.read('this_is_a_test' + file_type)
     # This works: File.open('this_is_a_test' + file_type)

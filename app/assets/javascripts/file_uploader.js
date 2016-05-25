@@ -42,9 +42,16 @@ $(function() {
 //   })
 
 
+// Prevent enter from submitting form on tag field
+$("#tag-autocomplete").bind("keypress", function (e) {
+    if (e.keyCode == 13) {
+        return false;
+    }
+});
+
+
   // progress bar
-  $('#meme-upload-submit').on('click', function(event){
-    
+  $('#meme-upload-submit').on('click', function(event){    
     var progress_bar_html = '<div id="progressDiv" class="progress"><div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div>'
     $('#progressDivtarget').html(progress_bar_html)
   })
