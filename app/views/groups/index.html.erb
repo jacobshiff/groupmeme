@@ -1,11 +1,23 @@
-<div class="portfolio-wrapper">
-<h1>Your Groups</h1>
-<ul>
-<% @groups.each do |group| %>
-  <li>
-    <%= link_to group.title, group_path(group.group_slug) %>
-  </li>
-<% end %>
-</ul>
-<%= link_to "Create A New Group", new_group_path, class: 'btn btn-primary' %>
+<div class="wrapper">
+  <div class="portfolio-wrapper">
+    <div class="row">
+      <h1>Your Groups</h1>
+    </div>
+
+      <% @groups.each do |group| %>
+
+      <div class="card">
+        <%= link_to group_path(group.group_slug), class: "thumb" do %>
+          <%= image_tag(group.image.url) %>
+          <span class="overlay"><span class="fa fa-chevron-circle-right"></span></span>
+          <% end %>
+          <div class="card-body">
+            <h4><%= group.title %>
+              <h5><small><%= group.users.count %> members</small></h5>
+            </div>
+      <% end %>
+      </div>
+
+  </div>
+    <%= link_to "Create A New Group", new_group_path, class: 'btn btn-primary' %>
 </div>

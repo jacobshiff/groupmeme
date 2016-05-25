@@ -6,6 +6,10 @@ class Group < ActiveRecord::Base
   has_many :tags, through: :meme_tags
   belongs_to :group_creator, class_name: 'User'
 
+  #paperclip
+  has_attached_file :image, default_url: "https://s3.amazonaws.com/groupmeme/default-avatar.png"
+  validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
+
   def to_slug
     revised = self.title.downcase.tr("()&.*',+!", ' ')
     array = revised.split(" ")

@@ -1,1 +1,25 @@
-Hey, how did you get here? This isn't supposed to exist yet!
+<div class="page">
+  <div class="article">
+    <h3>Edit Group</h3>
+    <%= form_for @group, url: group_path(@group.group_slug), html: {class: "form-horizontal"} do |f| %>
+    <div class="form-group">
+      <%= f.label :title, class: 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :title %>
+      </div><br>
+      <div style="width: 30%">
+        <%= image_tag @group.image, class: "registration-default-image img-responsive"%>
+      </div>
+      <div class="sub-text">
+        <%= f.label :image, "Customize your group photo" %>
+        <%= f.file_field(:image, accept: 'image/png,image/gif,image/jpeg') %>
+      </div><br>
+
+    <div class="form-group">
+      <%= f.submit class: 'btn btn-primary' %>
+    </div>
+  </div>
+
+  <% end %>
+</div>
+</div>
