@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   # end
 
 
+
+
 #### HOME
   get '/' => 'home#index', as: 'home'
 #### TAGS
@@ -34,7 +36,10 @@ Rails.application.routes.draw do
 #### MEMES
   #Create
   get '/:group_slug/memes/new' => 'memes#new'
-  post '/:group_slug/memes' => 'memes#create'
+  post '/:group_slug/memes' => 'memes#create', as: 'create_meme'
+
+
+
 
   #index
   get '/:group_slug/memes' => 'memes#index', as: 'memes'
@@ -80,7 +85,5 @@ Rails.application.routes.draw do
 
 #### COMMENTS
   post '/:group_slug/memes/:id/comment' => 'comments#create', as: :comment
-
-
 
 end
