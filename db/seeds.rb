@@ -117,17 +117,17 @@ like_3.save
 dislike_1.save
 dislike_2.save
 
-ping_pong = Tag.create(name: 'Ping Pong')
+ping_pong = Tag.create(name: 'Ping Pong', group: flatiron)
 doge.tags << ping_pong
 pepe.tags << ping_pong
 beef.tags << ping_pong
-javascript = Tag.create(name: 'JavaScript')
+javascript = Tag.create(name: 'JavaScript', group: flatiron)
 y_u_no.tags << javascript
-ruby = Tag.create(name: 'Ruby')
+ruby = Tag.create(name: 'Ruby', group: flatiron)
 beef.tags << ruby
 doge.tags << ruby
-lunch = Tag.create(name: 'Lunch')
-pepe.tags << lunch
+lunch = Tag.create(name: 'Lunch', group: google)
+skeltal.tags << lunch
 
 #associate all group-specific objects with their group
 doge.group = flatiron

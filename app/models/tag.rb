@@ -4,7 +4,6 @@ class Tag < ActiveRecord::Base
   belongs_to :group
 
   def self.search(term, group_id)
-    binding.pry
     where("name ILIKE ? AND group_id = ?", "%#{term}%", group_id)
   end
 
