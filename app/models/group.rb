@@ -7,7 +7,7 @@ class Group < ActiveRecord::Base
   belongs_to :group_creator, class_name: 'User'
 
   #paperclip
-  has_attached_file :image, default_url: "https://s3.amazonaws.com/groupmeme/default-avatar.png"
+  has_attached_file :image, default_url: "https://s3.amazonaws.com/groupmeme/default-group-image.png"
   validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png"] }
 
   def to_slug
