@@ -1,3 +1,4 @@
+// code from rebound template. this lets us filter by tag. asset pipeline gets weird if you move this!
 $(document).ready(function() {
     $('.dropdown-toggle').dropdown();
 

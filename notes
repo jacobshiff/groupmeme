@@ -1,0 +1,11 @@
+Get basic meme generation mode working
+Find a way to make a meme generation form
+Find a way to make a meme generation form display a preview window
+  have a second page; that lets you put in the top and bottom fields
+  var filepath = "url_path"
+  var txt_top = "top"
+  var txt_bottom = "bottom"
+
+Figure out where exactly the code that invokes Meme_captain goes?
+  Controller? Model? View? Can I put it in the view?
+  if not view, Seems like controller?

@@ -45,6 +45,7 @@ class Meme < ActiveRecord::Base
   end
 
   def heart_class(user)
+    #no longer a heart, should probably rename
     if user_reacted?(user)
       "fa fa-thumbs-up"
     else
@@ -52,6 +53,22 @@ class Meme < ActiveRecord::Base
     end
   end
 
+  def self.create_meme(url, top_text, bottom_text, filetype)
+    open(url, 'rb') do |f|
+      i = MemeCaptain.meme(f, [
+        MemeCaptain::TextPos.new(top_text, 0.10, 0.10, 0.80, 0.20,
+          :fill => 'white', :font => 'Impact-Regular'),
+        MemeCaptain::TextPos.new(bottom_text, 0.10, 0.70, 0.80, 0.2,
+          :fill => 'white', :font => 'Impact-Regular'),
+        # MemeCaptain::TextPos.new('test', 10, 10, 50, 25)
+        ])
+      # i.write(output_meme.path + 'output' + filetype)
+      i.write('temporary_meme' + filetype)
+      #can set type to be that of the input
+    end
+  end
+
+  #needed for nest attributes... added tag
   def tags_attributes=(tag_attributes)
     tag_attributes.values.each do |tag_name|
       tag_name.values.each do |tag|
@@ -65,6 +82,7 @@ class Meme < ActiveRecord::Base
     end
   end
 
+  #adds tags (by slug) to card classes
   def tag_class_list
     tags = self.tags.collect{|tag| tag.slug}
     if tags.length > 2
@@ -77,10 +95,6 @@ class Meme < ActiveRecord::Base
     end
     "#{str}"
   end
-
-  # def popularity_score
-  #   #self.
-  # end
 
   private
   def user_reacted?(user)

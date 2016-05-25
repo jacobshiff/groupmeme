@@ -12,9 +12,11 @@ class Group < ActiveRecord::Base
 
   def all_tags
     t = self.memes.collect{|meme| meme.tags.collect{|tag| tag} }
+    # the above returns an array of arrays with many repeats
     t.flatten.uniq
   end
 
+#### I (Rachel) wrote this code in a daze...very clearly it is not needed at all
   # def self.find_groups_for_user(user)
   #   #user passed in as ID
   #   memberships = Membership.where(user_id: user)
@@ -30,6 +32,10 @@ class Group < ActiveRecord::Base
   #   users = user_ids.collect{|id| User.find(id)}
   #   return users
   # end
+
+  def all_tags
+    self.memes.collect{|meme| meme.tags.collect{|tag| tag} }
+  end
 
 
 end

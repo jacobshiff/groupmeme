@@ -1,58 +1,10 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
-
-doge = Meme.create({
-  :image => File.new("#{Rails.root}/public/seed-images/doge.jpg")
-})
-
-pepe = Meme.create({
-  :image => File.new("#{Rails.root}/public/seed-images/pepe.jpeg")
-})
-
-y_u_no = Meme.create({
-  :image => File.new("#{Rails.root}/public/seed-images/yuno.jpg")
-})
-
-beef = Meme.create({
-  :image => File.new("#{Rails.root}/public/seed-images/beef.jpg")
-})
-
-skeltal = Meme.create({
-  :image => File.new("#{Rails.root}/public/seed-images/skeltal.png")
-})
 
 
-# doge = Meme.new
-# doge.image = File.open('/Users/pulsifer/Development/projects/groupmeme/web-0416-01-project/public/system/memes/images/seeds/doge.jpg')
-# doge.save
-# trump = Meme.new
-# trump.image = File.open('/Users/pulsifer/Development/projects/groupmeme/web-0416-01-project/public/system/memes/images/seeds/trump-pepe.jpg')
-# beef = Meme.new
-# beef.image = File.open('/Users/pulsifer/Development/projects/groupmeme/web-0416-01-project/public/system/memes/images/seeds/beef.jpg')
+#### THIS WILL BE OVERWRITTEN BY JACOB'S NEW SEED FILE
+#### RETURN HERE IF ALL THE SEEDS BREAK
 
-jacob = User.create(username: 'jacobshiff', email: 'shiffjacob@gmail.com', password: 'password')
-chris = User.create(username: 'xristo', email: 'chris@flatironschool.com', password: 'password')
-rachel = User.create(username: 'rachelb', email: 'rnbronstein@gmail.com', password: 'password')
-kevin = User.create(username: 'kwebster2', email: 'kevin@flatironschool.com', password: 'password')
-
-doge.creator = rachel
-pepe.creator = rachel
-y_u_no.creator = chris
-beef.creator = chris
-skeltal.creator = kevin
-
-doge.save
-pepe.save
-y_u_no.save
-beef.save
-skeltal.save
-
-flatiron = Group.create(title: "Flatiron School")
 google = Group.create(title: "Google")
 delta_nu = Group.create(title: "Delta Nu Sorority")
 my_friends = Group.create(title: "Friends")
