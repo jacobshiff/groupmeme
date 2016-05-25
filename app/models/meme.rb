@@ -96,6 +96,11 @@ class Meme < ActiveRecord::Base
     "#{str}"
   end
 
+  #destroy tag relationships when destroying self
+  def destroy_tags
+    self.meme_tags.each{|mt| mt.destroy}
+  end
+
   private
   def user_reacted?(user)
     self.reactions.where(user: user).any?

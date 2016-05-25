@@ -5,7 +5,7 @@ class RegistrationsController < ApplicationController
   def new
     if !capture_token_from_params
       flash[:danger] = "You need an invite to join GroupMeme."
-      redirect_to groups_path
+      redirect_to '/'
     elsif current_user
       flash[:danger] = "You are already logged in."
       redirect_to groups_path

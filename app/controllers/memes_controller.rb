@@ -94,6 +94,7 @@ class MemesController < ApplicationController
   end
 
   def destroy
+    @meme.destroy_tags
     @meme.destroy
     redirect_to memes_path(@meme.group.group_slug)
   end
