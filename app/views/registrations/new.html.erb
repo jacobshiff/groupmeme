@@ -21,7 +21,10 @@
         <%= f.password_field :password_confirmation %>
       </div>
 
-
+      <div>
+        <%= f.label "Write a short bio if you'd like!", :biography %>
+        <%= f.text_area :biography %>
+      </div>
       <div>
         <%= f.submit 'Sign Me Up'%>
       </div>
