@@ -67,12 +67,12 @@ class MemesController < ApplicationController
       # url = @template.image.url
       # filetype = '.' + @template.image_content_type.split('/').last
     end
-    
+
     top_text = params[:top_text]
     bottom_text = params[:bottom_text]
 
 
-    
+
     Meme.create_meme(url, top_text, bottom_text, filetype)
 
     @new_meme = Meme.new(tag_params)
@@ -80,13 +80,13 @@ class MemesController < ApplicationController
     @new_meme.title = title_params
     @new_meme.group = Group.find_by(group_slug: params[:group_slug])
     @new_meme.creator = current_user
-    
-    
+
+
     if @new_meme.save
       redirect_to meme_path(group_slug: @new_meme.group.group_slug, id: @new_meme.id)
     else
       render :new
-    end    
+    end
     # This works: File.read('this_is_a_test' + file_type)
     # This works: File.open('this_is_a_test' + file_type)
     #@new_meme.image = File.open('this_is_a_test' + file_type)

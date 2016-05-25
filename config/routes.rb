@@ -1,20 +1,12 @@
 Rails.application.routes.draw do
 
-  #resources :memes, only: [:index]
-
-  # resources :groups, only: [:index, :show], params: :slug do
-  #   resources :memes, only: [:index, :show]
-  # end
-
-
-
-
 #### HOME
   get '/' => 'home#index', as: 'home'
-  
+
 #### TAGS
   get '/:group_slug/tags' => 'tags#index', as: 'tags'
-  
+  get '/:group_slug/memes/tags/:tag' => 'tags#show', as: 'tag'
+
 #### USERS
     # Login
     get '/login' => 'sessions#new', as: 'login'

@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery-ui
 //= require bootstrap.js
-//= require rebound.js
 //= require jquery.isotope.min.js
 //= require jquery_ujs
 //= require bootstrap-sprockets
@@ -23,4 +22,5 @@
 //= require wow.min.js
 //= require retina-1.1.0.min.js
 //= require scripts.js
+//= require rebound.js
 //= require_tree .

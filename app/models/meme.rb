@@ -45,6 +45,7 @@ class Meme < ActiveRecord::Base
   end
 
   def heart_class(user)
+    #no longer a heart, should probably rename
     if user_reacted?(user)
       "fa fa-thumbs-up"
     else
@@ -73,16 +74,27 @@ class Meme < ActiveRecord::Base
       tag_name.values.each do |tag|
         tag.split(", ").each do |name|
           tag = Tag.find_or_create_by(name: name)
+          tag.slug = tag.to_slug
+          tag.save
           self.tags << tag
         end
       end
     end
   end
 
-
-  # def popularity_score
-  #   #self.
-  # end
+  #adds tags (by slug) to card classes
+  def tag_class_list
+    tags = self.tags.collect{|tag| tag.slug}
+    if tags.length > 2
+      last = tags.pop
+      str = tags.join(" ") + last
+    elsif tags.length == 2
+      str = tags.join(" ")
+    else
+      str = tags[0]
+    end
+    "#{str}"
+  end
 
   private
   def user_reacted?(user)
