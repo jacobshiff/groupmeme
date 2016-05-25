@@ -9,8 +9,9 @@ Rails.application.routes.draw do
 
 #### HOME
   get '/' => 'home#index', as: 'home'
-
-
+#### TAGS
+  get '/tags' => 'tags#index', as: 'tags'
+  
 #### USERS
     # Login
     get '/login' => 'sessions#new', as: 'login'
@@ -79,5 +80,7 @@ Rails.application.routes.draw do
 
 #### COMMENTS
   post '/:group_slug/memes/:id/comment' => 'comments#create', as: :comment
+
+
 
 end
