@@ -44,39 +44,6 @@ class MemesController < ApplicationController
   end
 
   def create
-    @meme = Meme.new(meme_params)
-    @meme.group = Group.find_by(group_slug: params[:group_slug])
-    @meme.creator = current_user
-    if @meme.save
-      redirect_to meme_path(group_slug: @meme.group.group_slug, id: @meme.id)
-    else
-      render :new
-    end
-  end
-
-  def destroy
-    @meme.destroy
-    redirect_to memes_path(@meme.group.group_slug)
-  end
-
-  def react
-    @meme.update_reactions(current_user)
-    @current_user = current_user
-
-    respond_to do |format|
-      format.js
-    end
-  end
-
-  #its fine this is good. okay.
-  def new_maker
-    @meme = Meme.new
-  end
-
-  output_meme = Tempfile.new('this_is_a_test')
-
-  # change to upload_base
-  def create_maker
     #Return to save template and create new model
     #***Return to refactor to remove this logic from the controller!****
     if params[:meme][:image].nil? #if they did not load a template, use paired programming gif
@@ -126,7 +93,19 @@ class MemesController < ApplicationController
 
   end
 
+  def destroy
+    @meme.destroy
+    redirect_to memes_path(@meme.group.group_slug)
+  end
 
+  def react
+    @meme.update_reactions(current_user)
+    @current_user = current_user
+
+    respond_to do |format|
+      format.js
+    end
+  end
 
 
   private

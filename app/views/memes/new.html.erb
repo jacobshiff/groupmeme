@@ -1,16 +1,69 @@
-<h1>Add A Meme</h1>
+<div class="col-md-5 content portfolio item">
+  <div class="page">
+  <article>
+  <!-- Image and title -->
+  <div class="page-header">
+    <div id="portfolio-carousel" class="carousel slide" data-ride="carousel">
+    <!-- Main image div -->
+    <div class="textpanel">
+      <div id="target">
+      <img  style="width:100%" src="https://s3.amazonaws.com/groupmeme/paired-programming.gif" class="thumb">
+      </div> 
+          <textarea class="meme-text" id="top-text" placeholder="ENTER YOUR TOP TEXT" onfocus="this.placeholder = ''" onblur="this.placeholder = 'ENTER YOUR TOP TEXT'"></textarea>
+          <textarea class="meme-text" id="bottom-text" placeholder="ENTER YOUR BOTTOM TEXT" onfocus="this.placeholder = ''" onblur="this.placeholder = 'ENTER YOUR BOTTOM TEXT'"></textarea>
+    </div>
 
-<%= form_for @meme do |f| %>
-<div>
-  <%= f.file_field(:image, accept: 'image/png,image/gif,image/jpeg') %>
+
+      <div id="user-input-box" style="margin-left: 40px">
+      
+        <!-- Form -->
+        <%= form_for @meme, url: create_meme_path(params[:group_slug]) do |f| %>
+          
+          <h4 style="margin-top:18px;">Select your background image. GIFs, JPGs, PNGs are accepted.</h4>
+          <%= f.file_field(:image, accept: 'image/png,image/gif,image/jpeg', id: 'pictureInput', class:'controls') %>
+
+          <%= f.hidden_field :title, id:"meme-title-input" %>
+          <%= hidden_field_tag :top_text %>
+          <%= hidden_field_tag :bottom_text %>
+          <!-- Tag nested form -->
+          <div>
+            <%= f.fields_for :tags, @meme.tags.new do |tag_form| %>
+              <h2><%= tag_form.text_field :name, id: "tag-autocomplete", class:'controls', placeholder: 'Enter tags for this image, separated by commas', style:'margin-top:4px;' %></h2>
+            <% end %>
+          </div>
+
+          <!-- Title placeholder -->
+        <h2><input type="text" id="meme-title-text" placeholder="Optional Title" style="margin-bottom:10px;"></input></h2>
+
+          <%= f.submit "Create", class: 'btn btn-lg btn-default', id:'meme-upload-submit'%>
+        <% end %>
+          
+          <br>
+          <!-- Progress bar location -->
+          <div id="progressDivtarget"></div>
+      </div>
+    </div>
+  </div>
+    
+  <!-- <div class="post-content">
+    
+          
+  </div> -->
+  <!-- End image and title -->
+
+  <!-- Comments -->
+
+  </article>
+
+
+  
+</div>
 </div>
 
 
-<div>
-  <%= f.fields_for :tags, @meme.tags.new do |tag_form| %>
-    <%= tag_form.label :name, "Tag Name" %>
-    <%= tag_form.text_field :name, id: "tag-autocomplete" %>
-  <% end %>
-</div>
-  <%= f.submit %>
-<% end %>
+
+
+
+
+
+  

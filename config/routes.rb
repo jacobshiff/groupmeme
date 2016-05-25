@@ -36,11 +36,8 @@ Rails.application.routes.draw do
 #### MEMES
   #Create
   get '/:group_slug/memes/new' => 'memes#new'
-  post '/:group_slug/memes' => 'memes#create'
+  post '/:group_slug/memes' => 'memes#create', as: 'create_meme'
 
-  #### EXPERIMENTAL
-  get '/:group_slug/memes/mememaker' => 'memes#new_maker'
-  post '/:group_slug/memes/mememaker' => 'memes#create_maker', as: 'create_meme'
 
 
 
