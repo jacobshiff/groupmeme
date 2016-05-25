@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
   def new
 
     if current_user
-      flash[:warning] = "You're already logged in, clown!"
+      flash[:warning] = "You are already logged in"
       redirect_to groups_path
       #redirect_to memes_path(current_user.groups.first.group_slug)
     end
