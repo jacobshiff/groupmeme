@@ -42,9 +42,30 @@ kevin = User.create({
 # kevin = User.create(username: 'kwebster2', email: 'kevin.webster@flatironschool.com', password: 'password')
 
 #### CREATE GROUPS
-flatiron = Group.create(title: "Flatiron School", group_slug: "flatiron-school", group_creator: jacob)
-barnard = Group.create(title: "Barnard", group_slug: "barnard", group_creator: rachel)
-jpmorgan = Group.create(title: "JPMorgan", group_slug: "jpmorgan", group_creator: kevin)
+flatiron = Group.create({
+  :title => "Flatiron School",
+  :group_slug => "flatiron-school",
+  :group_creator => jacob,
+  :image => File.new("#{Rails.root}/public/seed-images/groups/flatiron.png")
+  }
+)
+
+barnard = Group.create({
+  :title => "Flatiron School",
+  :group_slug => "Barnard",
+  :group_creator => rachel,
+  :image => File.new("#{Rails.root}/public/seed-images/groups/barnard.png")
+  }
+)
+
+jpmorgan = Group.create({
+  :title => "JPMorgan",
+  :group_slug => "jpmorgan",
+  :group_creator => kevin,
+  :image => File.new("#{Rails.root}/public/seed-images/groups/jpmorgan.png")
+  }
+)
+
 
 #### CREATE MEMBERSHIPS
 Membership.create(group: flatiron, user: jacob, user_type: 'admin')
