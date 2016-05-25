@@ -1,7 +1,6 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
-
 #### CREATE USERS
 ## Return to add in avatar files
 jacob = User.create({
@@ -108,5 +107,4 @@ MemeTag.create(tag: bangarang, meme: paired_programming)
 MemeTag.create(tag: bangarang, meme: penguin_programming)
 MemeTag.create(tag: random, meme: chewy)
 MemeTag.create(tag: rails, meme: chewy)
-
 

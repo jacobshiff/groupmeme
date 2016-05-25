@@ -4,7 +4,7 @@ class GroupsController < ApplicationController
   #before_action :require_login_and_access
 
   def index
-    @groups = Group.find_groups_for_user(current_user)
+    @groups = current_user.groups
   end
 
   def show
@@ -41,11 +41,11 @@ class GroupsController < ApplicationController
   end
 
   def edit_users
-    @users = Group.find_users_for_group(current_group)
+    @users = current_group.users
   end
 
   def user_index
-    @users = Group.find_users_for_group(current_group)
+    @users = current_group.users
   end
 
   private
