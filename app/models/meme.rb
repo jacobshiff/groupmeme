@@ -52,6 +52,18 @@ class Meme < ActiveRecord::Base
     end
   end
 
+  def tags_attributes=(tag_attributes)
+    tag_attributes.values.each do |tag_name|
+      tag_name.values.each do |tag|
+        tag.split(", ").each do |name|
+          tag = Tag.find_or_create_by(name: name)
+          self.tags << tag
+        end
+      end
+    end
+  end
+
+
   # def popularity_score
   #   #self.
   # end
