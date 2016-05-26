@@ -28,11 +28,11 @@
 
 
 <!-- Flashes -->
-<% flash.each do |type, message| %>
-    <div class="alert alert-<%= type %>" role="alert"><%= message %></div>
-  <% end %>
 
 <div class="col-md-9 content">
+<% flash.each do |type, message| %>
+    <div class="alert alert-<%= type %>"  role="alert"><%= message %></div>
+  <% end %>
     <%= yield %>
 </div>
 
