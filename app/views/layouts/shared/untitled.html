@@ -1,0 +1,136 @@
+OUR CODE
+
+<html class="csstransforms csstransforms3d csstransitions"><head>
+<title>GroupSlam</title>
+<!-- Stylesheets from Theme -->
+<link rel="stylesheet" media="all" href="/assets/application-8f7eaaf6cec94338a852e16d14a63e5f4883215dfdb2cf717a738055fd3e6259.css">
+  <!--[if IE 7]>
+    <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+    <![endif]-->
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+      <!--[if IE 7]>
+        <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+        <![endif]-->
+
+        <!-- Scripts from theme placed at bottom of body for faster loading -->
+
+        <meta name="csrf-param" content="authenticity_token">
+        <meta name="csrf-token" content="zMuQ8kshl4lnzaivybRI0cJU13jUEZu61CWUyn7lbwNcKuVITczkT0CtazwVe6LF4on1IeAkaEEw67IjAipQ7g==">
+
+        <!-- Favicon -->
+        <link rel="icon" type="image/ico" href="https://s3.amazonaws.com/groupmeme/GroupSlam-Favicon-32.ico">
+
+      </head>
+      <body>
+        <!-- Sidebar (includes nav)-->
+
+
+        <div class="wrapper">
+          <div class="row">
+            <div class="col-md-3 sidebar">
+              <div class="navbar" role="navigation">
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="/"><img style="width:80%" src="https://s3.amazonaws.com/groupmeme/GroupSlam-Logo.png"></a>
+
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#groupslam-navbar-collapse-1"><span class="fa fa-bars"></span>Menu</button>
+                  <p class="brand-text">Flatiron School</p>
+                </div><!-- end navbar-header -->
+
+                <div class="collapse navbar-collapse" id="groupslam-navbar-collapse-1">
+                
+                  <ul class="nav navbar-nav">
+                    <div>
+                      <img src="https://s3.amazonaws.com/groupmeme/default-avatar.png" class="navbar-avatar">
+                      <h5>jacobshiff2</h5>
+                    </div>
+                    <li class="title">Menu</li>
+                    <!-- Conditional links -->
+                    <li><a href="/users/jacobshiff2">Profile</a></li>
+                    <li><a href="/groups">Your Groups</a></li>
+                    <li><a rel="nofollow" data-method="delete" href="/logout">Sign Out</a></li>
+                  </ul>
+                </div><!-- end navbar-collapse -->
+              </div><!-- end navbar -->
+
+              <!-- FILTER ONLY SHOWS ON MEME INDEX PAGE -->
+
+            </div>
+
+            <!-- Flashes -->
+
+            <div class="col-md-9 content">
+              <div class="page">
+                <article>
+                  <!-- Image and title -->
+                  <div class="page-header">
+                    <div id="portfolio-carousel" class="carousel slide" data-ride="carousel">
+                      <!-- Main image div -->
+                      <div class="textpanel">
+                        <div id="target">
+                          <img style="width:100%" src="https://s3.amazonaws.com/groupmeme/paired-programming.gif" class="thumb">
+                        </div> 
+                        <textarea class="meme-text" id="top-text" placeholder="ENTER YOUR TOP TEXT" onfocus="this.placeholder = ''" onblur="this.placeholder = 'ENTER YOUR TOP TEXT'"></textarea>
+                        <textarea class="meme-text" id="bottom-text" placeholder="ENTER YOUR BOTTOM TEXT" onfocus="this.placeholder = ''" onblur="this.placeholder = 'ENTER YOUR BOTTOM TEXT'"></textarea>
+                      </div>
+
+
+                      <div id="user-input-box" style="margin-left: 40px">
+
+                        <!-- Form -->
+                        <form class="new_meme" id="new_meme" enctype="multipart/form-data" action="/flatiron-school/memes" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="zMuQ8kshl4lnzaivybRI0cJU13jUEZu61CWUyn7lbwNcKuVITczkT0CtazwVe6LF4on1IeAkaEEw67IjAipQ7g==">
+
+                          <h4 style="margin-top:18px;">Select your background image. GIFs, JPGs, PNGs are accepted.</h4>
+                          <input accept="image/png,image/gif,image/jpeg" id="pictureInput" class="controls" type="file" name="meme[image]">
+
+                          <input id="meme-title-input" type="hidden" name="meme[title]">
+                          <input type="hidden" name="top_text" id="top_text">
+                          <input type="hidden" name="bottom_text" id="bottom_text">
+                          <!-- Tag nested form -->
+                          <div>
+
+                            <h2><input id="tag-autocomplete" class="controls ui-autocomplete-input" placeholder="Enter tags for this image, separated by commas" style="margin-top:4px;" type="text" name="meme[tags_attributes][0][name]" autocomplete="off"></h2>
+                          </div>
+
+                          <!-- Title placeholder -->
+                          <h2><input type="text" id="meme-title-text" placeholder="Optional Title" style="margin-bottom:10px;"></h2>
+
+                          <input type="submit" name="commit" value="Create" class="btn btn-lg btn-default" id="meme-upload-submit">
+                        </form>          
+                        <br>
+                        <!-- Progress bar location -->
+                        <div id="progressDivtarget"></div>
+                      </div>
+                    </div>
+                  </div>
+
+  <!-- <div class="post-content">
+    
+          
+</div> -->
+<!-- End image and title -->
+
+<!-- Comments -->
+
+</article>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+</div>
+</div>
+</div>
+
+<!-- Scripts from theme placed at end for faster loading -->
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="/assets/application-f666b56f7471616361b0650cfeec51a36b756958afe0ff447d038dbd7afde7cc.js"></script>
+
+
+<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content" id="ui-id-1" tabindex="0" style="display: none;"></ul><span role="status" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></span></body></html>

@@ -1,47 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>GroupSlam</title>
-  <!-- Stylesheets from Theme -->
-  <%= stylesheet_link_tag 'application', media: 'all'%>
-  <!--[if IE 7]>
-    <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
-  <![endif]-->
-  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-      <!--[if IE 7]>
-        <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
-      <![endif]-->
-
-  <!-- Scripts from theme placed at bottom of body for faster loading -->
-
+<%= stylesheet_link_tag 'application', media: 'all'%>
+<%= javascript_include_tag '//code.jquery.com/jquery-1.11.3.min.js'%>
+<%= javascript_include_tag 'application'%>
+<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <%= csrf_meta_tags %>
-
-  <!-- Favicon -->
   <link rel="icon"
       type="image/ico"
       href="https://s3.amazonaws.com/groupmeme/GroupSlam-Favicon-32.ico" />
-
-</head>
-<body>
-<!-- Sidebar (includes nav)-->
-
-
-  <div class="wrapper">
-  <div class="row">
-<%= render 'layouts/shared/sidebar' %>
-<!-- Flashes -->
-
-<div class="col-md-9 content">
-<% flash.each do |type, message| %>
-    <div class="alert alert-<%= type %>"  role="alert"><%= message %></div>
-  <% end %>
-    <%= yield %>
-</div>
-</div>
-</div>
-
-<!-- Scripts from theme placed at end for faster loading -->
-  <%= javascript_include_tag 'http://code.jquery.com/jquery-1.11.3.min.js'%>
-  <%= javascript_include_tag 'application'%>
-</body>
-</html>
+<%= yield %>

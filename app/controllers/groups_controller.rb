@@ -8,7 +8,7 @@ class GroupsController < ApplicationController
   end
 
   def show
-    redirect_to memes_path(@group.group_slug)
+    # redirect_to memes_path(@group.group_slug)
     #@group = Group.find_by(group_slug: params[:group_slug])
   end
 
