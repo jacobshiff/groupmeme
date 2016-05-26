@@ -1,6 +1,0 @@
-<% if current_user %>
-<div>
-  <img src="<%= current_user.avatar %>" class="navbar-avatar">
-  <h5><%= current_user.username %></h5>
-</div>
-<% end %>

@@ -145,7 +145,11 @@ img.show-page-image{
 
 #nav-user-block{
   display: inline-block;
+}
+
+.nav-user-text{
   font-size: 15px;
+  font-weight: bold;
 }
 
 /*Custom CSS for image uploader*/
