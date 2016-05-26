@@ -13,9 +13,14 @@ class UsersController < ApplicationController
   end
 
   def update
-    binding.pry
+    # binding.pry
     @user = User.find_by(username: params[:username])
     @user.update(user_params)
+
+
+    # @user.avatar = user_params[:avatar]
+    # @user.avatar.save
+
     redirect_to user_path(@user.username)
   end
 
@@ -26,3 +31,17 @@ class UsersController < ApplicationController
   end
 
 end
+
+
+avatar = user_params[:avatar]
+@user.avatar = avatar
+@user.avatar.url
+@user.save
+
+
+@user.avatar
+@user.avatar.url
+@user.save
+@user.avatar.image
+@user.avatar.url
+@user.avatar.save

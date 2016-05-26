@@ -51,7 +51,7 @@ flatiron = Group.create({
 )
 
 barnard = Group.create({
-  :title => "Flatiron School",
+  :title => "Barnard",
   :group_slug => "Barnard",
   :group_creator => rachel,
   :image => File.new("#{Rails.root}/public/seed-images/groups/barnard.png")
