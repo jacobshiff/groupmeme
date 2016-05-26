@@ -3,74 +3,87 @@
   <article>
 
   <!-- Image and title -->
-  <div class="page-header">
-    <div id="portfolio-carousel" class="carousel slide" data-ride="carousel">
-    <!-- Main image div -->
-    <%= image_tag(@meme.image.url, class: "thumb") %>
-      <div style="margin-left: 40px">
-      <% if !@meme.title.nil? %>
-        <h2><%= @meme.title %></h2>
-      <% end %>
-        <!-- Reactions div -->
-        <div class="react" style="margin-top:15px;" meme_parent_id="<%=@meme.id%>">
-          <h4 id="show-page-reaction">
-          <%= render partial: "memes/memes_reactions", locals: {meme: @meme} %>
-          </h4>
+  
+  <% if @meme %> <!-- Check if it found the meme -->
+        <div class="page-header">
+          <div id="portfolio-carousel" class="carousel slide" data-ride="carousel">
+          <!-- Main image div -->
+          <%= image_tag(@meme.image.url, class: "thumb") %>
+            <div style="margin-left: 40px">
+            <% if !@meme.title.nil? %>
+              <h2><%= @meme.title %></h2>
+            <% end %>
+              <!-- Reactions div -->
+              <div class="react" style="margin-top:15px;" meme_parent_id="<%=@meme.id%>">
+                <h4 id="show-page-reaction">
+                <%= render partial: "memes/memes_reactions", locals: {meme: @meme} %>
+                </h4>
+              </div>
+
+            <!-- Creator -->
+              <h5>Posted by: <%= @meme.creator.username %> - <%=format_time(@meme.created_at)%></h5>
+              <!-- Tags -->
+                <% @meme.tags.each do |tag| %>
+                <span class="label label-info"><%= tag.name %></span>
+                <% end %>
+            </div>
+          </div>
+        </div>
+        <!-- End image and title -->
+
+        <!-- Comments -->
+
+        <a name="comments"></a>
+        <div class="row detailBox">
+          <div class="actionBox">
+            <div class="titleBox">
+              <label>Comments</label>
+            </div>
+            <div class="actionBox">
+              <ul class="commentList">
+                <% @meme.comments.each do |comment| %>
+                <li>
+                  <div class="commenterImage">
+                    <%= image_tag comment.user.avatar %>
+                  </div>
+                  <div class="commentText">
+                    <p><strong><%= link_to comment.user.username, user_path(comment.user.username) %></strong> <%= comment.content %></p> <span class="date sub-text"> <%= (format_time(comment.created_at)).capitalize %> </span>
+                  </div>
+                </li>
+                <% end %>
+              </ul>
+              <form class="form-inline" role="form">
+                <div class="form-group">
+                  <input class="form-control" type="text" placeholder="Your comments" name="comment[content]" />
+                </div>
+                <div class="form-group">
+                  <%= link_to comment_path(current_group.group_slug, params[:id]) do %>
+                  <button class="btn btn-default">Add</button>
+                  <% end %>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- Back and index buttons -->
+        <div class="row show-page-buttons">
+          <a href="<%=memes_path(@meme.group.group_slug)%>"><button type="button" class="btn btn-primary">Back to Index</button></a>
+
+          <%= link_to "Delete", meme_path(@meme.group.group_slug, @meme), method: :delete, data: {confirm: "Are you sure you want to delete this meme?" }, class: 'btn btn-danger'   %>
+          <!-- <button type="button" class="btn btn-danger">Delete</button> -->
+        </div>
+  <% else %> <!-- If it cannot find the meme, render a "Cannot find this meme error" -->
+
+      <div class="page-header">
+          <div id="portfolio-carousel" class="carousel slide" data-ride="carousel">
+          <div style="margin-left: 40px">
+          <h2>We cannot find this meme. It may have been deleted or your link may be incorrect.</h2>
+          </div>
+          </div>
         </div>
 
-      <!-- Creator -->
-        <h5>Posted by: <%= @meme.creator.username %> - <%=format_time(@meme.created_at)%></h5>
-        <!-- Tags -->
-          <% @meme.tags.each do |tag| %>
-          <span class="label label-info"><%= tag.name %></span>
-          <% end %>
-      </div>
-    </div>
-  </div>
-  <!-- End image and title -->
-
-  <!-- Comments -->
-
-  <a name="comments"></a>
-  <div class="row detailBox">
-    <div class="actionBox">
-      <div class="titleBox">
-        <label>Comments</label>
-      </div>
-      <div class="actionBox">
-        <ul class="commentList">
-          <% @meme.comments.each do |comment| %>
-          <li>
-            <div class="commenterImage">
-              <%= image_tag comment.user.avatar %>
-            </div>
-            <div class="commentText">
-              <p><strong><%= link_to comment.user.username, user_path(comment.user.username) %></strong> <%= comment.content %></p> <span class="date sub-text"> <%= (format_time(comment.created_at)).capitalize %> </span>
-            </div>
-          </li>
-          <% end %>
-        </ul>
-        <form class="form-inline" role="form">
-          <div class="form-group">
-            <input class="form-control" type="text" placeholder="Your comments" name="comment[content]" />
-          </div>
-          <div class="form-group">
-            <%= link_to comment_path(current_group.group_slug, params[:id]) do %>
-            <button class="btn btn-default">Add</button>
-            <% end %>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-  <!-- Back and index buttons -->
-  <div class="row show-page-buttons">
-    <a href="<%=memes_path(@meme.group.group_slug)%>"><button type="button" class="btn btn-primary">Back to Index</button></a>
-
-    <%= link_to "Delete", meme_path(@meme.group.group_slug, @meme), method: :delete, data: {confirm: "Are you sure you want to delete this meme?" }, class: 'btn btn-danger'   %>
-    <!-- <button type="button" class="btn btn-danger">Delete</button> -->
-  </div>
-
+  <% end %>
+      
   </article>
 
 

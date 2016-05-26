@@ -111,7 +111,7 @@ class MemesController < ApplicationController
 
   private
   def set_meme
-    @meme ||= Meme.find(params[:id])
+    @meme ||= Meme.find_by_id(params[:id]) if Meme.find_by_id(params[:id])
   end
 
   def set_group
