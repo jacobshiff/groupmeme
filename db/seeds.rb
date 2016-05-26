@@ -52,7 +52,7 @@ flatiron = Group.create({
 
 barnard = Group.create({
   :title => "Barnard",
-  :group_slug => "Barnard",
+  :group_slug => "barnard",
   :group_creator => rachel,
   :image => File.new("#{Rails.root}/public/seed-images/groups/barnard.png")
   }
@@ -98,6 +98,20 @@ penguin_programming = Meme.create({
   }
 )
 
+eye_roll = Meme.create({
+  image: File.new("#{Rails.root}/public/seed-images/eyeroll.gif")
+  creator: rachel,
+  group: barnard,
+  title: 'When the one dude in seminar starts his question with "As a man..."'
+  })
+
+obamanard = Meme.create({
+  image: File.new("#{Rails.root}/public/seed-images/obamanard.jpeg")
+  creator: rachel,
+  group: barnard
+  })
+
+
 ##Remove group ID from reactions, because it has it through images
 #### CREATE REACTIONS
 Reaction.create(meme: chewy, user: chris)
@@ -115,11 +129,13 @@ Comment.create(content: 'Too true', user: rachel, meme: paired_programming)
 Comment.create(content: 'Thanks!', user: jacob, meme: paired_programming)
 Comment.create(content: 'Me last night', user: chris, meme: penguin_programming)
 
-
 #### CREATE TAGS
 bangarang = Tag.create(name: 'Bangarangs', group: flatiron, slug: 'bangarang')
 random = Tag.create(name: 'Random', group: flatiron, slug: 'random')
 rails = Tag.create(name: 'Rails', group: flatiron, slug: 'rails')
+barnard = Tag.create(name: 'Barnard', group: barnard, slug: 'barnard')
+mlibc = Tag.create(name: '#mlibc', group: barnard, slug: 'mlibc')
+mansplain = Tag.create(name: 'Mansplaining', group: barnard, slug: 'mansplaining')
 
 
 #### CREATE MEME_TAG_JOIN
@@ -128,4 +144,6 @@ MemeTag.create(tag: bangarang, meme: paired_programming)
 MemeTag.create(tag: bangarang, meme: penguin_programming)
 MemeTag.create(tag: random, meme: chewy)
 MemeTag.create(tag: rails, meme: chewy)
-
+MemeTag.create(tag: barnard, meme: eye_roll)
+MemeTag.create(tag: mlibc, meme: eye_roll)
+MemeTag.create(tag: mansplain, meme: eye_roll)
