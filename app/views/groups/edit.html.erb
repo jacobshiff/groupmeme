@@ -7,12 +7,12 @@
       <div class="controls">
         <%= f.text_field :title %>
       </div><br>
-      <div style="width: 30%">
-        <%= image_tag @group.image, class: "registration-default-image img-responsive"%>
+      <div id="target">
+        <%= image_tag @group.image, class: "thumb", style: "width:30%"%>
       </div>
       <div class="sub-text">
         <%= f.label :image, "Customize your group photo" %>
-        <%= f.file_field(:image, accept: 'image/png,image/gif,image/jpeg') %>
+        <%= f.file_field(:image, accept: 'image/png,image/gif,image/jpeg', id: 'pictureInput', class: 'controls') %>
       </div><br>
 
       <div class="form-group">
