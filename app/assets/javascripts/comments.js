@@ -36,22 +36,24 @@ function build_new_comment(response){
   return output
 }
 
-function deleteComment(){
-  $('li.commentItem button.delete').click(function(e){
-    e.preventDefault();
-    var comment = $(this).parent();
-    $.ajax({
-      type: 'get',
-      url: destroy_comment_path,
-      data: {comment: comment}
-      beforeSend: function() {
-        parent.animate({'backgroundColor':'#fb6c6c'},300);
-      },
-      success: function() {
-        parent.slideUp(300,function() {
-          parent.remove();
-        });
-      }
-    });
-  })
-}
+// function deleteComment(){
+//   $('li.commentItem button.delete').click(function(e){
+//     e.preventDefault();
+//     var comment = $(this).parent().parent();
+//     debugger
+//     // $.ajax({
+//     //   type: 'get',
+//     //   url: "/",
+//     //   data: {comment: comment},
+//     //   debugger
+//     // });
+//    })
+// }
+//
+// beforeSend: function(){
+//   parent.animate({'backgroundColor':'#fb6c6c'},300);
+// },
+// success: function(){
+//   parent.slideUp(300,function()
+//     parent.remove();
+//   });

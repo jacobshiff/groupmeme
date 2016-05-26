@@ -137,8 +137,14 @@ img.show-page-image{
 
 .navbar-avatar{
   border-radius:50%;
-  width:30px;
+  width:50px;
   margin-right:5px;
+}
+
+
+#nav-user-block{
+  display: inline-block;
+  font-size: 15px;
 }
 
 /*Custom CSS for image uploader*/

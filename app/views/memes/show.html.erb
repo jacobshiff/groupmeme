@@ -46,7 +46,11 @@
             </div>
             <div class="commentText">
               <p><strong><%= link_to comment.user.username, user_path(comment.user.username) %></strong> <%= comment.content %></p> <span class="date sub-text"> <%= (format_time(comment.created_at)).capitalize %> </span>
-            <span><button class="btn btn-small btn-danger delete">Delete</button></span></div>
+            </div>
+            <div class="deleteComment">
+              <span><button class="btn btn-small btn-danger delete">Delete</button></span>
+            </div>
+
           </li>
           <% end %>
         </ul>
