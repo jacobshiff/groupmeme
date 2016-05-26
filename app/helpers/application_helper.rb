@@ -8,4 +8,12 @@ module ApplicationHelper
     end
   end
 
+  def active?(url)
+    if current_page?(url)
+      "active"
+    else
+      ""
+    end
+  end
+
 end
