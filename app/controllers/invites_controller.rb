@@ -18,6 +18,7 @@ class InvitesController < ApplicationController
     @invite.sender = current_user
 
     if @invite.save
+      binding.pry
       # if the user already exists...
       if @invite.recipient_id
         # ... send the existing user template

@@ -16,7 +16,11 @@ class RegistrationsController < ApplicationController
         flash[:danger] = "Your token is not valid."
         redirect_to '/'
       else
-        @user.email = Invite.find_by(token: @token).recipient_email
+        # @user = User.new
+        # @user.email = "jacobshiff@gmail.com" #remove this line later
+        # @invited_group = "Flatiron School"
+        # ADD IN GROUP ID
+    @user.email = Invite.find_by(token: @token).recipient_email
       end
     end
   end
