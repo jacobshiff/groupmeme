@@ -1,9 +1,11 @@
 <div class="page">
   <article>
     <div class="page-header">
-      <h2>&nbsp;&nbsp;&nbsp;&nbsp;<%= @user.username %>'s Profile</h2>
+      <h1><%= @user.username %>'s Profile</h1>
     </div>
     <div class="post-content">
       <%= image_tag @user.avatar, size: '100x100' %>
       <p>member since <%= format_time(@user.created_at) %></p>
     </div>
+  </article>
+</div>
