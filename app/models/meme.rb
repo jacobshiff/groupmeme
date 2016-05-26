@@ -85,15 +85,7 @@ class Meme < ActiveRecord::Base
   #adds tags (by slug) to card classes
   def tag_class_list
     tags = self.tags.collect{|tag| tag.slug}
-    if tags.length > 2
-      last = tags.pop
-      str = tags.join(" ") + last
-    elsif tags.length == 2
-      str = tags.join(" ")
-    else
-      str = tags[0]
-    end
-    "#{str}"
+    tags.join(" ")
   end
 
   #destroy tag relationships when destroying self

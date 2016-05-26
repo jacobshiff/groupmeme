@@ -40,13 +40,21 @@
       <div class="actionBox">
         <ul class="commentList">
           <% @meme.comments.each do |comment| %>
-          <li>
+          <li id="comment-<%= comment.id %>" class="commentItem">
             <div class="commenterImage">
               <%= image_tag comment.user.avatar %>
             </div>
             <div class="commentText">
               <p><strong><%= link_to comment.user.username, user_path(comment.user.username) %></strong> <%= comment.content %></p> <span class="date sub-text"> <%= (format_time(comment.created_at)).capitalize %> </span>
             </div>
+            <div class="deleteComment">
+              <% if comment.user == current_user %>
+                <%= link_to destroy_comment_path(id: comment.id), method: :delete, remote: true do %>
+                <span><i class="fa fa-times fa-fw red"></i></span>
+                <% end %>
+              <% end %>
+            </div>
+
           </li>
           <% end %>
         </ul>
