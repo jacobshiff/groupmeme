@@ -4,7 +4,7 @@
     <h1>Welcome to GroupSlam</h1>
     <p class="lead">The private forum for creating and sharing memes in your organization.</p>
   </div>
-  
+
   <div class="row">
     <div class="col-md-12">
     <h3>Please Sign Up</h3>
@@ -14,7 +14,7 @@
     <div class="col-md-8">
       <!-- This is the new user registration form -->
       <%= form_for @user, url: registration_create_path, html: { multipart: true } do |f| %>
-      
+
       <!-- Token (Hidden field)-->
       <% if @token != nil %>
       <div><%= f.hidden_field :invite_token, value: @token %></div>
@@ -22,7 +22,7 @@
 
       <!-- Email (Hidden field)-->
       <div><%= f.hidden_field :email, value: @user.email %></div>
-      
+
       <!-- Username field -->
       <div class="form-group">
         <%= f.label :username, class: "control-label" %>
@@ -54,7 +54,7 @@
       </div>
 
       <!-- Email field (Frozen) -->
-      <div class="form-group">
+      <div class="form-group disabled">
         <label class="control-label" for="inputEmail">Email*</label>
         <div class="row">
           <div class="col-md-10">
@@ -66,7 +66,7 @@
       </div>
 
       <!-- Invited group -->
-      <div class="form-group">
+      <div class="form-group disabled">
         <label class="control-label" for="inputEmail">Group*</label>
         <div class="row">
           <div class="col-md-10">
@@ -81,7 +81,7 @@
 
   </div>
 
-    
+
     <div class="col-md-4">
 
     <div class="sub-text">
@@ -94,7 +94,7 @@
 
     </div>
   </div>
-    
+
   <div class="row">
     <div class="col-md-12">
       <div>
