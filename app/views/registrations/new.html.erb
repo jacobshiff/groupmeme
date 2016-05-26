@@ -4,7 +4,7 @@
     <h1>Welcome to GroupSlam</h1>
     <p class="lead">The private forum for creating and sharing memes in your organization.</p>
   </div>
-  
+
   <div class="row">
     <div class="col-md-12">
     <h3>Please Sign Up</h3>
@@ -14,7 +14,7 @@
     <div class="col-md-8">
       <!-- This is the new user registration form -->
       <%= form_for @user, url: registration_create_path, html: { multipart: true } do |f| %>
-      
+
       <!-- Token (Hidden field)-->
       <% if @token != nil %>
       <div><%= f.hidden_field :invite_token, value: @token %></div>
@@ -22,7 +22,7 @@
 
       <!-- Email (Hidden field)-->
       <div><%= f.hidden_field :email, value: @user.email %></div>
-      
+
       <!-- Username field -->
       <div class="form-group">
         <%= f.label :username, class: "control-label" %>
@@ -81,20 +81,22 @@
 
   </div>
 
-    
+
     <div class="col-md-4">
 
     <div class="sub-text">
       <%= f.label :avatar do %>
+      <div id="target">
         <%= image_tag 'https://s3.amazonaws.com/groupmeme/default-avatar.png', class: "registration-default-image img-responsive"%>
+      </div>
         Customize your avatar
       <% end %>
-      <%= f.file_field(:avatar, accept: 'image/png,image/gif,image/jpeg') %>
+      <%= f.file_field(:avatar, accept: 'image/png,image/gif,image/jpeg', id: 'pictureInput') %>
     </div>
 
     </div>
   </div>
-    
+
   <div class="row">
     <div class="col-md-12">
       <div>
