@@ -10,7 +10,7 @@
     <span class="overlay"><span class="fa fa-chevron-circle-right"></span></span>
     <% end %>
     <div class="card-body">
-      <div class="react" meme_parent_id="<%=meme.id%>">
+      <div class="react" meme_parent_id="<%=meme.id%>" id="index-page-reaction">
         <%= render partial: "memes/memes_reactions", locals: {meme: meme} %>
       </div>
       <h4><%= meme.title if meme.title %></h4>
