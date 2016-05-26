@@ -1,25 +1,34 @@
 <div class="page">
-  <div class="article">
-    <h3>Create New Group</h3>
-    <%= form_for @group, html: {class: "form-horizontal"} do |f| %>
-    <div class="form-group">
-      <%= f.label :title, class: 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :title %>
-      </div><br>
-      <div id="target">
-        <%= image_tag @group.image, class: "thumb", style: "width:30%"%>
-      </div>
-      <div class="sub-text">
-        <%= f.label :image, 'https://s3.amazonaws.com/groupmeme/default-group-image.png' %>
-        <%= f.file_field(:image, accept: 'image/png,image/gif,image/jpeg', id: 'pictureInput', class: 'controls') %>
-      </div><br>
-
-      <div class="form-group">
-        <%= f.submit class: 'btn btn-primary' %>
-      </div>
+  <article>
+    <div class="page-header">
+      <h1>New Group</h1>
+      <p class="lead">Add your organization to GroupSlam!</p>
     </div>
 
-    <% end %>
+    <div class="row"
+    <div class="col-md-8">
+
+      <%= form_for @group, html: {multipart: true} do |f| %>
+      <div class="form-group">
+        <%= f.label :title, class: 'control-label' %>
+        <div class="controls">
+          <%= f.text_field :title %>
+        </div><br>
+        <div id="target">
+          <%= image_tag @group.image, class: "thumb", style: "width:30%"%>
+        </div>
+        <div class="sub-text">
+          <%= f.label :image, 'https://s3.amazonaws.com/groupmeme/default-group-image.png' %>
+          <%= f.file_field(:image, accept: 'image/png,image/gif,image/jpeg', id: 'pictureInput', class: 'controls') %>
+        </div><br>
+
+        <div class="form-group">
+          <%= f.submit class: 'btn btn-primary' %>
+        </div>
+      </div>
+      <% end %>
+    </div>
   </div>
+
+</article>
 </div>

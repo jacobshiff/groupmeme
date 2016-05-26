@@ -10,7 +10,7 @@ class MemesController < ApplicationController
   def index
     # group_slug = params[:group_slug]
     # @group = Group.find_by(group_slug: group_slug)
-    @memes = Meme.where(group: @group)
+    @memes = Meme.where(group: @group).reverse
 
     #Toodoo: REFACTOR ME INTO HELPER METHOD FOR SORTING TYPE CHOOSER
     #params[:sort]  #viral, or time, or rising   /memes/by/[x]
@@ -111,7 +111,7 @@ class MemesController < ApplicationController
 
   private
   def set_meme
-    @meme ||= Meme.find(params[:id])
+    @meme ||= Meme.find_by_id(params[:id]) if Meme.find_by_id(params[:id])
   end
 
   def set_group
