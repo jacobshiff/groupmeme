@@ -22,7 +22,11 @@ class SessionsController < ApplicationController
       if @user.authenticate(user_params[:password])
         #make active sesh, bring up first group of their groups
         session[:user_id] = @user.id
-        redirect_to groups_path
+        if @user.groups.count == 1
+          redirect_to group_path(@user.groups.first.group_slug)
+        else
+          redirect_to groups_path
+        end
       else
         flash.now[:danger] = "Please confirm that you entered your username and password correctly."
         render :new
