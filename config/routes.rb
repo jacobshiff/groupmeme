@@ -76,6 +76,6 @@ Rails.application.routes.draw do
 
 #### COMMENTS
   post '/:group_slug/memes/:id/comment' => 'comments#create', as: :comment
-  delete '/:group_slug/memes/:id' => 'comments#destroy', as: 'destroy_comment'
+  delete '/comment/:id' => 'comments#destroy', as: 'destroy_comment'
 
 end
