@@ -28,8 +28,7 @@
         <li><%= link_to "Sign Out", logout_path, method: :delete %></li>
       <% end %>
       <% if !current_user %>
-          <li><%= link_to "Sign In", login_path, class: 'btn btn-primary' %></li>
-          <li><%= link_to "Sign Up", registration_new_path, class: 'btn btn-primary' %></li>
+          <li><%= button_to "Sign Up", registration_new_path, class: 'btn btn-light', method: 'get', style: "width:80%; margin-top:5px;" %></li>
       <% end %>
     </ul>
   </div><!-- end navbar-collapse -->

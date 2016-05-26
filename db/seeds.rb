@@ -71,6 +71,7 @@ jpmorgan = Group.create({
 Membership.create(group: flatiron, user: jacob, user_type: 'admin')
 Membership.create(group: flatiron, user: rachel, user_type: 'admin')
 Membership.create(group: flatiron, user: kevin, user_type: 'member')
+Membership.create(group: flatiron, user: chris, user_type: 'member')
 Membership.create(group: barnard, user: rachel, user_type: 'admin')
 Membership.create(group: jpmorgan, user: kevin, user_type: 'admin')
 Membership.create(group: jpmorgan, user: chris, user_type: 'member')

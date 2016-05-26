@@ -5,18 +5,23 @@ class RegistrationsController < ApplicationController
   def new
     if !capture_token_from_params
       flash[:danger] = "You need an invite to join GroupMeme."
-      redirect_to '/'
+      redirect_to login_path
     elsif current_user
       flash[:danger] = "You are already logged in."
       redirect_to groups_path
     else
       capture_token_from_params
       @user = User.new
+      @user.email = Invite.find_by(token: @token).recipient_email
+      @invited_group = Invite.find_by(token: @token).group.title
       if Invite.find_by(token: @token).nil? #if cannot find the token
         flash[:danger] = "Your token is not valid."
-        redirect_to '/'
+        redirect_to login_path
       else
-        @user.email = Invite.find_by(token: @token).recipient_email
+        # @user = User.new
+        # @user.email = "jacobshiff@gmail.com" #remove this line later
+        # @invited_group = "Flatiron School"
+        # ADD IN GROUP ID
       end
     end
   end
@@ -33,7 +38,7 @@ class RegistrationsController < ApplicationController
         redirect_to memes_path(group.group_slug)
       else
         flash[:danger] = "You do not have permission to join this group. Please contact the administrator."
-        redirect_to groups_path
+        redirect_to login_path
       end
     else
       #if there is an error in registration, the error message carries through to the group/memes index??
@@ -45,7 +50,7 @@ class RegistrationsController < ApplicationController
   #New action for existing user who is adding a new group
   def add_group_to_existing
     if !capture_token_from_params
-      flash[:danger] = "You need an invite to join GroupMeme."
+      flash[:danger] = "We are currently in private beta. You need an invite to join GroupMeme."
       redirect_to groups_path
     elsif
       capture_token_from_params
