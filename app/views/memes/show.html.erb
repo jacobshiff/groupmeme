@@ -13,7 +13,7 @@
       <% end %>
         <!-- Reactions div -->
         <div class="react" style="margin-top:15px;" meme_parent_id="<%=@meme.id%>">
-          <h4>
+          <h4 id="show-page-reaction">
           <%= render partial: "memes/memes_reactions", locals: {meme: @meme} %>
           </h4>
         </div>

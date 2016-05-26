@@ -1,7 +1,12 @@
+<div>
+<%= link_to "Create A New Group", new_group_path, class: 'btn btn-primary' %>
+</div>
+<br>
+
 <div class="wrapper">
   <div class="portfolio-wrapper">
 
-      <% @groups.each do |group| %>
+    <% @groups.each do |group| %>
 
       <div class="card">
         <%= link_to group_path(group.group_slug), class: "thumb" do %>
@@ -12,9 +17,7 @@
             <h4><%= group.title %>
               <h5><small><%= group.users.count %> members</small></h5>
             </div>
-      <% end %>
-      </div>
+    </div>
+    <% end %>
   </div>
 </div>
-
-<%= link_to "Create A New Group", new_group_path, class: 'btn btn-primary' %>

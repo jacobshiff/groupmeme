@@ -8,11 +8,6 @@ class SessionsController < ApplicationController
       redirect_to groups_path
       #redirect_to memes_path(current_user.groups.first.group_slug)
     end
-
-    # This is the action associated with logging in (get request)
-    # renders new.html.erb, then submits heads DOWN to....(sessions#create)
-    # | | | | | |
-    # V V V V V V  jacob i wrote this for you to get mad.
   end
 
   def create  #create a session
@@ -27,7 +22,11 @@ class SessionsController < ApplicationController
       if @user.authenticate(user_params[:password])
         #make active sesh, bring up first group of their groups
         session[:user_id] = @user.id
-        redirect_to groups_path
+        if @user.groups.count == 1
+          redirect_to group_path(@user.groups.first.group_slug)
+        else
+          redirect_to groups_path
+        end
       else
         flash.now[:danger] = "Please confirm that you entered your username and password correctly."
         render :new
@@ -40,7 +39,8 @@ class SessionsController < ApplicationController
 
   def destroy
     session.delete(:user_id)
-    redirect_to home_path
+    flash[:warning] = "You have successfully logged out."
+    redirect_to login_path
   end
 
   private

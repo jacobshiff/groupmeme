@@ -7,6 +7,8 @@ class HomeController < ApplicationController
       else
         redirect_to(groups_path)
       end
+    else
+      redirect_to 'http://itsgroupslam.com'
     end
   end
 
