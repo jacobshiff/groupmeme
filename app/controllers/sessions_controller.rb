@@ -40,7 +40,7 @@ class SessionsController < ApplicationController
   def destroy
     session.delete(:user_id)
     flash[:warning] = "You have successfully logged out."
-    redirect_to home_path
+    redirect_to login_path
   end
 
   private
