@@ -18,6 +18,7 @@
         <li><a href="/users/<%= current_user.username %>">Profile</a></li>
         <li><a href="/groups">Your Groups</a></li>
         <% if current_user && current_group %>
+          <li> <%= link_to "Create New Meme", new_memes_path(current_group.group_slug) %></li>
           <% if current_user.type(current_group) == "admin" %>
           <li><%= link_to 'Edit Group', edit_group_path(current_group.group_slug) %></li>
           <li><%= link_to 'Invite New User', invite_new_path(current_group.group_slug) %></li>
