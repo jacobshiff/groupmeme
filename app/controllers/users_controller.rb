@@ -13,35 +13,16 @@ class UsersController < ApplicationController
   end
 
   def update
-    # binding.pry
     @user = User.find_by(username: params[:username])
-    @user.update(user_params)
-
-
-    # @user.avatar = user_params[:avatar]
-    # @user.avatar.save
-
+    @user.avatar = user_params[:avatar]
+    @user.save(validate: false)
     redirect_to user_path(@user.username)
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:username,:avatar)
+    params.require(:user).permit(:username, :avatar)
   end
 
 end
-
-
-avatar = user_params[:avatar]
-@user.avatar = avatar
-@user.avatar.url
-@user.save
-
-
-@user.avatar
-@user.avatar.url
-@user.save
-@user.avatar.image
-@user.avatar.url
-@user.avatar.save
