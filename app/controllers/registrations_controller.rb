@@ -29,11 +29,12 @@ class RegistrationsController < ApplicationController
   #Create action for brand new user (new email/username AND group)
   def create
     @user = User.new(user_params)
-    token = params[:user][:invite_token]
+    @token = params[:user][:invite_token]
+    @invited_group = Invite.find_by(token: @token).group.title
     if @user.save # if successfully saved user...
       session[:user_id] = @user.id #... then set session_id
-      if token # ...and associate the new user with the group to which he was invited
-        group = Invite.find_by(token: token).group
+      if @token # ...and associate the new user with the group to which he was invited
+        group = Invite.find_by(token: @token).group
         @user.groups << group
         redirect_to memes_path(group.group_slug)
       else
@@ -43,7 +44,7 @@ class RegistrationsController < ApplicationController
     else
       #if there is an error in registration, the error message carries through to the group/memes index??
       error_type
-      render :new
+      render :new, locals: {token: @token, invited_group: @invited_group}
     end
   end
 
