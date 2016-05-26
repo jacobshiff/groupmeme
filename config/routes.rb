@@ -29,7 +29,7 @@ Rails.application.routes.draw do
 
 #### MEMES
   #Create
-  get '/:group_slug/memes/new' => 'memes#new' #IMPORTANT: If you change this route, you MUST update tag_autocomplete.js, which grabs the group_slug based on 'var group_slug = window.location.pathname.split('/')[1]'
+  get '/:group_slug/memes/new' => 'memes#new', as: 'new_meme' #IMPORTANT: If you change this route, you MUST update tag_autocomplete.js, which grabs the group_slug based on 'var group_slug = window.location.pathname.split('/')[1]'
   post '/:group_slug/memes' => 'memes#create', as: 'create_meme'
 
   #index
@@ -76,5 +76,6 @@ Rails.application.routes.draw do
 
 #### COMMENTS
   post '/:group_slug/memes/:id/comment' => 'comments#create', as: :comment
+  delete '/comment/:id' => 'comments#destroy', as: 'destroy_comment'
 
 end

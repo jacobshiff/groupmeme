@@ -1,5 +1,20 @@
 <!-- Sidebar filters -->
 <ul class="nav navbar-nav filter-portfolio">
+  <ul class="nav nav-pills nav-stacked" style="max-width: 300px;">
+    <li class="title">Sort</li>
+    <li class=<%= active?(memes_sort_path(current_group.group_slug, "viral")) %>>
+      <%= link_to "Popular", memes_sort_path(current_group.group_slug, "viral")%>
+    </li>
+    <li class=<%= active?(memes_sort_path(current_group.group_slug, "rising")) %>>
+      <%= link_to "Rising", memes_sort_path(current_group.group_slug, "rising")%>
+    </li>
+    <li class=<%= active?(memes_sort_path(current_group.group_slug, "newest")) %>>
+      <%= link_to "Newest", memes_sort_path(current_group.group_slug, "newest")%>
+    </li>
+    <li class=<%= active?(memes_sort_path(current_group.group_slug, "oldest")) %>>
+      <%= link_to "Oldest", memes_sort_path(current_group.group_slug, "oldest")%>
+    </li>
+  </ul>
   <li class="title">Tags</li>
   <li><a href="#none" data-filter="*">All</a> <span>(<%= current_group.memes.count %>)</span></li>
   <% current_group.tags.uniq.each do |tag| %>
