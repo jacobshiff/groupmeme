@@ -17,7 +17,7 @@ class Invite < ActiveRecord::Base
     recipient = User.find_by(email: recipient_email)
     if recipient
       self.recipient_id = recipient.id
-   end
+    end
   end
 
 end

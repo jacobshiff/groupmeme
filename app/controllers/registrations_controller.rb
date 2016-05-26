@@ -12,8 +12,6 @@ class RegistrationsController < ApplicationController
     else
       capture_token_from_params
       @user = User.new
-      @user.email = Invite.find_by(token: @token).recipient_email
-      @invited_group = Invite.find_by(token: @token).group.title
       if Invite.find_by(token: @token).nil? #if cannot find the token
         flash[:danger] = "Your token is not valid."
         redirect_to login_path
@@ -22,6 +20,8 @@ class RegistrationsController < ApplicationController
         # @user.email = "jacobshiff@gmail.com" #remove this line later
         # @invited_group = "Flatiron School"
         # ADD IN GROUP ID
+        @user.email = Invite.find_by(token: @token).recipient_email #this needs to be below the error or else invalid tokens will return NilClass er
+        @invited_group = Invite.find_by(token: @token).group.title
       end
     end
   end
