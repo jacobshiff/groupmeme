@@ -8,11 +8,6 @@ class SessionsController < ApplicationController
       redirect_to groups_path
       #redirect_to memes_path(current_user.groups.first.group_slug)
     end
-
-    # This is the action associated with logging in (get request)
-    # renders new.html.erb, then submits heads DOWN to....(sessions#create)
-    # | | | | | |
-    # V V V V V V  jacob i wrote this for you to get mad.
   end
 
   def create  #create a session
@@ -40,6 +35,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session.delete(:user_id)
+    flash[:warning] = "You have successfully logged out."
     redirect_to home_path
   end
 
