@@ -50,7 +50,7 @@ class RegistrationsController < ApplicationController
   #New action for existing user who is adding a new group
   def add_group_to_existing
     if !capture_token_from_params
-      flash[:danger] = "You need an invite to join GroupMeme."
+      flash[:danger] = "We are currently in private beta. You need an invite to join GroupMeme."
       redirect_to groups_path
     elsif
       capture_token_from_params
