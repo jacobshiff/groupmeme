@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   before_action :current_user
-  before_action :set_group, only: [:show, :destroy]
+  before_action :set_group, only: [:show, :destroy, :edit, :update]
   #before_action :require_login_and_access
 
   def index
@@ -29,6 +29,8 @@ class GroupsController < ApplicationController
   end
 
   def update
+    @group.update(group_params)
+    redirect_to group_path(@group.group_slug)
   end
 
   def destroy
@@ -51,7 +53,7 @@ class GroupsController < ApplicationController
   private
 
   def group_params
-    params.require(:group).permit(:title)
+    params.require(:group).permit(:title, :image)
   end
 
   def set_group
