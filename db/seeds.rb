@@ -71,6 +71,7 @@ jpmorgan = Group.create({
 Membership.create(group: flatiron, user: jacob, user_type: 'admin')
 Membership.create(group: flatiron, user: rachel, user_type: 'admin')
 Membership.create(group: flatiron, user: kevin, user_type: 'member')
+Membership.create(group: flatiron, user: chris, user_type: 'member')
 Membership.create(group: barnard, user: rachel, user_type: 'admin')
 Membership.create(group: jpmorgan, user: kevin, user_type: 'admin')
 Membership.create(group: jpmorgan, user: chris, user_type: 'member')
@@ -86,8 +87,7 @@ chewy = Meme.create({
 paired_programming = Meme.create({
     :image => File.new("#{Rails.root}/public/seed-images/paired_programming.gif"),
     :creator => jacob,
-    :group => flatiron,
-    :title => "When you've been in project mode for way too long"
+    :group => flatiron
   }
 )
 

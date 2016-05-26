@@ -1,13 +1,20 @@
-<div class="container">
-  <h1>Users in <%= current_group.title %></h1>
+<div>
+<%= link_to "Create A New Group", new_group_path, class: 'btn btn-primary' %>
+</div>
+<br>
+
+<div class="wrapper">
+  <div class="portfolio-wrapper">
 
     <% @users.each do |user| %>
-      <div class="card">
-        <%= link_to user_path(user), class: "thumb" do %>
-            <%= image_tag user.avatar %>
-        <% end %>
+
+    <div class="card">
+      <%= link_to user_path(user), class: "thumb" do %>
+      <%= image_tag user.avatar %>
+      <span class="overlay"><span class="fa fa-chevron-circle-right"></span></span>
+      <% end %>
       <div class="card-body">
-        <h4><%= link_to user.username, user_path(user) %> </h4>
+                <h4><%= link_to user.username, user_path(user) %> </h4>
         <% if user != current_user %>
           <div>
           <span class="label label-large label-info">Role: <%= user.type(current_group) %></span>
@@ -22,10 +29,13 @@
               <li><a href="#none"><%= link_to "Remove User From Group", destroy_membership_path(current_group.group_slug, user.username), :method => :delete, data: { confirm: "Really?" }%></a></li>
             </ul>
           </div><!-- end btn-group -->
+          <h5><small><%= user.memes.count %> meme(s)</small></h5>
       </div>
-        <% else %>
+          
+      <% else %>
           <span class="label label-large label-info">That's you!</span>
         <% end  %>
       </div>
     <% end %>
+</div>
 </div>

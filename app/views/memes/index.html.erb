@@ -10,10 +10,10 @@
     <span class="overlay"><span class="fa fa-chevron-circle-right"></span></span>
     <% end %>
     <div class="card-body">
-      <div class="react" meme_parent_id="<%=meme.id%>">
+      <h4 style="margin-top:-5px;"><%= meme.title if meme.title %></h4>
+      <div class="react" meme_parent_id="<%=meme.id%>" id="index-page-reaction">
         <%= render partial: "memes/memes_reactions", locals: {meme: meme} %>
       </div>
-      <h4><%= meme.title if meme.title %></h4>
       <h5><small>Posted by <%= link_to meme.creator.username, user_path(meme.creator.username)%></small></h5>
       <h5><small><a href="/<%= current_group.group_slug %>/memes/<%= meme.id %>#comments"><%= meme.comments.count %> comments</small></h5></a>
     </div><!-- end card-body -->

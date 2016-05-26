@@ -1,1 +1,4 @@
-$("div.react[meme_parent_id='<%=@meme.id%>']").html("<%=j render partial: 'memes/memes_reactions', locals: {meme: @meme} %>")
+// For meme show page
+$("div.react[meme_parent_id='<%=@meme.id%>'] h4#show-page-reaction").html("<%=j render partial: 'memes/memes_reactions', locals: {meme: @meme} %>")
+// For meme index page
+$("div#index-page-reaction.react[meme_parent_id='<%=@meme.id%>']").html("<%=j render partial: 'memes/memes_reactions', locals: {meme: @meme} %>")
