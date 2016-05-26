@@ -1,11 +1,30 @@
 <div class="page">
   <article>
     <div class="page-header">
-      <h1><%= @user.username %>'s Profile</h1>
+      <h1><%= @user.username %></h1>
+      <p class="lead">Your Profile</p>
     </div>
-    <div class="post-content">
-      <%= image_tag @user.avatar, size: '100x100' %>
-      <p class="lead" style="margin-top:20px;">member since <%= format_time(@user.created_at) %></p>
+
+    <div class="row"
+    <div class="col-md-8">
+
+      <%= form_for @user, url: user_path(@user.username), html: {class: "form-horizontal"} do |f| %>
+      <div class="form-group">
+        <div id="target">
+          <%= image_tag @user.avatar, class: "thumb", style: "width:30%"%>
+        </div>
+        <div class="sub-text">
+          <%= f.label :image, "Customize your group photo" %>
+          <%= f.file_field(:avatar, accept: 'image/png,image/gif,image/jpeg', id: 'pictureInput', class: 'controls') %>
+        </div><br>
+
+        <div class="form-group">
+          <%= f.submit class: 'btn btn-primary' %>
+        </div>
+      </div>
+      <% end %>
     </div>
-  </article>
+  </div>
+
+</article>
 </div>

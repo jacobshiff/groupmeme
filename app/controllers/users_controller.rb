@@ -9,6 +9,9 @@ class UsersController < ApplicationController
   end
 
   def update
+    @user = current_user
+    @user.update(user_params)
+    redirect_to user_path(@user.username)
   end
 
   def destroy
@@ -16,7 +19,10 @@ class UsersController < ApplicationController
     current_user.destroy
   end
 
-  def update
+  private
+
+  def user_params
+    params.require(:user).permit(:avatar)
   end
 
 end
