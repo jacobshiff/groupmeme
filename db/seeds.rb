@@ -87,8 +87,7 @@ chewy = Meme.create({
 paired_programming = Meme.create({
     :image => File.new("#{Rails.root}/public/seed-images/paired_programming.gif"),
     :creator => jacob,
-    :group => flatiron,
-    :title => "When you've been in project mode for way too long"
+    :group => flatiron
   }
 )
 
