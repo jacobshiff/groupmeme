@@ -1,3 +1,11 @@
+<div class="page">
+  <article>
+  <div class="page-header">
+    <h1>Welcome to GroupSlam</h1>
+    <p class="lead">The private forum for creating and sharing memes in your organization.</p>
+  </div>
+  <h3>Please log in</h3>
+
 <!-- This is the new user registration form -->
       <%= form_for @user, url: registration_create_path, html: { multipart: true } do |f| %>
       <!-- Token -->
@@ -35,3 +43,5 @@
 
     </div>
   <% end %>
+</article>
+</div>
