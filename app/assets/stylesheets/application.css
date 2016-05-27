@@ -202,3 +202,13 @@ div#user-input-box span {
 input#meme-title-text, input#tag-autocomplete {
   width: 90%;
 }
+
+/*overlay title*/
+.overlay p.overlay-text {
+  position: relative;
+  top: 30%;
+  bottom: 30%;
+  font-size: 16px;
+  text-align: center;
+  color: #fff;
+}
