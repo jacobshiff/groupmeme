@@ -10,7 +10,11 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
-    @user.update(user_params)
+    @user.avatar = params[:user][:avatar]
+    @user.avatar.reprocess!
+    # @user.avatar.save
+    # @user.save
+    # @user.update(user_params)
     redirect_to user_path(@user.username)
   end
 
