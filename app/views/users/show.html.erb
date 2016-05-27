@@ -9,12 +9,12 @@
     <div class="col-md-8">
 
       <%= form_for @user, url: user_path(@user.username), html: {class: "form-horizontal"} do |f| %>
-      <div class="form-group">
+      <div class="form-group" style="margin-left:10px">
         <div id="target">
-          <%= image_tag @user.avatar, class: "thumb", style: "width:30%"%>
+          <%= image_tag @user.avatar, class: "thumb", style: "width:40%"%>
         </div>
         <div class="sub-text">
-          <%= f.label :image, "Customize your group photo" %>
+          <%= f.label :image, "Customize your profile photo" %>
           <%= f.file_field(:avatar, accept: 'image/png,image/gif,image/jpeg', id: 'pictureInput', class: 'controls') %>
         </div><br>
 
