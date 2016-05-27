@@ -30,6 +30,10 @@ class GroupsController < ApplicationController
 
   def update
     @group.update(group_params)
+    if group_params[:title]
+      @group.group_slug = @group.to_slug
+      @group.save
+    end
     redirect_to group_path(@group.group_slug)
   end
 
