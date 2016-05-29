@@ -1,15 +1,15 @@
 class InvitesController < ApplicationController
 
   def new
-    if !current_user
+    if !current_user #check if logged in
       flash[:danger] = "Please log in."
       redirect_to login_path
-    elsif current_user.type(current_group) == "admin" || current_user.type(current_group) == "moderator"
+    elsif current_user.type(current_group) == "admin" || current_user.type(current_group) == "moderator" #check if have correct permissions
       @invite = Invite.new
       @invite.group = current_group
     else
-      flash[:danger] = "Sorry, you are not authorized to invite new users."
-      redirect_to group_path(current_group.group_slug)
+      flash[:danger] = "Sorry, you are not authorized to invite new users to that group."
+      redirect_to groups_path
     end
   end
 
