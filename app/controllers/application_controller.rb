@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method def format_time(time)
-    #config.time_zone = 'Eastern Time (US & Canada)' in config
+    # Changed default timezone to ET in config: "config.time_zone = 'Eastern Time (US & Canada)'"
     if time.strftime("%Y-%m-%d") == Time.now.in_time_zone.strftime("%Y-%m-%d")
       "today at #{time.strftime("%I:%M %p")}"
     else
