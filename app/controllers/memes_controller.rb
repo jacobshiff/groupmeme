@@ -96,9 +96,13 @@ class MemesController < ApplicationController
   end
 
   def destroy
-    @meme.destroy_tags
-    @meme.destroy
-    redirect_to memes_path(@meme.group.group_slug)
+    if current_user == @meme.creator #check that user is the creator of the meme
+      @meme.destroy_tags
+      @meme.destroy
+      redirect_to memes_path(@meme.group.group_slug)
+    else
+      flash.now[:danger] = "You do not have permission to delete this meme"
+    end
   end
 
   def react
