@@ -8,8 +8,8 @@ class MemesController < ApplicationController
     before_action :require_login_and_access
 
   def index
-    @memes = Meme.where(group: @current_group).reverse
-
+    @memes = Meme.where(group: @current_group).order(id: :desc)
+    # @memes = Meme.where(group: @current_group).last(9).reverse
     #Toodoo: REFACTOR ME INTO HELPER METHOD FOR SORTING TYPE CHOOSER
     #params[:sort]  #viral, or time, or rising   /memes/by/[x]
 
@@ -32,6 +32,10 @@ class MemesController < ApplicationController
     #   end
     # end
   end
+
+  # def next_memes
+  #   @memes = Meme.where(group: @current_group).last(9).reverse
+  # end
 
   def show
     #potential optimization to limit set_meme calls?
