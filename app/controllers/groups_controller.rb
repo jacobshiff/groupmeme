@@ -1,15 +1,12 @@
 class GroupsController < ApplicationController
   before_action :current_user
-  before_action :set_group, only: [:show, :destroy, :edit, :update]
-  #before_action :require_login_and_access
 
   def index
     @groups = current_user.groups
   end
 
   def show
-    redirect_to memes_path(@group.group_slug)
-    #@group = Group.find_by(group_slug: params[:group_slug])
+    redirect_to memes_path(current_group.group_slug)
   end
 
   def new
@@ -26,32 +23,46 @@ class GroupsController < ApplicationController
   end
 
   def edit
+    if_confirmed_admin_status{
+      set_group
+    }
   end
 
   def update
-    @group.update(group_params)
-    if group_params[:title]
-      @group.group_slug = @group.to_slug
-      @group.save
-    end
-    redirect_to group_path(@group.group_slug)
+    if_confirmed_admin_status{
+      set_group
+      @group.update(group_params)
+      if group_params[:title]
+        @group.group_slug = @group.to_slug
+        @group.save
+      end
+      redirect_to group_path(@group.group_slug)
+    }
   end
 
   def destroy
-    if current_user.type(@group) == "admin"
-      @group.destroy
+    if_confirmed_admin_status{
+      current_group.destroy
       redirect_to groups_path
-    else
-      flash[:danger] = "You do not have permissions to do that."
-    end
+    }
+    # if current_user.type(@group) == "admin"
+    #   @group.destroy
+    #   redirect_to groups_path
+    # else
+    #   flash[:danger] = "You do not have permissions to do that."
+    # end
   end
 
   def edit_users
-    @users = current_group.users
+    if_confirmed_admin_status{
+      @users = current_group.users
+    }
   end
 
   def user_index
-    @users = current_group.users
+    if_confirmed_admin_status{
+      @users = current_group.users
+    }
   end
 
   private
@@ -62,6 +73,15 @@ class GroupsController < ApplicationController
 
   def set_group
     @group = Group.find_by(group_slug: params[:group_slug])
+  end
+
+  def if_confirmed_admin_status
+    if current_user.type(current_group) == "admin"
+      yield
+    else
+      flash[:danger] = "You do not have permission to perform this action."
+      redirect_to groups_path
+    end
   end
 
 end
