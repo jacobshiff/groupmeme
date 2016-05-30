@@ -8,7 +8,7 @@ class InvitesController < ApplicationController
       @invite = Invite.new
       @invite.group = current_group
     else
-      flash[:danger] = "Sorry, you are not authorized to invite new users to that group."
+      flash[:danger] = "You are not authorized to invite new users to that group."
       redirect_to groups_path
     end
   end

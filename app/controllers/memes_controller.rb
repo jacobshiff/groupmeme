@@ -46,6 +46,7 @@ class MemesController < ApplicationController
   def create
     #Return to save template and create new model
     #***Return to refactor to remove this logic from the controller!****
+    
     if params[:meme][:image].nil? #if they did not load a template, use paired programming gif
       url = 'https://s3.amazonaws.com/groupmeme/paired-programming.gif'
       filetype = '.gif'
@@ -60,6 +61,7 @@ class MemesController < ApplicationController
         return
       end
       #if the size is fine, proceed
+      binding.pry
       url = params[:meme][:image].tempfile.path
       filetype = '.' + params[:meme][:image].content_type.split('/').last
       # @template = Meme.new(base_params)
@@ -72,8 +74,8 @@ class MemesController < ApplicationController
     bottom_text = params[:bottom_text]
 
 
-
-    Meme.create_meme(url, top_text, bottom_text, filetype)
+    @meme = Meme.new
+    @meme.create_meme(url, top_text, bottom_text, filetype)
 
     @new_meme = Meme.new(tag_params)
     @new_meme.image = File.open('temporary_meme' + filetype)

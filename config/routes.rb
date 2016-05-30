@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 #### TAGS
   get '/:group_slug/tags' => 'tags#index', as: 'tags'
   get '/:group_slug/memes/tags/:tag' => 'tags#show', as: 'tag'
+  get '/tags/new' => 'tags#new'
 
 #### USERS
     # Login
