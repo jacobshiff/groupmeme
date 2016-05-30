@@ -1,6 +1,6 @@
   <div class="card <%= meme.tag_class_list %>">
     <%= link_to meme_path(meme.group.group_slug, meme), class: "thumb" do %>
-    <%= image_tag(meme.image.url, 'data-src': meme.image.url) %>
+    <%= image_tag(meme.image.url(:thumb), 'data-src': meme.image.url, class: "thumb") %>
     <!--   <% if meme.title? %>
         <span class="overlay"><p class="overlay-text"><%= meme.title %></p></span>
       <% end %> -->
