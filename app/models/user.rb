@@ -29,7 +29,10 @@ class User < ActiveRecord::Base
 
   #Find user_type for user of a given group
   def type(group)
-    Membership.find_by(user: self, group: group).user_type
+    membership = Membership.find_by(user: self, group: group)
+    if membership #if the user is a member of that group...
+      membership.user_type # ... then return their membership type
+    end
   end
 
   def type=(new_type, group)
