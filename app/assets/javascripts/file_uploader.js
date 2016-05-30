@@ -3,13 +3,12 @@ $(function() {
     var files = event.target.files;
     var image = files[0]
     // here's the file size
-    console.log(image.size);
     var reader = new FileReader();
     reader.onload = function(file) {
       var img = new Image();
-      console.log(file);
       img.src = file.target.result;
       img.id="preview-image"
+      drawCanvas(img)
       $('#target').html(img);
       $('img#preview-image').css( "width", "100%" )
     }
@@ -33,6 +32,38 @@ $(function() {
     // Sets to a hidden field in form
     $('input#meme-title-input').val(title)
   })
+
+  function drawCanvas(img) {
+  var max_width = 600;
+  var max_height = 600;
+  var width = img.width;
+  var height = img.height;
+  var canvas = document.getElementById("canvas");
+  var ctx = canvas.getContext("2d");
+
+  // calculate the width and height, constraining the proportions
+  if (width > height) {
+    if (width > max_width) {
+      //height *= max_width / width;
+      height = Math.round(height *= max_width / width);
+      width = max_width;
+    }
+  } else {
+    if (height > max_height) {
+      //width *= max_height / height;
+      width = Math.round(width *= max_height / height);
+      height = max_height;
+    }
+  }
+  
+  // resize the canvas and draw the image data into it
+  canvas.width = width;
+  canvas.height = height;
+  // ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(img, 0, 0, width, height);
+  // ctx.drawImage(image, 33, 90, 104, 124, 21, 20, 87, 104);
+  }
+
 
 // // set url
 //   $('#meme-upload-submit').on('click', function(event){
