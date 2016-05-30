@@ -7,7 +7,10 @@ class Meme < ActiveRecord::Base
   belongs_to :group
 
   #paperclip validations; must include for upload
-  has_attached_file :image, styles: { thumb: ["340"] }
+  #POST PROCESSING ADDS ABOUT 50% MORE TIME TO UPLOAD. DELAYED PROCESSING??
+  has_attached_file :image, styles: { thumb: ["340"] } 
+  # This did not result in any performance improvements...
+  # process_in_background :image
   validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
 
   def update_reactions(user)

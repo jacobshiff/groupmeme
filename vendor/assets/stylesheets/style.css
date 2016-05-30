@@ -1046,8 +1046,8 @@ dl:after {
   color: #1abc9c;
 }
 .navbar .brand-text {
-  margin: 0 0 30px;
-  font-size: 14px;
+  margin: 10px 0 30px;
+  font-size: 16px;
 }
 .navbar .navbar-header {
   float: none;
