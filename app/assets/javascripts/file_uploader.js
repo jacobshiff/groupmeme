@@ -1,18 +1,26 @@
 $(function() {
   $('#pictureInput').on('change', function(event) {
     var files = event.target.files;
-    var image = files[0]
+    // var image = files[0]
+    var blob = new Blob(files);
+    var blobURL = URL.createObjectURL(blob);
     // here's the file size
     var reader = new FileReader();
     reader.onload = function(file) {
       var img = new Image();
-      img.src = file.target.result;
+      img.src = blobURL;
       img.id="preview-image"
-      drawCanvas(img)
+      var resized = drawCanvas(img)
+      var newinput = document.createElement("input");
+      newinput.type = 'hidden';
+      newinput.name = 'images[]';
+      newinput.value = resized; // put result from canvas into new hidden input
+      $('form').append(newinput);
       $('#target').html(img);
       $('img#preview-image').css( "width", "100%" )
     }
-    reader.readAsDataURL(image);
+
+    reader.readAsDataURL(blob);
     console.log(files);
   });
 
@@ -34,34 +42,35 @@ $(function() {
   })
 
   function drawCanvas(img) {
-  var max_width = 600;
-  var max_height = 600;
-  var width = img.width;
-  var height = img.height;
-  var canvas = document.getElementById("canvas");
-  var ctx = canvas.getContext("2d");
+    var max_width = 600;
+    var max_height = 600;
+    var width = img.width;
+    var height = img.height;
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
 
-  // calculate the width and height, constraining the proportions
-  if (width > height) {
-    if (width > max_width) {
-      //height *= max_width / width;
-      height = Math.round(height *= max_width / width);
-      width = max_width;
+    // calculate the width and height, constraining the proportions
+    if (width > height) {
+      if (width > max_width) {
+        //height *= max_width / width;
+        height = Math.round(height *= max_width / width);
+        width = max_width;
+      }
+    } else {
+      if (height > max_height) {
+        //width *= max_height / height;
+        width = Math.round(width *= max_height / height);
+        height = max_height;
+      }
     }
-  } else {
-    if (height > max_height) {
-      //width *= max_height / height;
-      width = Math.round(width *= max_height / height);
-      height = max_height;
-    }
-  }
   
-  // resize the canvas and draw the image data into it
-  canvas.width = width;
-  canvas.height = height;
-  // ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(img, 0, 0, width, height);
-  // ctx.drawImage(image, 33, 90, 104, 124, 21, 20, 87, 104);
+    // resize the canvas and draw the image data into it
+    canvas.width = width;
+    canvas.height = height;
+    // ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0, width, height);
+    return canvas.toDataURL("image/jpeg",0.7);
+    // ctx.drawImage(image, 33, 90, 104, 124, 21, 20, 87, 104);
   }
 
 
