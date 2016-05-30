@@ -11,6 +11,7 @@ $(function() {
       img.src = blobURL;
       img.id="preview-image"
       var resized = drawCanvas(img)
+      debugger
       var newinput = document.createElement("input");
       newinput.type = 'hidden';
       newinput.name = 'images[]';
@@ -68,6 +69,7 @@ $(function() {
     canvas.width = width;
     canvas.height = height;
     // ctx.clearRect(0, 0, canvas.width, canvas.height);
+    debugger
     ctx.drawImage(img, 0, 0, width, height);
     return canvas.toDataURL("image/jpeg",0.7);
     // ctx.drawImage(image, 33, 90, 104, 124, 21, 20, 87, 104);

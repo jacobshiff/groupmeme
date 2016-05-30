@@ -60,6 +60,7 @@ class MemesController < ApplicationController
         return
       end
       #if the size is fine, proceed
+      binding.pry
       url = params[:meme][:image].tempfile.path
       filetype = '.' + params[:meme][:image].content_type.split('/').last
       # @template = Meme.new(base_params)
