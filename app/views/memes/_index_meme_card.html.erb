@@ -1,6 +1,10 @@
   <div class="card <%= meme.tag_class_list %>">
     <%= link_to meme_path(meme.group.group_slug, meme), class: "thumb" do %> 
-      <%= image_tag(meme.image.url(:thumb), 'data-src': meme.image.url(:thumb), class: "thumb") %>
+      <% if meme.image_content_type == "image/gif" %>
+         <%= image_tag(meme.image.url, 'data-src': meme.image.url, class: "thumb") %>
+      <% else %>
+        <%= image_tag(meme.image.url(:thumb), 'data-src': meme.image.url(:thumb), class: "thumb") %>
+      <% end %>
     <% end %>
     <div class="card-body">
       <h4 style="margin-top:-5px;"><%= meme.title if meme.title %></h4>
