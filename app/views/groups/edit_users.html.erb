@@ -11,7 +11,6 @@
     <div class="card">
       <%= link_to user_path(user), class: "thumb" do %>
       <%= image_tag user.avatar %>
-      <span class="overlay"><span class="fa fa-chevron-circle-right"></span></span>
       <% end %>
       <div class="card-body">
                 <h4><%= link_to user.username, user_path(user) %> </h4>
