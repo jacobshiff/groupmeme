@@ -16,13 +16,14 @@ class Group < ActiveRecord::Base
     array.join("-")
   end
 
-  def all_tags
-    t = self.memes.collect{|meme| meme.tags.collect{|tag| tag} }
-    # the above returns an array of arrays with many repeats
-    t = t.flatten
-    t = t.uniq
-    t
-  end
+  #The code below is inefficient and unclear when it is needed...
+  # def all_tags
+  #   t = self.memes.collect{|meme| meme.tags.collect{|tag| tag} }
+  #   # the above returns an array of arrays with many repeats
+  #   t = t.flatten
+  #   t = t.uniq
+  #   t
+  # end
 
 #### I (Rachel) wrote this code in a daze...very clearly it is not needed at all
   # def self.find_groups_for_user(user)
@@ -41,9 +42,9 @@ class Group < ActiveRecord::Base
   #   return users
   # end
 
-  def all_tags
-    self.memes.collect{|meme| meme.tags.collect{|tag| tag} }
-  end
+  # def all_tags
+  #   self.memes.collect{|meme| meme.tags.collect{|tag| tag} }
+  # end
 
 
 end

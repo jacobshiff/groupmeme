@@ -15,9 +15,6 @@ class User < ActiveRecord::Base
   has_attached_file :avatar, default_url: "https://s3.amazonaws.com/groupmeme/default-avatar.png"
   validates_attachment :avatar, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
 
-  # #CarrierWave
-  # mount_uploader :avatar, AvatarUploader
-
   has_secure_password
 
   # Validations

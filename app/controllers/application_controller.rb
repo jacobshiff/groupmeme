@@ -4,15 +4,16 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   helper_method def current_user
-    @current_user = User.find_by(id: session[:user_id])
+    @current_user ||= User.find_by(id: session[:user_id])
   end
 
   helper_method def current_group
-    @current_group = Group.find_by(group_slug: params[:group_slug]) if params[:group_slug]
+    @current_group ||= Group.find_by(group_slug: params[:group_slug]) if params[:group_slug]
   end
 
   helper_method def format_time(time)
-    if time.strftime("%Y-%m-%d") == Time.now.strftime("%Y-%m-%d")
+    #config.time_zone = 'Eastern Time (US & Canada)' in config
+    if time.strftime("%Y-%m-%d") == Time.now.in_time_zone.strftime("%Y-%m-%d")
       "today at #{time.strftime("%I:%M %p")}"
     else
       time.strftime("%I:%M %p on %b %d, %Y")
