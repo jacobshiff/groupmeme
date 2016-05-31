@@ -38,7 +38,6 @@ class MemesController < ApplicationController
   # end
 
   def show
-    #potential optimization to limit set_meme calls?
   end
 
   def new
