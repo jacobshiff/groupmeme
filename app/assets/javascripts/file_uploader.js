@@ -1,16 +1,20 @@
 $(function() {
   $('#pictureInput').on('change', function(event) {
     var files = event.target.files;
+    var file = files[0]
+    // debugger  
     // var image = files[0]
-    var blob = new Blob(files);
-    var blobURL = URL.createObjectURL(blob);
+    // var blob = new Blob(files);
+    // var blobURL = URL.createObjectURL(blob);
     // here's the file size
     var reader = new FileReader();
-    reader.onload = function(file) {
+    reader.readAsArrayBuffer(file);
+    reader.onload = function(event) {
+      debugger
       var img = new Image();
       img.src = blobURL;
       img.id="preview-image";
-      var resized = drawCanvas(img);
+      var resized =   (img);
       var newinput = document.createElement("input");
       newinput.type = 'hidden';
       newinput.name = 'images[]';
