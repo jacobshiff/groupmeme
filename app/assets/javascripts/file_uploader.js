@@ -1,3 +1,12 @@
+var fileinput = document.getElementById('fileinput');
+
+var max_width = 600;
+var max_height = 600;
+
+var preview = document.getElementById('preview');
+
+var form = document.getElementById('form');
+
 $(function() {
   $('#pictureInput').on('change', function(event) {
     var files = event.target.files;
@@ -10,23 +19,41 @@ $(function() {
     var reader = new FileReader();
     reader.readAsArrayBuffer(file);
     reader.onload = function(event) {
-      debugger
-      var img = new Image();
-      img.src = blobURL;
-      img.id="preview-image";
-      var resized =   (img);
-      var newinput = document.createElement("input");
-      newinput.type = 'hidden';
-      newinput.name = 'images[]';
-      newinput.value = resized; // put result from canvas into new hidden input
-      $('form').append(newinput);
-      $('#target').html(img);
-      $('img#preview-image').css( "width", "100%" )
+      var blob = new Blob([event.target.result]);
+      window.URL = window.URL || window.webkitURL;
+      var blobURL = window.URL.createObjectURL(blob);
+      var image = new Image();
+      image.src = blobURL;
+      //preview.appendChild(image); // preview commented out, I am using the canvas instead
+      image.onload = function() {
+        // have to wait till it's loaded
+        var resized = resizeMe(image); // send it to canvas
+        var newinput = document.createElement("input");
+        newinput.type = 'hidden';
+        newinput.name = 'images[]';
+        newinput.value = resized; // put result from canvas into new hidden input
+        form.appendChild(newinput);
+      }
     }
+  };
 
-    reader.readAsDataURL(blob);
-    console.log(files);
-  });
+function readfiles(files) {
+  
+    // remove the existing canvases and hidden inputs if user re-selects new pics
+    var existinginputs = document.getElementsByName('images[]');
+    var existingcanvases = document.getElementsByTagName('canvas');
+    while (existinginputs.length > 0) { // it's a live list so removing the first element each time
+      // DOMNode.prototype.remove = function() {this.parentNode.removeChild(this);}
+      form.removeChild(existinginputs[0]);
+      preview.removeChild(existingcanvases[0]);
+    } 
+  
+    for (var i = 0; i < files.length; i++) {
+      processfile(files[i]); // process each file at once
+    }
+    fileinput.value = ""; //remove the original files from fileinput
+    // TODO remove the previous hidden inputs if user selects other files
+}
 
 
   $('textarea.meme-text').on('change', function(event){
