@@ -9,9 +9,8 @@ $(function() {
     reader.onload = function(file) {
       var img = new Image();
       img.src = blobURL;
-      img.id="preview-image"
-      var resized = drawCanvas(img)
-      debugger
+      img.id="preview-image";
+      var resized = drawCanvas(img);
       var newinput = document.createElement("input");
       newinput.type = 'hidden';
       newinput.name = 'images[]';
@@ -69,19 +68,11 @@ $(function() {
     canvas.width = width;
     canvas.height = height;
     // ctx.clearRect(0, 0, canvas.width, canvas.height);
-    debugger
     ctx.drawImage(img, 0, 0, width, height);
     return canvas.toDataURL("image/jpeg",0.7);
     // ctx.drawImage(image, 33, 90, 104, 124, 21, 20, 87, 104);
   }
 
-
-// // set url
-//   $('#meme-upload-submit').on('click', function(event){
-    
-//     var template_temp = $('img#preview-image').attr('src');
-//     $('input#template_temp').val(template_temp)
-//   })
 
 
 // Prevent enter from submitting form on tag field
@@ -98,15 +89,4 @@ $("#tag-autocomplete").bind("keypress", function (e) {
     $('#progressDivtarget').html(progress_bar_html)
   })
 
-  // $('input#meme-upload-submit').on('click', function(event){
-  //   var top_text = $('textarea#top-text').val()
-  //   var bottom_text = $('textarea#bottom-text').val()
-  //   $.ajax({
-  //     url: '/flatiron-school/memes/mememaker',
-  //     data: 'POST',
-  //     success: function(){
-  //     }
-  //   })
-  //   debugger
-  // })
 });
