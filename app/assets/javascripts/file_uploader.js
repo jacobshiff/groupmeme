@@ -13,6 +13,7 @@ function processfile(file) {
             alert( "File "+ file.name +" is not an image." );
             return false;
         }
+    var filetype = file.type;
     var reader = new FileReader();
     reader.readAsArrayBuffer(file);
     reader.onload = function(event) {
@@ -24,12 +25,17 @@ function processfile(file) {
       //preview.appendChild(image); // preview commented out, I am using the canvas instead
       image.onload = function() {
         // have to wait till it's loaded
-        var resized = resizeMe(image); // send it to canvas
+        var resized = resizeMe(image, filetype); // send it to canvas
         var newinput = document.createElement("input");
         newinput.type = 'hidden';
         newinput.name = 'images[]';
         newinput.value = resized; // put result from canvas into new hidden input
         form.appendChild(newinput);
+        var newinputImageType = document.createElement("input");
+        newinputImageType.type = 'hidden';
+        newinputImageType.name = 'filetype';
+        newinputImageType.value = filetype; // put result from canvas into new hidden input
+        form.appendChild(newinputImageType);
       }
     }
   };
@@ -62,8 +68,8 @@ fileinput.onchange = function(){
 
 // === RESIZE ====
 
-function resizeMe(img) {
-  
+function resizeMe(img, filetype) {
+  debugger
   var canvas = document.createElement('canvas');
 
   var width = img.width;
@@ -92,7 +98,7 @@ function resizeMe(img) {
   
   preview.appendChild(canvas); // do the actual resized preview
   
-  return canvas.toDataURL("image/gif",0.7); // get the data from canvas as 70% JPG (can be also PNG, etc.)
+  return canvas.toDataURL(filetype); // get the data from canvas as 70% JPG (can be also PNG, etc.)
 
 }
 

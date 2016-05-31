@@ -49,11 +49,19 @@ class MemesController < ApplicationController
     #***Return to refactor to remove this logic from the controller!****
     
     image_uri = params[:images][0]
+    filetype = '.' + params[:filetype].split('/').last
+    filetype_full = params[:filetype]
+    
+    File.open('downscaled' + filetype, 'wb') do|f|
+      f.write(Base64.decode64(image_uri["data:#{filetype_full};base64,".length .. -1]))
+    end
+
+    # binding.pry
+    # Base64.decode64(image_uri['data:image/png;base64,'.length .. -1])
+    # image_uri = params[:images][0]
     # RETURN TO GET RID OF THIS HARDCODING
-    content_type = 'image/png'
-    decoded_image = decode_base64_image(image_uri, content_type)
+    decoded_image = decode_base64_image(image_uri, filetype_full)
     url = decoded_image.path
-    filetype = '.png'
 
     # if params[:meme][:image].nil? #if they did not load a template, use paired programming gif
     #   url = 'https://s3.amazonaws.com/groupmeme/paired-programming.gif'
@@ -141,35 +149,18 @@ class MemesController < ApplicationController
     params.require(:meme).permit(:image)
   end
 
-  def decode_base64_image(image_uri, content_type)
-      decoded_data = Base64.decode64(image_uri)
-      # data = StringIO.new(decoded_data)
-      file = Tempfile.new(['test', '.png']) 
+  def decode_base64_image(image_uri, filetype_full)
+  # begin
+      decoded_data = Base64.decode64(image_uri["data:#{filetype_full};base64,".length .. -1])
+      filetype = '.' + filetype_full.split('/').last
+      file = Tempfile.new(['downscaled', filetype]) 
       file.binmode
-      file.write decoded_data
+      file.write(decoded_data)
+      file.close
       return file
-    # begin
-    #   decoded_data = Base64.decode64(image_uri)
-    #   # data = StringIO.new(decoded_data)
-    #   file = Tempfile.new(['test', '.png']) 
-    #   file.binmode
-    #   file.write decoded_data
-      
-    #   # data.class_eval do
-    #   #   attr_accessor :content_type, :original_filename, :tempfile
-    #   # end
-    #   # binding.pry
-    #   # data.content_type = content_type
-    #   # binding.pry
-    #   # data.original_filename = File.basename("filler_name") #File.basename(original_filename)
-    #   # data.tempfile = 
-    #   # binding.pry
-    #   return file
-    # ensure
-    #   file.close
-    #   file.unlink
-    # end
-  
+  # ensure
+    # file.unlink
+  # end
   end
 
 
