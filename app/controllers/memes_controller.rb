@@ -52,14 +52,10 @@ class MemesController < ApplicationController
     filetype = '.' + params[:filetype].split('/').last
     filetype_full = params[:filetype]
     
-    File.open('downscaled' + filetype, 'wb') do|f|
-      f.write(Base64.decode64(image_uri["data:#{filetype_full};base64,".length .. -1]))
-    end
+    # File.open('downscaled' + filetype, 'wb') do|f|
+    #   f.write(Base64.decode64(image_uri["data:#{filetype_full};base64,".length .. -1]))
+    # end
 
-    # binding.pry
-    # Base64.decode64(image_uri['data:image/png;base64,'.length .. -1])
-    # image_uri = params[:images][0]
-    # RETURN TO GET RID OF THIS HARDCODING
     decoded_image = decode_base64_image(image_uri, filetype_full)
     url = decoded_image.path
 
