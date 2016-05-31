@@ -44,35 +44,41 @@ class MemesController < ApplicationController
   end
 
   def create
+    
     #Return to save template and create new model
     #***Return to refactor to remove this logic from the controller!****
-    if params[:meme][:image].nil? #if they did not load a template, use paired programming gif
-      url = 'https://s3.amazonaws.com/groupmeme/paired-programming.gif'
-      filetype = '.gif'
-    else #otherwise use their uploaded image as the template
+    
+    image_uri = params[:images][0]
+    # RETURN TO GET RID OF THIS HARDCODING
+    content_type = 'image/png'
+    decoded_image = decode_base64_image(image_uri, content_type)
+    url = decoded_image.path
+    filetype = '.png'
 
-      #but first check filesize
-      image_size_in_mb = params[:meme][:image].size / 1000000.0
-      if image_size_in_mb > 5
-        flash[:danger] = "The maximum upload size is 5 MB"
-        @meme = Meme.new
-        render :new
-        return
-      end
+    # if params[:meme][:image].nil? #if they did not load a template, use paired programming gif
+    #   url = 'https://s3.amazonaws.com/groupmeme/paired-programming.gif'
+    #   filetype = '.gif'
+    # else #otherwise use their uploaded image as the template
+
+    #   #but first check filesize
+    #   image_size_in_mb = params[:meme][:image].size / 1000000.0
+    #   if image_size_in_mb > 5
+    #     flash[:danger] = "The maximum upload size is 5 MB"
+    #     @meme = Meme.new
+    #     render :new
+    #     return
+    #   end
       #if the size is fine, proceed
-      binding.pry
-      url = params[:meme][:image].tempfile.path
-      filetype = '.' + params[:meme][:image].content_type.split('/').last
+      # url = params[:meme][:image].tempfile.path
+      # filetype = '.' + params[:meme][:image].content_type.split('/').last
       # @template = Meme.new(base_params)
       # @template.save
       # url = @template.image.url
       # filetype = '.' + @template.image_content_type.split('/').last
-    end
+    # end
 
     top_text = params[:top_text]
     bottom_text = params[:bottom_text]
-
-
 
     Meme.create_meme(url, top_text, bottom_text, filetype)
 
@@ -134,5 +140,37 @@ class MemesController < ApplicationController
   def base_params
     params.require(:meme).permit(:image)
   end
+
+  def decode_base64_image(image_uri, content_type)
+      decoded_data = Base64.decode64(image_uri)
+      # data = StringIO.new(decoded_data)
+      file = Tempfile.new(['test', '.png']) 
+      file.binmode
+      file.write decoded_data
+      return file
+    # begin
+    #   decoded_data = Base64.decode64(image_uri)
+    #   # data = StringIO.new(decoded_data)
+    #   file = Tempfile.new(['test', '.png']) 
+    #   file.binmode
+    #   file.write decoded_data
+      
+    #   # data.class_eval do
+    #   #   attr_accessor :content_type, :original_filename, :tempfile
+    #   # end
+    #   # binding.pry
+    #   # data.content_type = content_type
+    #   # binding.pry
+    #   # data.original_filename = File.basename("filler_name") #File.basename(original_filename)
+    #   # data.tempfile = 
+    #   # binding.pry
+    #   return file
+    # ensure
+    #   file.close
+    #   file.unlink
+    # end
+  
+  end
+
 
 end
