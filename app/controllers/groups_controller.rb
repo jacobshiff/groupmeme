@@ -23,13 +23,13 @@ class GroupsController < ApplicationController
   end
 
   def edit
-    if_confirmed_admin_status{
+    confirmed_admin_status?{
       set_group
     }
   end
 
   def update
-    if_confirmed_admin_status{
+    confirmed_admin_status?{
       set_group
       @group.update(group_params)
       if group_params[:title]
@@ -41,7 +41,7 @@ class GroupsController < ApplicationController
   end
 
   def destroy
-    if_confirmed_admin_status{
+    confirmed_admin_status?{
       current_group.destroy
       redirect_to groups_path
     }
@@ -54,13 +54,13 @@ class GroupsController < ApplicationController
   end
 
   def edit_users
-    if_confirmed_admin_status{
+    confirmed_admin_status?{
       @users = current_group.users
     }
   end
 
   def user_index
-    if_confirmed_admin_status{
+    confirmed_admin_status?{
       @users = current_group.users
     }
   end
@@ -75,7 +75,7 @@ class GroupsController < ApplicationController
     @group = Group.find_by(group_slug: params[:group_slug])
   end
 
-  def if_confirmed_admin_status
+  def confirmed_admin_status?
     if current_user.type(current_group) == "admin"
       yield
     else

@@ -1,13 +1,13 @@
 class UsersController < ApplicationController
 
   def show
-    if_confirmed_user_permission{ #confirm that the user has the right permission...
+    confirmed_user_permission?{ #confirm that the user has the right permission...
       @user = current_user
     }
   end
 
   def update
-    if_confirmed_user_permission{
+    confirmed_user_permission?{
       @user = current_user
       @user.avatar = params[:user][:avatar]
       @user.avatar.reprocess!
@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    if_confirmed_user_permission{
+    confirmed_user_permission?{
       current_user.destroy_memberships
       current_user.destroy
     }
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     params.require(:user).permit(:avatar)
   end
 
-  def if_confirmed_user_permission
+  def confirmed_user_permission?
     if current_user.username == params[:username] #check that user from session id is same as user from params (i.e. user they are trying to edit)
       yield
     else

@@ -9,9 +9,16 @@ class Meme < ActiveRecord::Base
   #paperclip validations; must include for upload
   #POST PROCESSING ADDS ABOUT 50% MORE TIME TO UPLOAD. DELAYED PROCESSING??
   has_attached_file :image, styles: { thumb: ["340"] } 
+  before_post_process :skip_for_gif
+
   # This did not result in any performance improvements...
   # process_in_background :image
   validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
+
+  #I dont' beleive this is working... return to correct?
+  def skip_for_gif
+    ! %w(image/gif).include?(image_content_type)
+  end
 
   def update_reactions(user)
     user_reacted?(user) ? unreact(user) : react(user)
