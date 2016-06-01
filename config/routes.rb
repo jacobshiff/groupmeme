@@ -56,7 +56,7 @@ Rails.application.routes.draw do
 
   # User path
   get '/users/:username' => 'users#show', as: 'user'
-  get '/users/:username/edit' => 'users#edit', as: 'edit_user'
+  # get '/users/:username/edit' => 'users#edit', as: 'edit_user' ## Editing happens at the show page
   patch '/users/:username' => 'users#update'
   delete '/users/:username' => 'users#destroy'
 
@@ -76,5 +76,6 @@ Rails.application.routes.draw do
 
 #### COMMENTS
   post '/:group_slug/memes/:id/comment' => 'comments#create', as: :comment
+  delete '/comment/:id' => 'comments#destroy', as: 'destroy_comment'
 
 end

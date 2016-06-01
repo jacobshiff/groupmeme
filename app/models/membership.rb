@@ -4,7 +4,7 @@ class Membership < ActiveRecord::Base
 
   def self.find_user_type(user_id, group_id)
     membership = self.find_by(user_id: user_id, group_id: group_id)
-    if !!membership
+    if membership
       membership.user_type
     end
   end

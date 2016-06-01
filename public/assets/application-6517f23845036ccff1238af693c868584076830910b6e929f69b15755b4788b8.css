@@ -9076,8 +9076,8 @@ dl:after {
   color: #1abc9c;
 }
 .navbar .brand-text {
-  margin: 0 0 30px;
-  font-size: 18px;
+  margin: 10px 0 30px;
+  font-size: 16px;
 }
 .navbar .navbar-header {
   float: none;
@@ -12242,12 +12242,12 @@ body .ui-tooltip {
 
  */
 
-/* line 6, /Users/pulsifer/Development/projects/groupmeme/groupmeme/app/assets/stylesheets/memes.scss */
+/* line 6, /Users/flatironschool/Development/code/groupmeme/app/assets/stylesheets/memes.scss */
 .index-meme-container {
   width: 100%;
 }
 
-/* line 9, /Users/pulsifer/Development/projects/groupmeme/groupmeme/app/assets/stylesheets/memes.scss */
+/* line 9, /Users/flatironschool/Development/code/groupmeme/app/assets/stylesheets/memes.scss */
 .index-meme {
   max-height: 50px;
   max-width: 50px;
@@ -12466,4 +12466,13 @@ input#meme-title-text, input#tag-autocomplete {
   font-size: 16px;
   text-align: center;
   color: #fff;
+}
+
+/*Custom CSS for deleting comment*/
+#deleteComment{
+  display: none;
+}
+
+li.commentItem:hover #deleteComment{
+     display: block;   
 }

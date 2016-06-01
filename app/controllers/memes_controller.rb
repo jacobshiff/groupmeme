@@ -8,35 +8,36 @@ class MemesController < ApplicationController
     before_action :require_login_and_access
 
   def index
-    # group_slug = params[:group_slug]
-    # @group = Group.find_by(group_slug: group_slug)
-    @memes = Meme.where(group: @group).reverse
-
+    @memes = Meme.where(group: @current_group).order(id: :desc)
+    # @memes = Meme.where(group: @current_group).last(9).reverse
     #Toodoo: REFACTOR ME INTO HELPER METHOD FOR SORTING TYPE CHOOSER
     #params[:sort]  #viral, or time, or rising   /memes/by/[x]
 
-    if params[:sort]   #how do we wish to mutate-sort our localvar, @memes?
-      #if it exists
-      case (params[:sort])
-      when "viral"
-        #sort virally
-        @memes = @memes.sort_by {|meme| - meme.reactions.count}
-      when "newest"
-        #sort chrono
-        @memes = @memes.sort_by(&:created_at).reverse
-      when "oldest"
-        @memes = @memes.sort_by(&:created_at)
-      when "rising"
-        #sort rising
-        @memes = @memes.sort_by {|meme| - meme.reactions.where(created_at: (Time.now - 1.hour)..Time.now).count}
-      else
-        flash[:warning] = "What exactly are you trying to do here, pal?"
-      end
-    end
+    # if params[:sort]   #how do we wish to mutate-sort our localvar, @memes?
+    #   #if it exists
+    #   case (params[:sort])
+    #   when "viral"
+    #     #sort virally
+    #     @memes = @memes.sort_by {|meme| - meme.reactions.count}
+    #   when "newest"
+    #     #sort chrono
+    #     @memes = @memes.sort_by(&:created_at).reverse
+    #   when "oldest"
+    #     @memes = @memes.sort_by(&:created_at)
+    #   when "rising"
+    #     #sort rising
+    #     @memes = @memes.sort_by {|meme| - meme.reactions.where(created_at: (Time.now - 1.hour)..Time.now).count}
+    #   else
+    #     flash[:warning] = "What exactly are you trying to do here, pal?"
+    #   end
+    # end
   end
 
+  # def next_memes
+  #   @memes = Meme.where(group: @current_group).last(9).reverse
+  # end
+
   def show
-    #potential optimization to limit set_meme calls?
   end
 
   def new
@@ -107,9 +108,13 @@ class MemesController < ApplicationController
   end
 
   def destroy
-    @meme.destroy_tags
-    @meme.destroy
-    redirect_to memes_path(@meme.group.group_slug)
+    if current_user == @meme.creator #check that user is the creator of the meme
+      @meme.destroy_tags
+      @meme.destroy
+      redirect_to memes_path(@meme.group.group_slug)
+    else
+      flash.now[:danger] = "You do not have permission to delete this meme"
+    end
   end
 
   def react
@@ -128,7 +133,8 @@ class MemesController < ApplicationController
   end
 
   def set_group
-    @group = Group.find_by(group_slug: params[:group_slug])
+    # @group = Group.find_by(group_slug: params[:group_slug])
+    @current_group ||= Group.find_by(group_slug: params[:group_slug]) if params[:group_slug]
   end
 
   def meme_params
