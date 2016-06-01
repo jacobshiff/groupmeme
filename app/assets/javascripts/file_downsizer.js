@@ -32,6 +32,11 @@ $(function() {
   function gifReader(files){
     var image = files[0]
     var reader = new FileReader();
+    var newinputImageType = document.createElement("input");
+    newinputImageType.type = 'hidden';
+    newinputImageType.name = 'filetype';
+    newinputImageType.value = image.type; // put result from canvas into new hidden input
+    form.appendChild(newinputImageType);
     reader.onload = function(file) {
       var img = new Image();
       img.src = file.target.result;
