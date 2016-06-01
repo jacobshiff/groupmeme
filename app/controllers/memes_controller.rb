@@ -49,15 +49,28 @@ class MemesController < ApplicationController
     #***Return to refactor to remove this logic from the controller!****
     
     image_uri = params[:images][0]
-    filetype = '.' + params[:filetype].split('/').last
     filetype_full = params[:filetype]
+
+    top_text = params[:top_text]
+    bottom_text = params[:bottom_text]
+    
     
     # File.open('downscaled' + filetype, 'wb') do|f|
     #   f.write(Base64.decode64(image_uri["data:#{filetype_full};base64,".length .. -1]))
     # end
 
+    filetype = '.' + filetype_full.split('/').last
+
     decoded_image = decode_base64_image(image_uri, filetype_full)
     url = decoded_image.path
+
+    Meme.create_meme(url, top_text, bottom_text, filetype)
+
+    @new_meme = Meme.new(tag_params)
+    @new_meme.image = File.open('temporary_meme' + filetype)
+    @new_meme.title = title_params
+    @new_meme.group = Group.find_by(group_slug: params[:group_slug])
+    @new_meme.creator = current_user
 
     # if params[:meme][:image].nil? #if they did not load a template, use paired programming gif
     #   url = 'https://s3.amazonaws.com/groupmeme/paired-programming.gif'
@@ -80,17 +93,6 @@ class MemesController < ApplicationController
       # url = @template.image.url
       # filetype = '.' + @template.image_content_type.split('/').last
     # end
-
-    top_text = params[:top_text]
-    bottom_text = params[:bottom_text]
-
-    Meme.create_meme(url, top_text, bottom_text, filetype)
-
-    @new_meme = Meme.new(tag_params)
-    @new_meme.image = File.open('temporary_meme' + filetype)
-    @new_meme.title = title_params
-    @new_meme.group = Group.find_by(group_slug: params[:group_slug])
-    @new_meme.creator = current_user
 
 
     if @new_meme.save
