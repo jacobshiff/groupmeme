@@ -23,9 +23,9 @@
             <!-- Creator -->
               <h5>Posted by: <%= @meme.creator.username %> - <%=format_time(@meme.created_at)%></h5>
               <!-- Tags -->
-                <% @meme.tags.each do |tag| %>
-                <span class="label label-info"><%= tag.name %></span>
-                <% end %>
+              <% @meme.tags.each do |tag| %>
+                <span class="label label-info"><%= link_to tag.name, tag_path(current_group.group_slug, tag.slug), {:style=>'color:#FFFFFF;'}%></span>
+              <% end %>
             </div>
           </div>
         </div>
