@@ -8,4 +8,8 @@ module ApplicationHelper
     end
   end
 
+  def slug
+    current_group.group_slug if current_group
+  end
+
 end
