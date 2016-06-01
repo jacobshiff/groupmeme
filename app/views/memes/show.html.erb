@@ -3,7 +3,7 @@
   <article>
 
   <!-- Image and title -->
-  
+
   <% if @meme %> <!-- Check if it found the meme -->
         <div class="page-header">
           <div id="portfolio-carousel" class="carousel slide" data-ride="carousel">
@@ -42,6 +42,7 @@
             <div class="actionBox">
               <ul class="commentList">
                 <% @meme.comments.each do |comment| %>
+                <li id="comment-<%= comment.id %>" class="commentItem">
                 <li>
                   <div class="commenterImage">
                     <%= image_tag comment.user.avatar %>
@@ -85,7 +86,7 @@
         </div>
 
   <% end %>
-      
+
   </article>
 
 
