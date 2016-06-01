@@ -32,6 +32,8 @@ function submitComment(content, url){
 
 function build_new_comment(response){
   // rewrite alt
-  var output = '<li><div class="commenterImage"><img src="' + response.user_avatar + '" alt="' + response.username + 'avatar" /></div><div class="commentText"><p><strong><a href="/users/' + response.username + '">'+ response.username + ' </a></strong>' + response.content + '</p> <span class="date sub-text">' + response.time + '</span></div></li>'
+  comment = response
+  var output = '<li class="commentItem"><div class="commenterImage"><img src="' + comment.user_avatar + '" alt="' + comment.username + 'avatar" /></div><div class="commentText"><p><strong><a href="/users/' + comment.username + '">'+comment.username +'</a></strong> '+ comment.content +'</p><span class="date sub-text">'+ comment.time +'</span></div><div class="deleteComment"><a data-remote="true" rel="nofollow" data-method="delete" href="/comment/' + comment.id + '" title="Delete this comment"><span><i class="fa fa-times fa-fw grey"></i></span></a></div></li>'
   return output
+
 }
