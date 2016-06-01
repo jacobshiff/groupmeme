@@ -8,6 +8,14 @@ $(function() {
 
   var form = document.getElementById('form');
 
+  fileinput.onchange = function(){
+    if ( !( window.File && window.FileReader && window.FileList && window.Blob ) ) {
+      alert('The File APIs are not fully supported in this browser.');
+      return false;
+      }
+    readfiles(fileinput.files);
+  }
+
   function processfile(file) {  
       if( !( /image/i ).test( file.type ) )
           {
@@ -57,14 +65,6 @@ $(function() {
       }
       fileinput.value = ""; //remove the original files from fileinput
       // TODO remove the previous hidden inputs if user selects other files
-  }
-
-  fileinput.onchange = function(){
-    if ( !( window.File && window.FileReader && window.FileList && window.Blob ) ) {
-      alert('The File APIs are not fully supported in this browser.');
-      return false;
-      }
-    readfiles(fileinput.files);
   }
 
   // === RESIZE ====
