@@ -16,10 +16,10 @@
       <div id="user-input-box" style="margin-left: 40px">
       
         <!-- Form -->
-        <%= form_for @meme, url: create_meme_path(params[:group_slug]) do |f| %>
+        <%= form_for @meme, url: create_meme_path(params[:group_slug]), html: { id: 'form' } do |f| %>
           
           <h4 style="margin-top:18px;">Select your background image. GIFs, JPGs, PNGs are accepted.</h4>
-          <%= f.file_field(:image, accept: 'image/png,image/gif,image/jpeg', id: 'pictureInput', class:'controls') %>
+          <%= f.file_field(:image, accept: 'image/png,image/gif,image/jpeg', id: 'fileinput', class:'controls') %>
 
           <%= f.hidden_field :title, id:"meme-title-input" %>
           <%= hidden_field_tag :top_text %>

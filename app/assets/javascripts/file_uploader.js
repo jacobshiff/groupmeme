@@ -1,23 +1,5 @@
+// See file_downsizer.js for filesizing code
 $(function() {
-  $('#pictureInput').on('change', function(event) {
-    var files = event.target.files;
-    var image = files[0]
-    // here's the file size
-    console.log(image.size);
-    var reader = new FileReader();
-    reader.onload = function(file) {
-      var img = new Image();
-      console.log(file);
-      img.src = file.target.result;
-      img.id="preview-image"
-      $('#target').html(img);
-      $('img#preview-image').css( "width", "100%" )
-    }
-    reader.readAsDataURL(image);
-    console.log(files);
-  });
-
-
   $('textarea.meme-text').on('change', function(event){
     var top_text = $('textarea#top-text').val()
     var bottom_text = $('textarea#bottom-text').val()
@@ -34,21 +16,12 @@ $(function() {
     $('input#meme-title-input').val(title)
   })
 
-// // set url
-//   $('#meme-upload-submit').on('click', function(event){
-    
-//     var template_temp = $('img#preview-image').attr('src');
-//     $('input#template_temp').val(template_temp)
-//   })
-
-
-// Prevent enter from submitting form on tag field
-$("#tag-autocomplete").bind("keypress", function (e) {
-    if (e.keyCode == 13) {
-        return false;
-    }
-});
-
+  // Prevent enter from submitting form on tag field
+  $("#tag-autocomplete").bind("keypress", function (e) {
+      if (e.keyCode == 13) {
+          return false;
+      }
+  });
 
   // progress bar
   $('#meme-upload-submit').on('click', function(event){    
@@ -56,15 +29,4 @@ $("#tag-autocomplete").bind("keypress", function (e) {
     $('#progressDivtarget').html(progress_bar_html)
   })
 
-  // $('input#meme-upload-submit').on('click', function(event){
-  //   var top_text = $('textarea#top-text').val()
-  //   var bottom_text = $('textarea#bottom-text').val()
-  //   $.ajax({
-  //     url: '/flatiron-school/memes/mememaker',
-  //     data: 'POST',
-  //     success: function(){
-  //     }
-  //   })
-  //   debugger
-  // })
 });
