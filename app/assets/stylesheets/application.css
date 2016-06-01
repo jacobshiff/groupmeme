@@ -221,3 +221,14 @@ input#meme-title-text, input#tag-autocomplete {
   text-align: center;
   color: #fff;
 }
+
+/*Custom CSS for deleting comment*/
+
+li.commentItem:hover .deleteComment{
+  visibility: visible;
+}
+
+div.deleteComment{
+  visibility: hidden;
+  position: relative;
+}
