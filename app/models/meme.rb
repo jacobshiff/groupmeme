@@ -53,6 +53,24 @@ class Meme < ActiveRecord::Base
     end
   end
 
+  #MEME DOWNSIZING
+  def self.generate_meme(image_uri, filetype_full, filetype, top_text, bottom_text)
+    begin
+    tempfile = Tempfile.new(['downscaled', filetype]) 
+    url = self.decode_base64_image(image_uri, filetype_full, filetype, tempfile).path
+    self.create_meme(url, top_text, bottom_text, filetype)
+    ensure
+      tempfile.unlink #deletes the tempfile
+    end
+  end
+
+  def self.decode_base64_image(image_uri, filetype_full, filetype, tempfile)
+    decoded_data = Base64.decode64(image_uri["data:#{filetype_full};base64,".length .. -1])
+    tempfile.binmode
+    tempfile.write(decoded_data)
+    tempfile.close
+    return tempfile
+  end
 
   def self.create_meme(url, top_text, bottom_text, filetype)
     open(url, 'rb') do |f|
