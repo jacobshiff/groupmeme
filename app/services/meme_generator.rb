@@ -31,9 +31,13 @@ class MemeGenerator
   def generate
     case filetype
     when "image/gif"
-      generate_meme_gif
+      if image_size > 5
+        return {meme: nil, notice: "The maximum upload size is 5 MB"}
+      else
+        generate_meme
+      end
     when nil
-      generate_meme_default
+      generate_meme
     when "image/jpeg", "image/png", "image/tiff"
       generate_meme_static
     else
@@ -41,25 +45,24 @@ class MemeGenerator
     end
   end
 
-  def generate_meme_gif
-    if image_size > 5
-      return {meme: nil, notice: "The maximum upload size is 5 MB"}
-    else
-      create_meme_image #this will dump a meme image into root directory
-      new_meme = create_meme_object
-      return {meme: new_meme, notice: ""}
-    end
-  end
-
-  def generate_meme_default
-    create_meme_image
-    new_meme = create_meme_object
+  def generate_meme
+    new_meme = create_meme
     return {meme: new_meme, notice: ""}
   end
 
   def generate_meme_static
-    generate_downsized_meme_image #this will dump a meme image into root directory
-    new_meme = create_meme_object
+    begin
+        filetype_extension = self.filetype_extension
+        tempfile = Tempfile.new(['downscaled', filetype_extension]) 
+        self.url = decode_base64_image(tempfile).path
+        generate_meme
+      ensure
+        tempfile.unlink #deletes the tempfile
+      end
+  end
+
+  def generate_meme_default
+    new_meme = create_meme
     return {meme: new_meme, notice: ""}
   end
 
@@ -67,18 +70,6 @@ class MemeGenerator
     return {meme: nil, notice: "This is not a valid file type"}
   end
 
-  def generate_downsized_meme_image
-    begin
-      filetype_extension = self.filetype_extension
-      tempfile = Tempfile.new(['downscaled', filetype_extension]) 
-      self.url = decode_base64_image(tempfile).path
-      create_meme_image
-      new_meme = create_meme_object
-      return {meme: new_meme, notice: ""}
-    ensure
-      tempfile.unlink #deletes the tempfile
-    end
-  end
 
   def decode_base64_image(tempfile)
     filetype = self.filetype
@@ -90,25 +81,25 @@ class MemeGenerator
     return tempfile
   end
 
-  def create_meme_image
+  def create_meme
     top_text = self.top_text
     bottom_text = self.bottom_text
     open(self.url, 'rb') do |f|
-      i = MemeCaptain.meme(f, [
+      image_magick = MemeCaptain.meme(f, [
         MemeCaptain::TextPos.new(top_text, 0.10, 0.10, 0.80, 0.20,
           :fill => 'white', :font => 'Impact-Regular'),
         MemeCaptain::TextPos.new(bottom_text, 0.10, 0.70, 0.80, 0.2,
           :fill => 'white', :font => 'Impact-Regular'),
         # MemeCaptain::TextPos.new('test', 10, 10, 50, 25)
         ])
-      i.write('temporary_meme' + self.filetype_extension)
+      create_meme_object(image_magick)
     end
   end
 
-  def create_meme_object
+  def create_meme_object(image_magick)
     new_meme = Meme.new(self.tag_params)
     new_meme.title = self.title
-    new_meme.image = File.open('temporary_meme' + self.filetype_extension)
+    new_meme.image = StringIO.open(image_magick.to_blob)
     new_meme.group = Group.find_by(group_slug: self.group_slug)
     new_meme.creator = current_user
     new_meme
