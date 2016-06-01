@@ -18,7 +18,7 @@ $(function() {
       }
     else {
       if(file_type === "image/gif"){
-        debugger
+        gifReader(fileinput.files)
       }
       else if (file_type === "image/jpeg" || file_type === "image/jpeg" || file_type === "image/png" || file_type === "image/tiff") {
         downsizeReader(fileinput.files) 
@@ -28,6 +28,20 @@ $(function() {
       }
     }
   }
+
+  function gifReader(files){
+    var image = files[0]
+    var reader = new FileReader();
+    reader.onload = function(file) {
+      var img = new Image();
+      img.src = file.target.result;
+      img.id="preview-image"
+      $('#target').html(img);
+      $('img#preview-image').css( "width", "100%" )
+    }
+    reader.readAsDataURL(image);
+  }
+
 
   function downsizeReader(files) {
     

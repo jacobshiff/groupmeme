@@ -56,20 +56,42 @@ class MemesController < ApplicationController
     #Capture parameters
     top_text = params[:top_text]
     bottom_text = params[:bottom_text]
-    image_uri = params[:images][0]
-    filetype_full = params[:filetype]
 
-    filetype = '.' + filetype_full.split('/').last
+    if params[:meme][:image].content_type == "image/gif"      
+      image_size_in_mb = params[:meme][:image].size / 1000000.0
+      if image_size_in_mb > 5
+        flash[:danger] = "The maximum upload size is 5 MB"
+        @meme = Meme.new
+        render :new
+        return
+      end
+      if #the size is fine, proceed
+        url = params[:meme][:image].tempfile.path
+        filetype = '.' + params[:meme][:image].content_type.split('/').last
+        @template = Meme.new(base_params)
+        @template.save
+        url = @template.image.url
+        filetype = '.' + @template.image_content_type.split('/').last
+        Meme.create_meme(url, top_text, bottom_text, filetype)
+      end
+    else
+      binding.pry
+      image_uri = params[:images][0]
+      filetype_full = params[:filetype]
+      filetype = '.' + filetype_full.split('/').last
+      Meme.generate_meme(image_uri, filetype_full, filetype, top_text, bottom_text)
+    end
+    
+    
     
     # File.open('downscaled' + filetype, 'wb') do|f|
     #   f.write(Base64.decode64(image_uri["data:#{filetype_full};base64,".length .. -1]))
     # end
 
-    Meme.generate_meme(image_uri, filetype_full, filetype, top_text, bottom_text)
+    
 
     # url = Meme.decode_base64_image(image_uri, filetype_full).path
     # binding.pry
-    # Meme.create_meme(url, top_text, bottom_text, filetype)
     
     # Meme.set_meme(@new_meme, filetype)
 
@@ -83,21 +105,21 @@ class MemesController < ApplicationController
     # else #otherwise use their uploaded image as the template
 
     #   #but first check filesize
-    #   image_size_in_mb = params[:meme][:image].size / 1000000.0
-    #   if image_size_in_mb > 5
-    #     flash[:danger] = "The maximum upload size is 5 MB"
-    #     @meme = Meme.new
-    #     render :new
-    #     return
-    #   end
-      #if the size is fine, proceed
-      # url = params[:meme][:image].tempfile.path
-      # filetype = '.' + params[:meme][:image].content_type.split('/').last
-      # @template = Meme.new(base_params)
-      # @template.save
-      # url = @template.image.url
-      # filetype = '.' + @template.image_content_type.split('/').last
-    # end
+      image_size_in_mb = params[:meme][:image].size / 1000000.0
+      if image_size_in_mb > 5
+        flash[:danger] = "The maximum upload size is 5 MB"
+        @meme = Meme.new
+        render :new
+        return
+      end
+      if #the size is fine, proceed
+        url = params[:meme][:image].tempfile.path
+        filetype = '.' + params[:meme][:image].content_type.split('/').last
+        @template = Meme.new(base_params)
+        @template.save
+        url = @template.image.url
+        filetype = '.' + @template.image_content_type.split('/').last
+      end
 
 
     if @new_meme.save
