@@ -19,13 +19,13 @@ class MemesController < ApplicationController
   end
 
   def create
-    
+
     #Return to save template and create new model?
-    
+
     #Create new_meme instance, to be modified later
     @new_meme = Meme.new(tag_params)
     @new_meme.title = title_params
-    
+
     #Capture parameters
     top_text = params[:top_text]
     bottom_text = params[:bottom_text]
@@ -33,7 +33,7 @@ class MemesController < ApplicationController
     # === GENERATE MEME, BASED ON FILE TYPE ====
 
     # GIF: If gif, do not downsize (canvas cannot downsize gifs)
-    if params[:filetype] == "image/gif"      
+    if params[:filetype] == "image/gif"
       gif_image = params[:meme][:image]
       image_size_in_mb = gif_image.size / 1000000.0
       # Ensure that gif is not too large
@@ -48,20 +48,20 @@ class MemesController < ApplicationController
         filetype = '.' + gif_image.content_type.split('/').last
         Meme.create_meme(url, top_text, bottom_text, filetype)
       end
-    
+
     # NO IMAGE: If no image, then use default paired programming gif
     elsif params[:filetype].nil?
       url = 'https://s3.amazonaws.com/groupmeme/paired-programming.gif'
       filetype = '.gif'
       Meme.create_meme(url, top_text, bottom_text, filetype)
-    
+
     # JPEG/PNG/TIFF: If JPEG/PNG/TIFF, then downsize image and create meme
     elsif params[:filetype] == "image/jpeg" || params[:filetype] == "image/png" || params[:filetype] == "image/tiff"
       image_uri = params[:images][0]
       filetype_full = params[:filetype]
       filetype = '.' + filetype_full.split('/').last
       Meme.generate_meme(image_uri, filetype_full, filetype, top_text, bottom_text)
-    
+
     # INVALID FILE TYPE:
     else
       flash.now[:danger] = "This is not a valid file type"
@@ -69,7 +69,7 @@ class MemesController < ApplicationController
       render :new
       return
     end
-    
+
     # === SAVE MEME ====
     @new_meme.image = File.open('temporary_meme' + filetype)
     @new_meme.group = Group.find_by(group_slug: params[:group_slug])
@@ -93,9 +93,7 @@ class MemesController < ApplicationController
   end
 
   def react
-    @meme.update_reactions(current_user)
-    @current_user = current_user
-
+    LikeCreator.new(@meme, current_user).update_reactions
     respond_to do |format|
       format.js
     end
@@ -132,7 +130,7 @@ class MemesController < ApplicationController
     begin
         decoded_data = Base64.decode64(image_uri["data:#{filetype_full};base64,".length .. -1])
         filetype = '.' + filetype_full.split('/').last
-        file = Tempfile.new(['downscaled', filetype]) 
+        file = Tempfile.new(['downscaled', filetype])
         file.binmode
         file.write(decoded_data)
         file.close
