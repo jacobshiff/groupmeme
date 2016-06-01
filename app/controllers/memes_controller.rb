@@ -23,6 +23,8 @@ class MemesController < ApplicationController
     #Return to save template and create new model?
     
     #Create new_meme instance, to be modified later
+    # meme = MemeGenerator.new(params).generate
+
     @new_meme = Meme.new(tag_params)
     @new_meme.title = title_params
     
@@ -33,7 +35,9 @@ class MemesController < ApplicationController
     # === GENERATE MEME, BASED ON FILE TYPE ====
 
     # GIF: If gif, do not downsize (canvas cannot downsize gifs)
-    if params[:filetype] == "image/gif"      
+    case params[:filetype]
+
+    when "image/gif"      
       gif_image = params[:meme][:image]
       image_size_in_mb = gif_image.size / 1000000.0
       # Ensure that gif is not too large
@@ -50,13 +54,13 @@ class MemesController < ApplicationController
       end
     
     # NO IMAGE: If no image, then use default paired programming gif
-    elsif params[:filetype].nil?
+    when nil
       url = 'https://s3.amazonaws.com/groupmeme/paired-programming.gif'
       filetype = '.gif'
       Meme.create_meme(url, top_text, bottom_text, filetype)
     
     # JPEG/PNG/TIFF: If JPEG/PNG/TIFF, then downsize image and create meme
-    elsif params[:filetype] == "image/jpeg" || params[:filetype] == "image/png" || params[:filetype] == "image/tiff"
+    when "image/jpeg", "image/png", "image/tiff"
       image_uri = params[:images][0]
       filetype_full = params[:filetype]
       filetype = '.' + filetype_full.split('/').last
