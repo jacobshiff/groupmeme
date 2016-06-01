@@ -21,7 +21,6 @@ class MemesController < ApplicationController
   def create
     #Return to save template and create new model?
     meme_generator_result = MemeGenerator.new(params, tag_params, current_user).generate
-    binding.pry
     if meme_generator_result[:meme].nil?
       flash.now[:danger] = meme_generator_result[:notice]
       @meme = Meme.new

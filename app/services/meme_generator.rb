@@ -1,19 +1,31 @@
 class MemeGenerator
 
-  attr_reader :top_text, :bottom_text, :filetype, :params, :tag_params, :group_slug, :title, :current_user
-  attr_accessor :url, :filetype_extension
+  attr_reader :top_text, :bottom_text, :filetype, :params, :tag_params, :group_slug, :title, :current_user, :url, :filetype_extension, :image_uri, :image_size
+  attr_accessor :url
 
   def initialize(params, tag_params, current_user)
-    @params = params
     @filetype = params[:filetype]
-    @filetype_extension = ""
     @top_text = params[:top_text]
     @bottom_text = params[:bottom_text]
     @tag_params = tag_params
     @title = params[:meme][:title]
     @group_slug = params[:group_slug]
-    @url = ""
     @current_user = current_user
+
+    case filetype
+
+    when "image/gif"
+      @url = params[:meme][:image].tempfile.path
+      @filetype_extension = '.' + self.filetype.split('/').last
+      @image_size = params[:meme][:image].size / 1000000.0 
+    when nil
+      @url = "https://s3.amazonaws.com/groupmeme/paired-programming.gif"
+      @filetype_extension = '.gif'
+    when "image/jpeg", "image/png", "image/tiff"
+      @image_uri = params[:images][0]
+      @filetype_extension = '.' + self.filetype.split('/').last
+    end
+
   end
 
   def generate
@@ -30,11 +42,9 @@ class MemeGenerator
   end
 
   def generate_meme_gif
-    if size_greater_than_5?
+    if image_size > 5
       return {meme: nil, notice: "The maximum upload size is 5 MB"}
     else
-      self.url = params[:meme][:image].tempfile.path
-      self.filetype_extension = '.' + self.filetype.split('/').last
       create_meme_image #this will dump a meme image into root directory
       new_meme = create_meme_object
       return {meme: new_meme, notice: ""}
@@ -42,26 +52,26 @@ class MemeGenerator
   end
 
   def generate_meme_default
-    self.url = "https://s3.amazonaws.com/groupmeme/paired-programming.gif"
-    self.filetype_extension = '.gif'
     create_meme_image
     new_meme = create_meme_object
     return {meme: new_meme, notice: ""}
   end
 
   def generate_meme_static
-    image_uri = params[:images][0]
-    self.filetype_extension = '.' + filetype.split('/').last
-    generate_downsized_meme_image(image_uri) #this will dump a meme image into root directory
+    generate_downsized_meme_image #this will dump a meme image into root directory
     new_meme = create_meme_object
     return {meme: new_meme, notice: ""}
   end
 
-  def generate_downsized_meme_image(image_uri)
+  def generate_meme_error
+    return {meme: nil, notice: "This is not a valid file type"}
+  end
+
+  def generate_downsized_meme_image
     begin
       filetype_extension = self.filetype_extension
       tempfile = Tempfile.new(['downscaled', filetype_extension]) 
-      self.url = decode_base64_image(image_uri, tempfile).path
+      self.url = decode_base64_image(tempfile).path
       create_meme_image
       new_meme = create_meme_object
       return {meme: new_meme, notice: ""}
@@ -70,8 +80,9 @@ class MemeGenerator
     end
   end
 
-  def decode_base64_image(image_uri, tempfile)
+  def decode_base64_image(tempfile)
     filetype = self.filetype
+    image_uri = self.image_uri
     decoded_data = Base64.decode64(image_uri["data:#{filetype};base64,".length .. -1])
     tempfile.binmode
     tempfile.write(decoded_data)
@@ -101,11 +112,6 @@ class MemeGenerator
     new_meme.group = Group.find_by(group_slug: self.group_slug)
     new_meme.creator = current_user
     new_meme
-  end
-
-  def size_greater_than_5?
-    image_size = params[:meme][:image].size / 1000000.0
-    image_size > 5
   end
 
 end
