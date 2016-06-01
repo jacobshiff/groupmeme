@@ -1,3 +1,5 @@
+'use strict';
+
 $(function() {
   var fileinput = document.getElementById('fileinput');
 
@@ -9,11 +11,40 @@ $(function() {
   var form = document.getElementById('form');
 
   fileinput.onchange = function(){
+    var file_type = fileinput.files[0].type
     if ( !( window.File && window.FileReader && window.FileList && window.Blob ) ) {
       alert('The File APIs are not fully supported in this browser.');
       return false;
       }
-    readfiles(fileinput.files);
+    else {
+      if(file_type === "image/gif"){
+        debugger
+      }
+      else if (file_type === "image/jpeg" || file_type === "image/jpeg" || file_type === "image/png" || file_type === "image/tiff") {
+        downsizeReader(fileinput.files) 
+      }
+      else {
+        alert("This file type is not allowed.")
+      }
+    }
+  }
+
+  function downsizeReader(files) {
+    
+      // remove the existing canvases and hidden inputs if user re-selects new pics
+      var existinginputs = document.getElementsByName('images[]');
+      var existingcanvases = document.getElementsByTagName('canvas');
+      while (existinginputs.length > 0) { // it's a live list so removing the first element each time
+        // DOMNode.prototype.remove = function() {this.parentNode.removeChild(this);}
+        form.removeChild(existinginputs[0]);
+        preview.removeChild(existingcanvases[0]);
+      } 
+    
+      for (var i = 0; i < files.length; i++) {
+        processfile(files[i]); // process each file at once
+      }
+      fileinput.value = ""; //remove the original files from fileinput
+      // TODO remove the previous hidden inputs if user selects other files
   }
 
   function processfile(file) {  
@@ -49,23 +80,6 @@ $(function() {
       }
     };
 
-  function readfiles(files) {
-    
-      // remove the existing canvases and hidden inputs if user re-selects new pics
-      var existinginputs = document.getElementsByName('images[]');
-      var existingcanvases = document.getElementsByTagName('canvas');
-      while (existinginputs.length > 0) { // it's a live list so removing the first element each time
-        // DOMNode.prototype.remove = function() {this.parentNode.removeChild(this);}
-        form.removeChild(existinginputs[0]);
-        preview.removeChild(existingcanvases[0]);
-      } 
-    
-      for (var i = 0; i < files.length; i++) {
-        processfile(files[i]); // process each file at once
-      }
-      fileinput.value = ""; //remove the original files from fileinput
-      // TODO remove the previous hidden inputs if user selects other files
-  }
 
   // === RESIZE ====
 
@@ -101,4 +115,7 @@ $(function() {
     return canvas.toDataURL(filetype); // get the data from canvas as 70% JPG (can be also PNG, etc.)
 
   }
+
+
+
 });
