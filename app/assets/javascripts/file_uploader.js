@@ -16,12 +16,12 @@ $(function() {
     $('input#meme-title-input').val(title)
   })
 
-// Prevent enter from submitting form on tag field
-$("#tag-autocomplete").bind("keypress", function (e) {
-    if (e.keyCode == 13) {
-        return false;
-    }
-});
+  // Prevent enter from submitting form on tag field
+  $("#tag-autocomplete").bind("keypress", function (e) {
+      if (e.keyCode == 13) {
+          return false;
+      }
+  });
 
   // progress bar
   $('#meme-upload-submit').on('click', function(event){    

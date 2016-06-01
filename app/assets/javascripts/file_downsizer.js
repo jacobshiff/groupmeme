@@ -4,7 +4,7 @@ $(function() {
   var max_width = 600;
   var max_height = 600;
 
-  var preview = document.getElementById('preview');
+  var target = document.getElementById('target');
 
   var form = document.getElementById('form');
 
@@ -70,7 +70,6 @@ $(function() {
   // === RESIZE ====
 
   function resizeMe(img, filetype) {
-    debugger
     var canvas = document.createElement('canvas');
 
     var width = img.width;
@@ -96,8 +95,8 @@ $(function() {
     canvas.height = height;
     var ctx = canvas.getContext("2d");
     ctx.drawImage(img, 0, 0, width, height);
-    
-    preview.appendChild(canvas); // do the actual resized preview
+    canvas.style = 'width:100%'
+    $(target).html(canvas); // do the actual resized preview
     
     return canvas.toDataURL(filetype); // get the data from canvas as 70% JPG (can be also PNG, etc.)
 

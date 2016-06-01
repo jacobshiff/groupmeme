@@ -146,17 +146,17 @@ class MemesController < ApplicationController
   end
 
   def decode_base64_image(image_uri, filetype_full)
-  # begin
-      decoded_data = Base64.decode64(image_uri["data:#{filetype_full};base64,".length .. -1])
-      filetype = '.' + filetype_full.split('/').last
-      file = Tempfile.new(['downscaled', filetype]) 
-      file.binmode
-      file.write(decoded_data)
-      file.close
-      return file
-  # ensure
-    # file.unlink
-  # end
+    begin
+        decoded_data = Base64.decode64(image_uri["data:#{filetype_full};base64,".length .. -1])
+        filetype = '.' + filetype_full.split('/').last
+        file = Tempfile.new(['downscaled', filetype]) 
+        file.binmode
+        file.write(decoded_data)
+        file.close
+        return file
+    ensure
+      file.unlink
+    end
   end
 
 
