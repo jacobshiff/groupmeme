@@ -64,7 +64,9 @@ group :development, :test do
   gem 'pry-rails'
 
   gem 'prybaby'
-  
+
+  gem 'rspec-rails'
+
 
 end
 
