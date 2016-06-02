@@ -46,9 +46,7 @@ class MemesController < ApplicationController
   end
 
   def react
-    @meme.update_reactions(current_user)
-    @current_user = current_user
-
+    LikeCreator.new(@meme, current_user).update_reactions
     respond_to do |format|
       format.js
     end
