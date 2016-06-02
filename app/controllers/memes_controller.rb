@@ -46,7 +46,9 @@ class MemesController < ApplicationController
   end
 
   def react
-    LikeCreator.new(@meme, current_user).update_reactions
+    @meme.update_reactions(current_user)
+    @current_user = current_user
+
     respond_to do |format|
       format.js
     end
@@ -70,21 +72,4 @@ class MemesController < ApplicationController
     params.require(:meme).permit(tags_attributes: [:name])
   end
 
-  def base_params
-    params.require(:meme).permit(:image)
-  end
-
-  def decode_base64_image(image_uri, filetype_full)
-    begin
-        decoded_data = Base64.decode64(image_uri["data:#{filetype_full};base64,".length .. -1])
-        filetype = '.' + filetype_full.split('/').last
-        file = Tempfile.new(['downscaled', filetype])
-        file.binmode
-        file.write(decoded_data)
-        file.close
-        return file
-    ensure
-      file.unlink
-    end
-  end
 end
