@@ -1,7 +1,7 @@
 'use strict';
 
 $(function() {
-  var fileinput = document.getElementById('fileinput');
+  var fileinput = document.getElementById('meme-fileinput');
 
   var max_width = 600;
   var max_height = 600;
@@ -10,7 +10,7 @@ $(function() {
 
   var form = document.getElementById('form');
 
-  fileinput.onchange = function(){
+  $('input#meme-fileinput').on('change', function(){
     var file_type = fileinput.files[0].type
     if ( !( window.File && window.FileReader && window.FileList && window.Blob ) ) {
       alert('The File APIs are not fully supported in this browser.');
@@ -27,7 +27,7 @@ $(function() {
         alert("This file type is not allowed.")
       }
     }
-  }
+  })
 
   function gifReader(files){
     var image = files[0]
