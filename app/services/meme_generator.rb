@@ -14,9 +14,10 @@ class MemeGenerator
 
     case filetype
 
+    #return to ensure that the MIME cannot be spooofed
     when "image/gif"
       @url = params[:meme][:image].tempfile.path
-      @filetype_extension = '.' + self.filetype.split('/').last
+      @filetype_extension = '.gif'
       @image_size = params[:meme][:image].size / 1000000.0 
     when nil
       @url = "https://s3.amazonaws.com/groupmeme/paired-programming.gif"
