@@ -8073,7 +8073,7 @@ ul.icons-ul > li .icon-li {
 ****************************************************/
 body {
   font-family: 'PT Sans', Helvetica, Arial, ans-serif;
-  background: url(/assets/images/bg.jpg) 0 0 repeat #efefef;
+  background: url(/app/assets/images/bg.jpg) 0 0 repeat #efefef;
   color: #555;
 }
 a {

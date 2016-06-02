@@ -8073,7 +8073,7 @@ ul.icons-ul > li .icon-li {
 ****************************************************/
 body {
   font-family: 'PT Sans', Helvetica, Arial, ans-serif;
-  background: url(/assets/images/bg.jpg) 0 0 repeat #efefef;
+  background: url(/app/assets/bg.jpg) 0 0 repeat #efefef;
   color: #555;
 }
 a {
@@ -9076,8 +9076,8 @@ dl:after {
   color: #1abc9c;
 }
 .navbar .brand-text {
-  margin: 0 0 30px;
-  font-size: 14px;
+  margin: 10px 0 30px;
+  font-size: 16px;
 }
 .navbar .navbar-header {
   float: none;
@@ -12302,10 +12302,11 @@ body .ui-tooltip {
     margin-right:-4px;
 }
 
-@import url(//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css);
+/*@import url(//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css);*/
 
 .detailBox {
-    width: 400px;
+    /*width: 400px;*/
+    /*width: 100%;*/
     border:1px solid #bbb;
 }
 .titleBox {
@@ -12347,7 +12348,7 @@ body .ui-tooltip {
     display:table-cell;
 }
 .commenterImage {
-    width:30px;
+    width:7.5%;
     margin-right:5px;
     height:100%;
     float:left;
@@ -12455,4 +12456,25 @@ div#user-input-box span {
 
 input#meme-title-text, input#tag-autocomplete {
   width: 90%;
+}
+
+/*overlay title*/
+.overlay p.overlay-text {
+  position: relative;
+  top: 30%;
+  bottom: 30%;
+  font-size: 16px;
+  text-align: center;
+  color: #fff;
+}
+
+/*Custom CSS for deleting comment*/
+
+li.commentItem:hover .deleteComment{
+  visibility: visible;
+}
+
+div.deleteComment{
+  visibility: hidden;
+  position: relative;
 }
