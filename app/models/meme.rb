@@ -8,7 +8,7 @@ class Meme < ActiveRecord::Base
 
   #paperclip validations; must include for upload
   #POST PROCESSING ADDS ABOUT 50% MORE TIME TO UPLOAD. DELAYED PROCESSING??
-  has_attached_file :image, styles: { thumb: ["340"] } 
+  has_attached_file :image, styles: { thumb: ["340"] }
   before_post_process :skip_for_gif
 
   # This did not result in any performance improvements...
@@ -20,53 +20,10 @@ class Meme < ActiveRecord::Base
     ! %w(image/gif).include?(image_content_type)
   end
 
-  def update_reactions(user)
-    user_reacted?(user) ? unreact(user) : react(user)
-  end
-
-  def reactions_message(user)
-    if !user_reacted?(user)
-      message_helper.html_safe
-    else
-      other_message_helper.html_safe
-    end
-  end
-
-  def message_helper
-    num = self.reactions.count
-    if num > 1
-      "<strong>#{num} people</strong> like this"
-    elsif num == 0
-      "Be the first to like this"
-    else
-      "<strong>#{num} person</strong> likes this"
-    end
-  end
-
-  def other_message_helper
-    num = self.reactions.count - 1
-    if num == 1
-      "<strong>You</strong> and <strong>1 other person </strong> like this"
-    elsif num == 0
-      "<strong>You</strong> like this"
-    else
-      "<strong>You</strong> and <strong>#{num} other people</strong> like this"
-    end
-  end
-
-  def heart_class(user)
-    #no longer a heart, should probably rename
-    if user_reacted?(user)
-      "fa fa-thumbs-up"
-    else
-      "fa fa-thumbs-o-up"
-    end
-  end
-
   #MEME DOWNSIZING
   def self.generate_meme(image_uri, filetype_full, filetype, top_text, bottom_text)
     begin
-    tempfile = Tempfile.new(['downscaled', filetype]) 
+    tempfile = Tempfile.new(['downscaled', filetype])
     url = self.decode_base64_image(image_uri, filetype_full, filetype, tempfile).path
     self.create_meme(url, top_text, bottom_text, filetype)
     ensure
@@ -122,19 +79,6 @@ class Meme < ActiveRecord::Base
   #destroy tag relationships when destroying self
   def destroy_tags
     self.meme_tags.each{|mt| mt.destroy}
-  end
-
-  private
-  def user_reacted?(user)
-    self.reactions.where(user: user).any?
-  end
-
-  def react(user)
-    self.reactions.create(user_id: user.id)
-  end
-
-  def unreact(user)
-    self.reactions.find_by(user_id: user.id).destroy
   end
 
 end
