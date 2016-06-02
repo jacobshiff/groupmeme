@@ -42,6 +42,8 @@
             <div class="actionBox">
               <ul class="commentList">
                 <% @meme.comments.each do |comment| %>
+                <li id="comment-<%= comment.id %>" class="commentItem">
+                </li>
                 <li class="commentItem">
                   <div class="commenterImage">
                     <%= image_tag comment.user.avatar %>
@@ -56,7 +58,6 @@
                       <% end %>
                    </div>
                    <% end %>
-               
                 </li>
                 <% end %>
               </ul>
