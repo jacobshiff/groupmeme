@@ -3,7 +3,6 @@
   <article>
 
   <!-- Image and title -->
-
   <% if @meme %> <!-- Check if it found the meme -->
         <div class="page-header">
           <div id="portfolio-carousel" class="carousel slide" data-ride="carousel">
@@ -19,17 +18,16 @@
                 <%= render partial: "memes/memes_reactions", locals: {meme: @meme} %>
                 </h4>
               </div>
-
             <!-- Creator -->
-              <h5>Posted by: <%= @meme.creator.username %> - <%=format_time(@meme.created_at)%></h5>
-              <!-- Tags -->
-                <% @meme.tags.each do |tag| %>
-                <span class="label label-info"><%= tag.name %></span>
-                <% end %>
-            </div>
+            <h5>Posted by: <%= @meme.creator.username %> - <%=format_time(@meme.created_at)%></h5>
+            <!-- Tags -->
+              <% @meme.tags.each do |tag| %>
+              <span class="label label-info"><%= link_to tag.name, tag_path(current_group.group_slug, tag.slug), {:style=>'color:#FFFFFF;'}%></span>
+              <% end %>
           </div>
-        </div>
-        <!-- End image and title -->
+    </div>
+  </div>
+  <!-- End image and title -->
 
         <!-- Comments -->
 
