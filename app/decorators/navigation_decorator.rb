@@ -11,7 +11,7 @@ class NavigationDecorator < SimpleDelegator
   def navbar
     if user
       navbar = <<-NAVBAR
-        <li class="title">Menu</li><li>#{display_user_info}</li><li>#{profile_link}</li><li>#{groups_link}</li>#{admin_links}<li>#{sign_out}</li>
+        <li class="title">Menu</li><li>#{display_user_info}</li><li>#{new_meme_button}</li><li>#{profile_link}</li><li>#{groups_link}</li>#{admin_links}<li>#{sign_out}</li>
         NAVBAR
     navbar.html_safe
     end
@@ -48,6 +48,19 @@ class NavigationDecorator < SimpleDelegator
     end
   end
 
+  def new_meme_button
+    if group
+      button = <<-BUTTON
+      <li>#{h.link_to button_html, new_meme_url}</li>
+      BUTTON
+      button.html_safe
+    end
+  end
+
+  def button_html
+    '<button class="btn btn-large btn-primary">Add A New Meme</button>'.html_safe
+  end
+
   def sign_out
     "#{h.link_to 'Sign Out', logout_url, method: :delete}".html_safe
   end
@@ -80,4 +93,9 @@ class NavigationDecorator < SimpleDelegator
   def registration_new_url
     Rails.application.routes.url_helpers.registration_new_path unless user
   end
+
+  def new_meme_url
+    Rails.application.routes.url_helpers.new_meme_path(group.group_slug) if group
+  end
+
 end
