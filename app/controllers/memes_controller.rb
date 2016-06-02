@@ -73,4 +73,3 @@ class MemesController < ApplicationController
   end
 
 end
-

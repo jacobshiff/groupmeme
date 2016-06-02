@@ -11,7 +11,7 @@ class NavigationDecorator < SimpleDelegator
   def navbar
     if user
       navbar = <<-NAVBAR
-        <li class="title">Menu</li><li>#{display_user_info}</li><li>#{profile_link}</li><li>#{groups_link}</li>#{admin_links}<li>#{sign_out}</li>
+        <li class="title">Menu</li><li>#{display_user_info}</li><li>#{new_meme_button}</li><li>#{profile_link}</li><li>#{groups_link}</li>#{admin_links}<li>#{sign_out}</li>
         NAVBAR
     navbar.html_safe
     end
@@ -48,6 +48,19 @@ class NavigationDecorator < SimpleDelegator
     end
   end
 
+  def new_meme_button
+    if group
+      button = <<-BUTTON
+      <li>#{h.link_to button_html, new_meme_url}</li>
+      BUTTON
+      button.html_safe
+    end
+  end
+
+  def button_html
+    '<button class="btn btn-large btn-primary">Add A New Meme</button>'.html_safe
+  end
+
   def sign_out
     "#{h.link_to 'Sign Out', logout_url, method: :delete}".html_safe
   end
@@ -80,55 +93,9 @@ class NavigationDecorator < SimpleDelegator
   def registration_new_url
     Rails.application.routes.url_helpers.registration_new_path unless user
   end
+
+  def new_meme_url
+    Rails.application.routes.url_helpers.new_meme_path(group.group_slug) if group
+  end
+
 end
-
-# <!-- Conditional links -->
-#
-#    <li><%= (button_to "Add A New Meme", new_meme_path(current_group.group_slug), method: :get, class: 'btn btn-large btn-primary') if current_group%></li>
-#   <li><a href="/users/<%= current_user.username %>">Profile</a></li>
-#   <li><a href="/groups">Your Groups</a></li>
-#   <% if current_user && current_group %>
-#     <!-- Add a new meme button - maybe move -->
-#     <% if current_user.type(current_group) == "admin" %>
-#     <li><%= link_to 'Edit Group', edit_group_path(current_group.group_slug) %></li>
-#     <li><%= link_to 'Invite New User', invite_new_path(current_group.group_slug) %></li>
-#     <li><%= link_to 'View and Edit Members', edit_users_path(current_group.group_slug) %></li>
-#     <% end %>
-#     <li><%= link_to "Sign Out", logout_path, method: :delete %></li>
-#   <% end %>
-# <% end %>
-# <% if !current_user %>
-#     <li><%= button_to "Sign Up", registration_new_path, class: 'btn btn-light', method: 'get', style: "width:80%; margin-top:5px;" %></li>
-# <% end %>
-
-
-# <!-- <% if current_group %>
-#   <%= link_to group_path(current_group.group_slug) do %>
-#   <p class="brand-text"><%= current_group.title %></p>
-#   <% end %>
-# <% end %> -->
-#
-# <!-- Conditional links -->
-# <!-- <% if current_user %>
-#   <li>
-#     <div id="nav-user-block">
-#      <img src="<%= current_user.avatar %>" class="navbar-avatar">
-#       <h5 class="nav-user-text"><%= current_user.username %></h5>
-#     </div>
-#  </li>
-#    <li><%= (button_to "Add A New Meme", new_meme_path(current_group.group_slug), method: :get, class: 'btn btn-large btn-primary') if current_group%></li>
-#   <li><a href="/users/<%= current_user.username %>">Profile</a></li>
-#   <li><a href="/groups">Your Groups</a></li>
-#   <% if current_user && current_group %>
-#     Add a new meme button - maybe move
-#     <% if current_user.type(current_group) == "admin" %>
-#     <li><%= link_to 'Edit Group', edit_group_path(current_group.group_slug) %></li>
-#     <li><%= link_to 'Invite New User', invite_new_path(current_group.group_slug) %></li>
-#     <li><%= link_to 'View and Edit Members', edit_users_path(current_group.group_slug) %></li>
-#     <% end %>
-#     <li><%= link_to "Sign Out", logout_path, method: :delete %></li>
-#   <% end %>
-# <% end %>
-# <% if !current_user %>
-#     <li><%= button_to "Sign Up", registration_new_path, class: 'btn btn-light', method: 'get', style: "width:80%; margin-top:5px;" %></li>
-# <% end %> -->
