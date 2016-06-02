@@ -1,0 +1,25 @@
+  <div class="card <%= meme.tag_class_list %>">
+    <%= link_to meme_path(meme.group.group_slug, meme), class: "thumb" do %> 
+      <% if meme.image_content_type == "image/gif" %>
+         <%= image_tag(meme.image.url, 'data-src': meme.image.url, class: "thumb") %>
+      <% else %>
+        <%= image_tag(meme.image.url(:thumb), 'data-src': meme.image.url(:thumb), class: "thumb") %>
+      <% end %>
+    <% end %>
+    <div class="card-body">
+      <h4 style="margin-top:-5px;"><%= meme.title if meme.title %></h4>
+      <div class="react" meme_parent_id="<%=meme.id%>" id="index-page-reaction">
+        <%= render partial: "memes/memes_reactions", locals: {meme: meme} %>
+      </div>
+      <h5><small>Posted by <%= link_to meme.creator.username, user_path(meme.creator.username)%></small></h5>
+      <h5><small><a href="/<%= current_group.group_slug %>/memes/<%= meme.id %>#comments"><%= meme.comments.count %> comments</small></h5></a>
+    </div><!-- end card-body -->
+    <div class="card-footer">
+      <ul class="list-inline filters">
+        <% meme.tags.each do |tag| %>
+        <li><%= link_to tag.name, tag_path(current_group.group_slug, tag.slug)%>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>

@@ -6,7 +6,16 @@ class CommentsController < ApplicationController
     @comment.group = current_group
     @comment.save
     time = format_time(@comment.created_at)
-    render json: {content: @comment.content, user: @comment.user, user_avatar: @comment.user.avatar, username: @comment.user.username, time: time}
+    render json: {content: @comment.content, user: @comment.user, user_avatar: @comment.user.avatar, username: @comment.user.username, time: time, id: @comment.id}
+  end
+
+  def destroy
+    @comment = Comment.find(params[:id])
+    @comment.destroy
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   private

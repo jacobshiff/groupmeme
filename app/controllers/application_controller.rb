@@ -4,11 +4,12 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   helper_method def current_user
-    @current_user = User.find_by(id: session[:user_id])
+    @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
   end
 
+  ####Return to confirm that 'cheap man's caching' doesn't cause any bugs!
   helper_method def current_group
-    @current_group = Group.find_by(group_slug: params[:group_slug]) if params[:group_slug]
+    @current_group ||= Group.find_by(group_slug: params[:group_slug]) if params[:group_slug]
   end
 
   helper_method def format_time(time)
@@ -26,7 +27,7 @@ class ApplicationController < ActionController::Base
 
   def access_to_group?
     set_user if logged_in?
-    @user.groups.include?(Group.find_by(group_slug: params[:group_slug]))
+    @user.groups.include?(current_group)
   end
 
   def require_login_and_access
@@ -46,6 +47,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_user
-    @user = User.find(session[:user_id])
+    @user ||= User.find(session[:user_id])
   end
 end
