@@ -33602,6 +33602,188 @@ $(document).ready(function() {
   $('.dropdown-toggle').dropdown();
   $('[data-toggle=tooltip]').tooltip();
 });
+//Based on MinifyJpeg
+//http://elicon.blog57.fc2.com/blog-entry-206.html
+
+var ExifRestorer = (function()
+{
+   
+  var ExifRestorer = {};
+   
+    ExifRestorer.KEY_STR = "ABCDEFGHIJKLMNOP" +
+                         "QRSTUVWXYZabcdef" +
+                         "ghijklmnopqrstuv" +
+                         "wxyz0123456789+/" +
+                         "=";
+
+    ExifRestorer.encode64 = function(input)
+    {
+        var output = "",
+            chr1, chr2, chr3 = "",
+            enc1, enc2, enc3, enc4 = "",
+            i = 0;
+
+        do {
+            chr1 = input[i++];
+            chr2 = input[i++];
+            chr3 = input[i++];
+
+            enc1 = chr1 >> 2;
+            enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+            enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+            enc4 = chr3 & 63;
+
+            if (isNaN(chr2)) {
+               enc3 = enc4 = 64;
+            } else if (isNaN(chr3)) {
+               enc4 = 64;
+            }
+
+            output = output +
+               this.KEY_STR.charAt(enc1) +
+               this.KEY_STR.charAt(enc2) +
+               this.KEY_STR.charAt(enc3) +
+               this.KEY_STR.charAt(enc4);
+            chr1 = chr2 = chr3 = "";
+            enc1 = enc2 = enc3 = enc4 = "";
+        } while (i < input.length);
+
+        return output;
+    };
+    
+    ExifRestorer.restore = function(origFileBase64, resizedFileBase64)
+    {     
+        if (!origFileBase64.match("data:image/jpeg;base64,"))
+        {
+          return resizedFileBase64;
+        }       
+        
+        var rawImage = this.decode64(origFileBase64.replace("data:image/jpeg;base64,", ""));
+        var segments = this.slice2Segments(rawImage);
+                
+        var image = this.exifManipulation(resizedFileBase64, segments);
+        
+        return this.encode64(image);
+        
+    };
+
+
+    ExifRestorer.exifManipulation = function(resizedFileBase64, segments)
+    {
+            var exifArray = this.getExifArray(segments),
+                newImageArray = this.insertExif(resizedFileBase64, exifArray),
+                aBuffer = new Uint8Array(newImageArray);
+
+            return aBuffer;
+    };
+
+
+    ExifRestorer.getExifArray = function(segments)
+    {
+            var seg;
+            for (var x = 0; x < segments.length; x++)
+            {
+                seg = segments[x];
+                if (seg[0] == 255 & seg[1] == 225) //(ff e1)
+                {
+                    return seg;
+                }
+            }
+            return [];
+    };
+
+
+    ExifRestorer.insertExif = function(resizedFileBase64, exifArray)
+    {
+            var imageData = resizedFileBase64.replace("data:image/jpeg;base64,", ""),
+                buf = this.decode64(imageData),
+                separatePoint = buf.indexOf(255,3),
+                mae = buf.slice(0, separatePoint),
+                ato = buf.slice(separatePoint),
+                array = mae;
+
+            array = array.concat(exifArray);
+            array = array.concat(ato);
+           return array;
+    };
+
+
+    
+    ExifRestorer.slice2Segments = function(rawImageArray)
+    {
+        var head = 0,
+            segments = [];
+
+        while (1)
+        {
+            if (rawImageArray[head] == 255 & rawImageArray[head + 1] == 218){break;}
+            if (rawImageArray[head] == 255 & rawImageArray[head + 1] == 216)
+            {
+                head += 2;
+            }
+            else
+            {
+                var length = rawImageArray[head + 2] * 256 + rawImageArray[head + 3],
+                    endPoint = head + length + 2,
+                    seg = rawImageArray.slice(head, endPoint);
+                segments.push(seg);
+                head = endPoint;
+            }
+            if (head > rawImageArray.length){break;}
+        }
+
+        return segments;
+    };
+
+
+    
+    ExifRestorer.decode64 = function(input) 
+    {
+        var output = "",
+            chr1, chr2, chr3 = "",
+            enc1, enc2, enc3, enc4 = "",
+            i = 0,
+            buf = [];
+
+        // remove all characters that are not A-Z, a-z, 0-9, +, /, or =
+        var base64test = /[^A-Za-z0-9\+\/\=]/g;
+        if (base64test.exec(input)) {
+            alert("There were invalid base64 characters in the input text.\n" +
+                  "Valid base64 characters are A-Z, a-z, 0-9, '+', '/',and '='\n" +
+                  "Expect errors in decoding.");
+        }
+        input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+
+        do {
+            enc1 = this.KEY_STR.indexOf(input.charAt(i++));
+            enc2 = this.KEY_STR.indexOf(input.charAt(i++));
+            enc3 = this.KEY_STR.indexOf(input.charAt(i++));
+            enc4 = this.KEY_STR.indexOf(input.charAt(i++));
+
+            chr1 = (enc1 << 2) | (enc2 >> 4);
+            chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+            chr3 = ((enc3 & 3) << 6) | enc4;
+
+            buf.push(chr1);
+
+            if (enc3 != 64) {
+               buf.push(chr2);
+            }
+            if (enc4 != 64) {
+               buf.push(chr3);
+            }
+
+            chr1 = chr2 = chr3 = "";
+            enc1 = enc2 = enc3 = enc4 = "";
+
+        } while (i < input.length);
+
+        return buf;
+    };
+
+    
+    return ExifRestorer;
+})();
 $(document).ready(function(){
   bindClick()
 });
@@ -33683,6 +33865,211 @@ document.getElementById('file-input').onchange = function (e) {
         );  
     }      
   })
+
+};
+
+
+});
+
+// 'use strict';
+
+// $(function() {
+//   var fileinput = document.getElementById('meme-fileinput');
+
+//   var max_width = 600;
+//   var max_height = 600;
+
+//   var target = document.getElementById('target');
+
+//   var form = document.getElementById('form');
+
+//   $('input#meme-fileinput').on('change', function(){
+//     var file_type = fileinput.files[0].type
+//     if ( !( window.File && window.FileReader && window.FileList && window.Blob ) ) {
+//       alert('The File APIs are not fully supported in this browser.');
+//       return false;
+//       }
+//     else {
+//       if(file_type === "image/gif"){
+//         gifReader(fileinput.files)
+//       }
+//       else if (file_type === "image/jpeg" || file_type === "image/jpeg" || file_type === "image/png" || file_type === "image/tiff") {
+//         downsizeReader(fileinput.files) 
+//       }
+//       else {
+//         alert("This file type is not allowed.")
+//       }
+//     }
+//   })
+
+//   function gifReader(files){
+//     var image = files[0]
+//     var reader = new FileReader();
+//     var newinputImageType = document.createElement("input");
+//     newinputImageType.type = 'hidden';
+//     newinputImageType.name = 'filetype';
+//     newinputImageType.value = image.type; // put result from canvas into new hidden input
+//     form.appendChild(newinputImageType);
+//     reader.onload = function(file) {
+//       var img = new Image();
+//       img.src = file.target.result;
+//       img.id="preview-image"
+//       $('#target').html(img);
+//       $('img#preview-image').css( "width", "100%" )
+//     }
+//     reader.readAsDataURL(image);
+//   }
+
+
+//   function downsizeReader(files) {
+
+//       // remove the existing canvases and hidden inputs if user re-selects new pics
+//       var existinginputs = document.getElementsByName('images[]');
+//       var existingcanvases = document.getElementsByTagName('canvas');
+//       while (existinginputs.length > 0) { // it's a live list so removing the first element each time
+//         // DOMNode.prototype.remove = function() {this.parentNode.removeChild(this);}
+//         form.removeChild(existinginputs[0]);
+//         preview.removeChild(existingcanvases[0]);
+//       } 
+
+//       for (var i = 0; i < files.length; i++) {
+//         processfile(files[i]); // process each file at once
+//       }
+//       fileinput.value = ""; //remove the original files from fileinput
+//       // TODO remove the previous hidden inputs if user selects other files
+//   }
+
+//   function processfile(file) {  
+//       if( !( /image/i ).test( file.type ) )
+//           {
+//               alert( "File "+ file.name +" is not an image." );
+//               return false;
+//           }
+//       var filetype = file.type;
+//       var reader = new FileReader();
+//       reader.readAsArrayBuffer(file);
+//       reader.onload = function(event) {
+//         var blob = new Blob([event.target.result]);
+//         window.URL = window.URL || window.webkitURL;
+//         var blobURL = window.URL.createObjectURL(blob);
+//         var image = new Image();
+//         image.src = blobURL;
+//         //preview.appendChild(image); // preview commented out, I am using the canvas instead
+//         image.onload = function() {
+//           // have to wait till it's loaded
+//           var resized = resizeMe(image, filetype); // send it to canvas
+//           var newinput = document.createElement("input");
+//           newinput.type = 'hidden';
+//           newinput.name = 'images[]';
+//           newinput.value = resized; // put result from canvas into new hidden input
+//           form.appendChild(newinput);
+//           var newinputImageType = document.createElement("input");
+//           newinputImageType.type = 'hidden';
+//           newinputImageType.name = 'filetype';
+//           newinputImageType.value = filetype; // put result from canvas into new hidden input
+//           form.appendChild(newinputImageType);
+//         }
+//       }
+//     };
+
+
+//   // === RESIZE ====
+
+//   function resizeMe(img, filetype) {
+//     var canvas = document.createElement('canvas');
+
+//     var width = img.width;
+//     var height = img.height;
+
+//     // calculate the width and height, constraining the proportions
+//     if (width > height) {
+//       if (width > max_width) {
+//         //height *= max_width / width;
+//         height = Math.round(height *= max_width / width);
+//         width = max_width;
+//       }
+//     } else {
+//       if (height > max_height) {
+//         //width *= max_height / height;
+//         width = Math.round(width *= max_height / height);
+//         height = max_height;
+//       }
+//     }
+
+//     // resize the canvas and draw the image data into it
+//     canvas.width = width;
+//     canvas.height = height;
+//     var ctx = canvas.getContext("2d");
+//     ctx.drawImage(img, 0, 0, width, height);
+//     canvas.style = 'width:100%'
+//     $(target).html(canvas); // do the actual resized preview
+
+//     return canvas.toDataURL(filetype); // get the data from canvas as 70% JPG (can be also PNG, etc.)
+
+//   }
+
+
+
+// });  + i];
+        }
+        return aBytes;
+    };
+    file.getLength = function() {
+        return data.length;
+    };
+    return file;
+  };
+
+
+  // === RESIZE ====
+
+  function resizeMe(img, filetype) {
+    var canvas = document.createElement('canvas');
+
+    var width = img.width;
+    var height = img.height;
+>>>>>>> 23e2bba55ca3c54b95e7cc5f3e36976321c29c2c
+
+            // document.body.appendChild(img);
+          },
+          {
+            maxWidth: 600,
+        // maxHeight: 300,
+        // minWidth: 100,
+        // minHeight: 50,
+        canvas: true,
+        orientation: image_orientation
+      }
+<<<<<<< HEAD
+        // {maxWidth: 600} // Options
+        );  
+    }      
+  })
+=======
+    }
+    
+    // resize the canvas and draw the image data into it
+    canvas.width = width;
+    canvas.height = height;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0, width, height);
+    canvas.style = 'width:100%'
+    $(target).html(canvas); // do the actual resized preview
+    
+    return canvas.toDataURL(filetype); // get the data from canvas as 70% JPG (can be also PNG, etc.)
+
+  }
+
+  function dataURItoBlob(dataURI) {
+    var binary = atob(dataURI.split(',')[1]);
+    var array = [];
+    for(var i = 0; i < binary.length; i++) {
+        array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
+  }
+
+>>>>>>> 23e2bba55ca3c54b95e7cc5f3e36976321c29c2c
 
 };
 

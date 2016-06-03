@@ -40,7 +40,7 @@ class MemeGenerator
     when nil
       generate_meme
     when "image/jpeg", "image/png", "image/tiff"
-      generate_meme_static
+      generate_downsized_meme
     else
       generate_meme_error
     end
@@ -51,7 +51,7 @@ class MemeGenerator
     return {meme: new_meme, notice: ""}
   end
 
-  def generate_meme_static
+  def generate_downsized_meme
     begin
         filetype_extension = self.filetype_extension
         tempfile = Tempfile.new(['downscaled', filetype_extension]) 
