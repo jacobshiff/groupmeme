@@ -33829,82 +33829,109 @@ $(function() {
 
   var image_orientation; // i believe the scope for this could be moved lower down
   var target = document.getElementById('target');
-  var filetype
+  var imagefile = e.target.files[0]
+  var filetype = imagefile.type;
 
-  loadImage.parseMetaData(e.target.files[0], function (data) {
-    if (data.exif) {
-      image_orientation = data.exif.get('Orientation');
-      filetype = e.target.files[0].type;
-      loadImage(
-        e.target.files[0],
-        function (img) {
-          img.style = 'width:100%';
-          $(target).html(img);
-          var canvas = document.getElementsByTagName('canvas');
-          var resized = canvas[0].toDataURL(filetype);
-          var newinput = document.createElement("input");
-          newinput.type = 'hidden';
-          newinput.name = 'images[]';
-          newinput.value = resized; // put result from canvas into new hidden input
-          form.appendChild(newinput);
+  if(filetype === "image/gif"){
+    readGIF(imagefile);
+  }
+  else if (filetype === "image/jpeg" || filetype === "image/jpeg" || filetype === "image/png" || filetype === "image/tiff") {
+    compressImage()
+  }
+  else {
+    alert("This file type is not allowed.")
+  }
+  
+  function readGIF(imagefile){
+    var image = imagefile
+    var reader = new FileReader();
+    var newinputImageType = document.createElement("input");
+    newinputImageType.type = 'hidden';
+    newinputImageType.name = 'filetype';
+    newinputImageType.value = image.type; // put result from canvas into new hidden input
+    form.appendChild(newinputImageType);
+    reader.onload = function(file) {
+      var img = new Image();
+      img.src = file.target.result;
+      img.id="preview-image"
+      $('#target').html(img);
+      $('img#preview-image').css( "width", "100%" )
+    }
+    reader.readAsDataURL(image);
+  }
 
-          var newinputImageType = document.createElement("input");
-          newinputImageType.type = 'hidden';
-          newinputImageType.name = 'filetype';
-          newinputImageType.value = filetype; // put result from canvas into new hidden input
-          form.appendChild(newinputImageType);
+  function compressImage(){
+    loadImage.parseMetaData(imagefile, function (data) {
+      if (data.exif) { // This will only be for JPEGs
+        image_orientation = data.exif.get('Orientation');
+        loadImage(
+          imagefile,
+          function (img) {
+            img.style = 'width:100%';
+            $(target).html(img);
+            var canvas = document.getElementsByTagName('canvas');
+            var resized = canvas[0].toDataURL(filetype);
+            var newinput = document.createElement("input");
+            newinput.type = 'hidden';
+            newinput.name = 'images[]';
+            newinput.value = resized; // put result from canvas into new hidden input
+            form.appendChild(newinput);
 
-            // document.body.appendChild(img);
-          },
-          {
-            maxWidth: 600,
-            // maxHeight: 300,
-            // minWidth: 100,
-            // minHeight: 50,
-            canvas: true,
-            orientation: image_orientation
-          }
-        );  
+            var newinputImageType = document.createElement("input");
+            newinputImageType.type = 'hidden';
+            newinputImageType.name = 'filetype';
+            newinputImageType.value = filetype; // put result from canvas into new hidden input
+            form.appendChild(newinputImageType);
+              // document.body.appendChild(img);
+            },
+            {
+              maxWidth: 600,
+              // maxHeight: 300,
+              // minWidth: 100,
+              // minHeight: 50,
+              canvas: true,
+              orientation: image_orientation
+            }
+          );  
 
-    } else {
-      filetype = e.target.files[0].type;
-      loadImage(
-        e.target.files[0],
-        function (img) {
-          img.style = 'width:100%';
-          $(target).html(img);
-          var canvas = document.getElementsByTagName('canvas');
-          var resized = canvas[0].toDataURL(filetype);
-          var newinput = document.createElement("input");
-          newinput.type = 'hidden';
-          newinput.name = 'images[]';
-          newinput.value = resized; // put result from canvas into new hidden input
-          form.appendChild(newinput);
+      } else { // This will only be for TIFFs and PNGs
+        loadImage(
+          imagefile,
+          function (img) {
+            img.style = 'width:100%';
+            $(target).html(img);
+            var canvas = document.getElementsByTagName('canvas');
+            var resized = canvas[0].toDataURL(filetype);
+            var newinput = document.createElement("input");
+            newinput.type = 'hidden';
+            newinput.name = 'images[]';
+            newinput.value = resized; // put result from canvas into new hidden input
+            form.appendChild(newinput);
 
-          var newinputImageType = document.createElement("input");
-          newinputImageType.type = 'hidden';
-          newinputImageType.name = 'filetype';
-          newinputImageType.value = filetype; // put result from canvas into new hidden input
-          form.appendChild(newinputImageType);
+            var newinputImageType = document.createElement("input");
+            newinputImageType.type = 'hidden';
+            newinputImageType.name = 'filetype';
+            newinputImageType.value = filetype; // put result from canvas into new hidden input
+            form.appendChild(newinputImageType);
+              // document.body.appendChild(img);
+            },
+            {
+              maxWidth: 600,
+              // maxHeight: 300,
+              // minWidth: 100,
+              // minHeight: 50,
+              canvas: true,
+            }
+          );  
 
-            // document.body.appendChild(img);
-          },
-          {
-            maxWidth: 600,
-            // maxHeight: 300,
-            // minWidth: 100,
-            // minHeight: 50,
-            canvas: true,
-          }
-        );  
+      }
+
+
+    });
 
     }
+  };
 
-
-  });
-
-
-};
 });
 
 // 'use strict';
@@ -33938,23 +33965,23 @@ $(function() {
 //     }
 //   })
 
-//   function gifReader(files){
-//     var image = files[0]
-//     var reader = new FileReader();
-//     var newinputImageType = document.createElement("input");
-//     newinputImageType.type = 'hidden';
-//     newinputImageType.name = 'filetype';
-//     newinputImageType.value = image.type; // put result from canvas into new hidden input
-//     form.appendChild(newinputImageType);
-//     reader.onload = function(file) {
-//       var img = new Image();
-//       img.src = file.target.result;
-//       img.id="preview-image"
-//       $('#target').html(img);
-//       $('img#preview-image').css( "width", "100%" )
-//     }
-//     reader.readAsDataURL(image);
-//   }
+  // function gifReader(files){
+  //   var image = files[0]
+  //   var reader = new FileReader();
+  //   var newinputImageType = document.createElement("input");
+  //   newinputImageType.type = 'hidden';
+  //   newinputImageType.name = 'filetype';
+  //   newinputImageType.value = image.type; // put result from canvas into new hidden input
+  //   form.appendChild(newinputImageType);
+  //   reader.onload = function(file) {
+  //     var img = new Image();
+  //     img.src = file.target.result;
+  //     img.id="preview-image"
+  //     $('#target').html(img);
+  //     $('img#preview-image').css( "width", "100%" )
+  //   }
+  //   reader.readAsDataURL(image);
+  // }
 
 
 //   function downsizeReader(files) {
