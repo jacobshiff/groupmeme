@@ -92,8 +92,7 @@ $(function() {
       image.onload = function() {
 
          // have to wait till it's loaded
-         var resized = ResizeImage(image); // send it to canvas
-
+         var resized = resizeMe(image); // send it to canvas
          resized = ExifRestorer.restore(event.target.result, resized);  //<= EXIF  
 
          var newinput = document.createElement("input");
@@ -193,6 +192,14 @@ $(function() {
 
   }
 
+  function dataURItoBlob(dataURI) {
+    var binary = atob(dataURI.split(',')[1]);
+    var array = [];
+    for(var i = 0; i < binary.length; i++) {
+        array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
+  }
 
 
 });
