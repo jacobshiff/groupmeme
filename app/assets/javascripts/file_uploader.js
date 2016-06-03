@@ -1,5 +1,13 @@
 // See file_downsizer.js for filesizing code
 $(function() {
+  // var target = document.getElementById('target');
+  // debugger
+  // $(target).on('change', function(){
+  //     debugger
+  //     var canvas = document.getElementsByTagName('canvas')
+  //     output = canvas.toDataURL
+  // })
+  
   $('textarea.meme-text').on('change', function(event){
     var top_text = $('textarea#top-text').val()
     var bottom_text = $('textarea#bottom-text').val()
