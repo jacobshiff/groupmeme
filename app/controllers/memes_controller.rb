@@ -19,7 +19,6 @@ class MemesController < ApplicationController
   end
 
   def create
-    binding.pry
     #Return to save template and create new model?
     meme_generator_result = MemeGenerator.new(params, tag_params, current_user).generate
     if meme_generator_result[:meme].nil?
