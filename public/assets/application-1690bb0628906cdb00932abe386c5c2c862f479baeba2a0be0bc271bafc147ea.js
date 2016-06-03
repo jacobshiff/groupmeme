@@ -33825,20 +33825,23 @@ function build_new_comment(response){
 }
 ;
 $(function() {
-document.getElementById('file-input').onchange = function (e) {
+  document.getElementById('meme-file-input').onchange = function (e) {
 
-  var image_orientation
+  var image_orientation; // i believe the scope for this could be moved lower down
   var target = document.getElementById('target');
+  var filetype
 
   loadImage.parseMetaData(e.target.files[0], function (data) {
     if (data.exif) {
       image_orientation = data.exif.get('Orientation');
+      filetype = e.target.files[0].type;
       loadImage(
         e.target.files[0],
         function (img) {
-          $(target).html(img)
-          var canvas = document.getElementsByTagName('canvas')
-          var resized = canvas[0].toDataURL("image/jpeg");
+          img.style = 'width:100%';
+          $(target).html(img);
+          var canvas = document.getElementsByTagName('canvas');
+          var resized = canvas[0].toDataURL(filetype);
           var newinput = document.createElement("input");
           newinput.type = 'hidden';
           newinput.name = 'images[]';
@@ -33848,27 +33851,60 @@ document.getElementById('file-input').onchange = function (e) {
           var newinputImageType = document.createElement("input");
           newinputImageType.type = 'hidden';
           newinputImageType.name = 'filetype';
-          newinputImageType.value = 'image/jpeg'; // put result from canvas into new hidden input
+          newinputImageType.value = filetype; // put result from canvas into new hidden input
           form.appendChild(newinputImageType);
 
             // document.body.appendChild(img);
           },
           {
             maxWidth: 600,
-        // maxHeight: 300,
-        // minWidth: 100,
-        // minHeight: 50,
-        canvas: true,
-        orientation: image_orientation
-      }
-        // {maxWidth: 600} // Options
+            // maxHeight: 300,
+            // minWidth: 100,
+            // minHeight: 50,
+            canvas: true,
+            orientation: image_orientation
+          }
         );  
-    }      
-  })
+
+    } else {
+      filetype = e.target.files[0].type;
+      loadImage(
+        e.target.files[0],
+        function (img) {
+          img.style = 'width:100%';
+          $(target).html(img);
+          var canvas = document.getElementsByTagName('canvas');
+          var resized = canvas[0].toDataURL(filetype);
+          var newinput = document.createElement("input");
+          newinput.type = 'hidden';
+          newinput.name = 'images[]';
+          newinput.value = resized; // put result from canvas into new hidden input
+          form.appendChild(newinput);
+
+          var newinputImageType = document.createElement("input");
+          newinputImageType.type = 'hidden';
+          newinputImageType.name = 'filetype';
+          newinputImageType.value = filetype; // put result from canvas into new hidden input
+          form.appendChild(newinputImageType);
+
+            // document.body.appendChild(img);
+          },
+          {
+            maxWidth: 600,
+            // maxHeight: 300,
+            // minWidth: 100,
+            // minHeight: 50,
+            canvas: true,
+          }
+        );  
+
+    }
+
+
+  });
+
 
 };
-
-
 });
 
 // 'use strict';
@@ -34013,24 +34049,18 @@ document.getElementById('file-input').onchange = function (e) {
 // });
 // See file_downsizer.js for filesizing code
 $(function() {
-  // var target = document.getElementById('target');
-  // debugger
-  // $(target).on('change', function(){
-  //     debugger
-  //     var canvas = document.getElementsByTagName('canvas')
-  //     output = canvas.toDataURL
-  // })
   
+  
+  // Capture top and bottom text
   $('textarea.meme-text').on('change', function(event){
     var top_text = $('textarea#top-text').val()
     var bottom_text = $('textarea#bottom-text').val()
-    var title = $('#meme-title-text').val()
     // Sets to a hidden field in form
     $('input#top_text').val(top_text)
     $('input#bottom_text').val(bottom_text)
-    $('input#meme-title-input').val(title)
   })
 
+  // Capture title text
   $('input#meme-title-text').on('change', function(event){
     var title = $('#meme-title-text').val()
     // Sets to a hidden field in form

@@ -1,19 +1,20 @@
 $(function() {
-document.getElementById('file-input').onchange = function (e) {
+  document.getElementById('meme-file-input').onchange = function (e) {
 
-  var image_orientation // i believe the scope for this could be moved lower down
+  var image_orientation; // i believe the scope for this could be moved lower down
   var target = document.getElementById('target');
+  var filetype
 
   loadImage.parseMetaData(e.target.files[0], function (data) {
     if (data.exif) {
       image_orientation = data.exif.get('Orientation');
-      var filetype = e.target.files[0].type
+      filetype = e.target.files[0].type;
       loadImage(
         e.target.files[0],
         function (img) {
-          img.style = 'width:100%'
-          $(target).html(img)
-          var canvas = document.getElementsByTagName('canvas')
+          img.style = 'width:100%';
+          $(target).html(img);
+          var canvas = document.getElementsByTagName('canvas');
           var resized = canvas[0].toDataURL(filetype);
           var newinput = document.createElement("input");
           newinput.type = 'hidden';
@@ -31,20 +32,53 @@ document.getElementById('file-input').onchange = function (e) {
           },
           {
             maxWidth: 600,
-        // maxHeight: 300,
-        // minWidth: 100,
-        // minHeight: 50,
-        canvas: true,
-        orientation: image_orientation
-      }
-        // {maxWidth: 600} // Options
+            // maxHeight: 300,
+            // minWidth: 100,
+            // minHeight: 50,
+            canvas: true,
+            orientation: image_orientation
+          }
         );  
-    }      
-  })
+
+    } else {
+      filetype = e.target.files[0].type;
+      loadImage(
+        e.target.files[0],
+        function (img) {
+          img.style = 'width:100%';
+          $(target).html(img);
+          var canvas = document.getElementsByTagName('canvas');
+          var resized = canvas[0].toDataURL(filetype);
+          var newinput = document.createElement("input");
+          newinput.type = 'hidden';
+          newinput.name = 'images[]';
+          newinput.value = resized; // put result from canvas into new hidden input
+          form.appendChild(newinput);
+
+          var newinputImageType = document.createElement("input");
+          newinputImageType.type = 'hidden';
+          newinputImageType.name = 'filetype';
+          newinputImageType.value = filetype; // put result from canvas into new hidden input
+          form.appendChild(newinputImageType);
+
+            // document.body.appendChild(img);
+          },
+          {
+            maxWidth: 600,
+            // maxHeight: 300,
+            // minWidth: 100,
+            // minHeight: 50,
+            canvas: true,
+          }
+        );  
+
+    }
+
+
+  });
+
 
 };
-
-
 });
 
 // 'use strict';
