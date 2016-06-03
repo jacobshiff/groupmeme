@@ -73,31 +73,89 @@ $(function() {
               return false;
           }
       var filetype = file.type;
+
       var reader = new FileReader();
-      reader.readAsArrayBuffer(file);
-      reader.onload = function(event) {
-        var blob = new Blob([event.target.result]);
-        window.URL = window.URL || window.webkitURL;
-        var blobURL = window.URL.createObjectURL(blob);
-        var image = new Image();
-        image.src = blobURL;
-        //preview.appendChild(image); // preview commented out, I am using the canvas instead
-        image.onload = function() {
-          // have to wait till it's loaded
-          var resized = resizeMe(image, filetype); // send it to canvas
-          var newinput = document.createElement("input");
-          newinput.type = 'hidden';
-          newinput.name = 'images[]';
-          newinput.value = resized; // put result from canvas into new hidden input
-          form.appendChild(newinput);
-          var newinputImageType = document.createElement("input");
-          newinputImageType.type = 'hidden';
-          newinputImageType.name = 'filetype';
-          newinputImageType.value = filetype; // put result from canvas into new hidden input
-          form.appendChild(newinputImageType);
-        }
-      }
+
+      //reader.readAsArrayBuffer(file); //load data ... old version
+      reader.readAsDataURL(file);       //load data ... new version
+      reader.onload = function (event) {
+      // blob stuff
+      //var blob = new Blob([event.target.result]); // create blob... old version
+      var blob = dataURItoBlob(event.target.result); // create blob...new version
+      window.URL = window.URL || window.webkitURL;
+      var blobURL = window.URL.createObjectURL(blob); // and get it's URL
+
+      // helper Image object
+      var image = new Image();
+      image.src = blobURL;
+
+      image.onload = function() {
+
+         // have to wait till it's loaded
+         var resized = ResizeImage(image); // send it to canvas
+
+         resized = ExifRestorer.restore(event.target.result, resized);  //<= EXIF  
+
+         var newinput = document.createElement("input");
+         newinput.type = 'hidden';
+         newinput.name = 'html5_images[]';
+         newinput.value = resized; // put result from canvas into new hidden input
+         form.appendChild(newinput);
+
+        var newinputImageType = document.createElement("input");
+        newinputImageType.type = 'hidden';
+        newinputImageType.name = 'filetype';
+        newinputImageType.value = filetype; // put result from canvas into new hidden input
+        form.appendChild(newinputImageType);
+
+       };
+      };
+
+      // var reader = new FileReader();
+      // reader.readAsArrayBuffer(file);
+      // reader.onload = function(event) {
+      //   var blob = new Blob([event.target.result]);
+      //   window.URL = window.URL || window.webkitURL;
+      //   var blobURL = window.URL.createObjectURL(blob);
+      //   var image = new Image();
+      //   image.src = blobURL;
+      //   //preview.appendChild(image); // preview commented out, I am using the canvas instead
+      //   image.onload = function() {
+      //     // have to wait till it's loaded
+      //     var resized = resizeMe(image, filetype); // send it to canvas
+      //     var newinput = document.createElement("input");
+      //     newinput.type = 'hidden';
+      //     newinput.name = 'images[]';
+      //     newinput.value = resized; // put result from canvas into new hidden input
+      //     form.appendChild(newinput);
+      //     var newinputImageType = document.createElement("input");
+      //     newinputImageType.type = 'hidden';
+      //     newinputImageType.name = 'filetype';
+      //     newinputImageType.value = filetype; // put result from canvas into new hidden input
+      //     form.appendChild(newinputImageType);
+      //   }
+      // }
     };
+
+  // === RESIZE ====  
+  var createBinaryFile = function(uintArray) {
+    var data = new Uint8Array(uintArray);
+    var file = new BinaryFile(data);
+    file.getByteAt = function(iOffset) {
+        return data[iOffset];
+    };
+    file.getBytesAt = function(iOffset, iLength) {
+        var aBytes = [];
+        for (var i = 0; i < iLength; i++) {
+            aBytes[i] = data[iOffset  + i];
+        }
+        return aBytes;
+    };
+    file.getLength = function() {
+        return data.length;
+    };
+    return file;
+  };
 
 
   // === RESIZE ====
