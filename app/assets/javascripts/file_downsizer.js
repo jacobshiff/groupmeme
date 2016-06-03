@@ -1,18 +1,20 @@
 $(function() {
 document.getElementById('file-input').onchange = function (e) {
 
-  var image_orientation
+  var image_orientation // i believe the scope for this could be moved lower down
   var target = document.getElementById('target');
 
   loadImage.parseMetaData(e.target.files[0], function (data) {
     if (data.exif) {
       image_orientation = data.exif.get('Orientation');
+      var filetype = e.target.files[0].type
       loadImage(
         e.target.files[0],
         function (img) {
+          img.style = 'width:100%'
           $(target).html(img)
           var canvas = document.getElementsByTagName('canvas')
-          var resized = canvas[0].toDataURL("image/jpeg");
+          var resized = canvas[0].toDataURL(filetype);
           var newinput = document.createElement("input");
           newinput.type = 'hidden';
           newinput.name = 'images[]';
@@ -22,7 +24,7 @@ document.getElementById('file-input').onchange = function (e) {
           var newinputImageType = document.createElement("input");
           newinputImageType.type = 'hidden';
           newinputImageType.name = 'filetype';
-          newinputImageType.value = 'image/jpeg'; // put result from canvas into new hidden input
+          newinputImageType.value = filetype; // put result from canvas into new hidden input
           form.appendChild(newinputImageType);
 
             // document.body.appendChild(img);

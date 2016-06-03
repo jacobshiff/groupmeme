@@ -1,23 +1,17 @@
 // See file_downsizer.js for filesizing code
 $(function() {
-  // var target = document.getElementById('target');
-  // debugger
-  // $(target).on('change', function(){
-  //     debugger
-  //     var canvas = document.getElementsByTagName('canvas')
-  //     output = canvas.toDataURL
-  // })
   
+  
+  // Capture top and bottom text
   $('textarea.meme-text').on('change', function(event){
     var top_text = $('textarea#top-text').val()
     var bottom_text = $('textarea#bottom-text').val()
-    var title = $('#meme-title-text').val()
     // Sets to a hidden field in form
     $('input#top_text').val(top_text)
     $('input#bottom_text').val(bottom_text)
-    $('input#meme-title-input').val(title)
   })
 
+  // Capture title text
   $('input#meme-title-text').on('change', function(event){
     var title = $('#meme-title-text').val()
     // Sets to a hidden field in form
