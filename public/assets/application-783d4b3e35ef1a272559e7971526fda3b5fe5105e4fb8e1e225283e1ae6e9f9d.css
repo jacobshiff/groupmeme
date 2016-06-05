@@ -12423,7 +12423,7 @@ img.show-page-image{
     width: 80%;
     text-align: center;
     vertical-align: text-middle;
-    font-family:Impact, Haettenschweiler, "Franklin Gothic Bold", Charcoal, "Helvetica Inserat", "Bitstream Vera Sans Bold", "Arial Black", "sans serif";
+    font-family:Impact, Charcoal, sans-serif;
     font-size: 40px;
     line-height:1em;
     color: white;
