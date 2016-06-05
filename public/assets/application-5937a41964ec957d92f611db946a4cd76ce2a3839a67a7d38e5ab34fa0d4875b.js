@@ -33869,7 +33869,7 @@ $(function() {
           function (img) {
             img.id="preview-image"
             $(target).html(img);
-            $('img#preview-image').css( "width", "100%")
+            $('canvas#preview-image').css( "width", "100%")
             // $(target).css("width", "100%")
             // img.style = 'width:100%';
             var canvas = document.getElementsByTagName('canvas');
@@ -33903,7 +33903,7 @@ $(function() {
           function (img) {
             img.id="preview-image"
             $(target).html(img);
-            $('img#preview-image').css( "width", "100%")
+            $('canvas#preview-image').css( "width", "100%")
             // img.style = 'width:100%';
             var canvas = document.getElementsByTagName('canvas');
             var resized = canvas[0].toDataURL(filetype);
