@@ -41,8 +41,8 @@ $(function() {
         loadImage(
           imagefile,
           function (img) {
-            img.style = 'width:100%';
             $(target).html(img);
+            img.style = 'width:100%';
             var canvas = document.getElementsByTagName('canvas');
             var resized = canvas[0].toDataURL(filetype);
             var newinput = document.createElement("input");
